@@ -1,0 +1,57 @@
+# Lumenook ships English + Arabic only. Skip translation-parity checks for Dwell's
+# other storefront locales so new lumenook.* keys don't need 30 unused translations.
+MatchingTranslations:
+  ignore:
+    - locales/bg.json
+    - locales/cs.json
+    - locales/cs.schema.json
+    - locales/da.json
+    - locales/da.schema.json
+    - locales/de.json
+    - locales/de.schema.json
+    - locales/el.json
+    - locales/es.json
+    - locales/es.schema.json
+    - locales/fi.json
+    - locales/fi.schema.json
+    - locales/fr.json
+    - locales/fr.schema.json
+    - locales/he.json
+    - locales/he.schema.json
+    - locales/hr.json
+    - locales/hu.json
+    - locales/id.json
+    - locales/it.json
+    - locales/it.schema.json
+    - locales/ja.json
+    - locales/ja.schema.json
+    - locales/ko.json
+    - locales/ko.schema.json
+    - locales/lt.json
+    - locales/nb.json
+    - locales/nb.schema.json
+    - locales/nl.json
+    - locales/nl.schema.json
+    - locales/pl.json
+    - locales/pl.schema.json
+    - locales/pt-BR.json
+    - locales/pt-BR.schema.json
+    - locales/pt-PT.json
+    - locales/pt-PT.schema.json
+    - locales/ro.json
+    - locales/ru.json
+    - locales/sk.json
+    - locales/sl.json
+    - locales/sv.json
+    - locales/sv.schema.json
+    - locales/th.json
+    - locales/th.schema.json
+    - locales/tr.json
+    - locales/tr.schema.json
+    - locales/ur.json
+    - locales/ur.schema.json
+    - locales/vi.json
+    - locales/zh-CN.json
+    - locales/zh-CN.schema.json
+    - locales/zh-TW.json
+    - locales/zh-TW.schema.json
