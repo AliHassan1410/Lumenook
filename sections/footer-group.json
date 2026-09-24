@@ -21,14 +21,15 @@
             "width": "fill",
             "custom_width": 100,
             "heading": "Join the Lumenook circle",
+            "text": "Early access to new pieces and quiet evenings, in your inbox.",
             "heading_preset": "h6",
             "border_style": "underline",
             "input_style": "custom",
             "border_width": 1,
             "border_radius": 100,
-            "input_background_color": "{{ settings.color_palette.background }}",
-            "input_text_color": "{{ settings.color_palette.foreground }}",
-            "input_border_color": "{{ settings.color_palette.foreground }}",
+            "input_background_color": "{{ settings.color_palette.color2 }}",
+            "input_text_color": "#EFE6DA",
+            "input_border_color": "#EFE6DA",
             "input_type_preset": "h3",
             "style_class": "button-unstyled",
             "display_type": "text",
@@ -39,7 +40,7 @@
             "padding-block-end": 60,
             "padding-inline-start": 0,
             "padding-inline-end": 0,
-            "heading_text_color": "{{ settings.color_palette.background }}"
+            "heading_text_color": "#EFE6DA"
           },
           "blocks": {}
         }

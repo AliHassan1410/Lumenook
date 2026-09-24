@@ -60,6 +60,30 @@
           },
           "blocks": {}
         },
+        "ln_subtext": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Sculptural lamps and considered desk objects, delivered across the UAE.</p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "{{ settings.color_palette.background }}",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "ln_cta": {
           "type": "button",
           "settings": {
@@ -79,6 +103,7 @@
       "block_order": [
         "ln_eyebrow",
         "ln_title",
+        "ln_subtext",
         "ln_cta"
       ],
       "name": "t:names.hero",
@@ -610,7 +635,7 @@
             "ln_p": {
               "type": "text",
               "settings": {
-                "text": "<p>Touch lamps, candle warmers and ambient pieces for slow evenings. Warm, low light that makes a room feel calm long after sunset.</p>",
+                "text": "<p>Touch lamps, candle warmers and softly glowing pieces for slow evenings. Warm, low light that makes a room feel calm long after sunset.</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -634,7 +659,7 @@
             "ln_b": {
               "type": "button",
               "settings": {
-                "label": "Shop Mood & Ambient",
+                "label": "Explore ambient light",
                 "link": "shopify://collections/ambient-lighting",
                 "open_in_new_tab": false,
                 "style_class": "button-unstyled",

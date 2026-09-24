@@ -24,6 +24,14 @@
       {{ block_settings.heading | escape }}
     </div>
   {% endif %}
+  {% if block_settings.text != blank %}
+    <div
+      class="email-signup__text"
+      style="{% if block_settings.heading_text_color != blank %}--color: {{ block_settings.heading_text_color }}; --color-rgb: {{ block_settings.heading_text_color.rgb }}; color: var(--color);{% endif %}"
+    >
+      {{ block_settings.text | escape }}
+    </div>
+  {% endif %}
   {%- form 'customer', class: 'email-signup__form spacing-style' %}
     {% comment %} --- Input group classes --- {% endcomment %}
     {%- liquid
@@ -150,6 +158,12 @@
   .email-signup__heading {
     color: var(--color, inherit);
     padding-block: var(--padding-sm);
+  }
+
+  .email-signup__text {
+    color: var(--color, inherit);
+    opacity: 0.85;
+    margin-block-end: var(--gap-md, 1rem);
   }
 
   .email-signup__form {
@@ -448,6 +462,11 @@
     {
       "type": "text",
       "id": "heading",
+      "label": "t:settings.text"
+    },
+    {
+      "type": "text",
+      "id": "text",
       "label": "t:settings.text"
     },
     {
