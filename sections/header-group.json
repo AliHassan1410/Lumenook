@@ -17,22 +17,48 @@
         "announcement_KMAGKG": {
           "type": "_announcement",
           "settings": {
-            "text": "Shop the bedroom event - on now!",
-            "link": "shopify://collections/all",
+            "text": "Complimentary delivery across the UAE over AED 300",
             "font": "var(--font-accent--family)",
             "font_size": "0.75rem",
             "letter_spacing": "loose",
-            "case": "uppercase"
+            "case": "uppercase",
+            "text_color": "{{ settings.color_palette.color2 }}"
+          },
+          "blocks": {}
+        },
+        "announcement_ln_cod": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Cash on delivery available",
+            "font": "var(--font-accent--family)",
+            "font_size": "0.75rem",
+            "letter_spacing": "loose",
+            "case": "uppercase",
+            "text_color": "{{ settings.color_palette.color2 }}"
+          },
+          "blocks": {}
+        },
+        "announcement_ln_gift": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Gift wrapping on request",
+            "font": "var(--font-accent--family)",
+            "font_size": "0.75rem",
+            "letter_spacing": "loose",
+            "case": "uppercase",
+            "text_color": "{{ settings.color_palette.color2 }}"
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "announcement_KMAGKG"
+        "announcement_KMAGKG",
+        "announcement_ln_cod",
+        "announcement_ln_gift"
       ],
       "name": "t:names.announcement_bar",
       "settings": {
-        "speed": 5,
+        "speed": 6,
         "section_width": "full-width",
         "background_color": "{{ settings.color_palette.color1 }}",
         "divider_width": 0,
