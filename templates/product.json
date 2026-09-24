@@ -285,6 +285,11 @@
                 "shipping_page": "shipping"
               },
               "blocks": {}
+            },
+            "ln_price_note": {
+              "type": "lumenook-price-note",
+              "settings": {},
+              "blocks": {}
             }
           },
           "block_order": [
@@ -294,6 +299,7 @@
             "ln_subtitle",
             "reviews",
             "price_a7krng",
+            "ln_price_note",
             "variant_picker_R3rGDr",
             "ln_gift",
             "ln_gift_message",
@@ -310,7 +316,7 @@
         "equal_columns": false,
         "limit_details_width": true,
         "gap": 48,
-        "enable_sticky_add_to_cart": true,
+        "enable_sticky_add_to_cart": false,
         "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 16,
         "padding-block-end": 0

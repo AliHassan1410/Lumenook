@@ -176,5 +176,8 @@
     {% endif %}
 
     {% render 'lumenook-whatsapp' %}
+    {%- if template.name == 'product' -%}
+      {% render 'lumenook-sticky-atc', product: product %}
+    {%- endif -%}
   </body>
 </html>

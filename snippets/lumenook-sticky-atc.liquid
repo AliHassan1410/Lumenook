@@ -1,0 +1,28 @@
+{% doc %}
+  Mobile sticky add-to-bag bar (brief Section 10F). Mobile only (<750px). Appears once the main
+  add-to-cart button scrolls out of view and hides near the footer. Its button submits the main
+  product form through the `form` attribute, so the selected variant always stays in sync.
+  Wired up by <ln-sticky-atc> in lumenook.js.
+
+  @param {object} product - The product
+{% enddoc %}
+{%- if product != blank and product.available -%}
+  <ln-sticky-atc class="ln-sticky-atc" hidden>
+    <div class="ln-sticky-atc__inner">
+      {%- if product.featured_image -%}
+        {{
+          product.featured_image
+          | image_url: width: 120
+          | image_tag: widths: '60, 120', sizes: '48px', loading: 'lazy', class: 'ln-sticky-atc__image', alt: ''
+        }}
+      {%- endif -%}
+      <div class="ln-sticky-atc__text">
+        <p class="ln-sticky-atc__title">{{ product.title }}</p>
+        <p class="ln-sticky-atc__price" data-price>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</p>
+      </div>
+      <button type="submit" name="add" class="button ln-sticky-atc__button" data-button>
+        {{- 'lumenook.cta.add_to_bag' | t -}}
+      </button>
+    </div>
+  </ln-sticky-atc>
+{%- endif -%}

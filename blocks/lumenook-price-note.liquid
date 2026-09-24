@@ -1,0 +1,37 @@
+{% doc %}
+  Price footnote under the product price (brief Section 10): "VAT included" in muted 12px when the
+  store shows tax-inclusive prices, plus an instalment line when Tabby or Tamara is switched on in
+  Theme settings > Lumenook. The provider's own app block can replace this line once installed.
+{% enddoc %}
+{%- liquid
+  assign product = closest.product
+  assign variant = product.selected_or_first_available_variant
+  assign provider = settings.ln_bnpl_provider
+  assign parts = settings.ln_bnpl_instalments | default: 4
+  assign instalment = variant.price | divided_by: parts
+  assign instalment_money = instalment | money_without_trailing_zeros
+-%}
+<div class="ln-price-note" {{ block.shopify_attributes }}>
+  {%- if cart.taxes_included or shop.taxes_included -%}
+    <p class="ln-price-note__vat">{{ 'lumenook.product.vat_included' | t }}</p>
+  {%- endif -%}
+  {%- if provider != blank and provider != 'none' -%}
+    <p class="ln-price-note__bnpl">
+      {{ 'lumenook.product.instalments' | t: count: parts, amount: instalment_money, provider: provider }}
+    </p>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Lumenook price note",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Instalment provider is set in Theme settings > Lumenook."
+    }
+  ],
+  "presets": [{ "name": "Lumenook price note" }]
+}
+{% endschema %}
