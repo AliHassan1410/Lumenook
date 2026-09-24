@@ -139,18 +139,16 @@
         height="{{ section.settings.image_1_mobile.height }}"
       >
       {%- if is_asset_image_1 -%}
-        {{
-          asset_image_1
-          | asset_url
-          | image_tag:
-            width: 1580,
-            height: 656,
-            alt: section.settings.image_1.alt | default: 'Lumenook',
-            class: 'hero__media',
-            sizes: sizes,
-            fetchpriority: fetch_priority,
-            data-testid: 'hero-desktop-image-1'
-        }}
+        <img
+          src="{{ asset_image_1 | asset_url }}"
+          width="1580"
+          height="656"
+          alt="{{ section.settings.image_1.alt | default: 'Lumenook' | escape }}"
+          class="hero__media"
+          sizes="{{ sizes }}"
+          fetchpriority="{{ fetch_priority }}"
+          data-testid="hero-desktop-image-1"
+        >
       {%- else -%}
         {{
           section.settings.image_1
@@ -170,18 +168,16 @@
   {%- elsif media_1 == 'image' -%}
     <div class="{{ media_wrapper_desktop_class }}">
       {%- if is_asset_image_1 -%}
-        {{
-          asset_image_1
-          | asset_url
-          | image_tag:
-            width: 1580,
-            height: 656,
-            alt: section.settings.image_1.alt | default: 'Lumenook',
-            class: 'hero__media',
-            sizes: sizes,
-            fetchpriority: fetch_priority,
-            data-testid: 'hero-desktop-image-1'
-        }}
+        <img
+          src="{{ asset_image_1 | asset_url }}"
+          width="1580"
+          height="656"
+          alt="{{ section.settings.image_1.alt | default: 'Lumenook' | escape }}"
+          class="hero__media"
+          sizes="{{ sizes }}"
+          fetchpriority="{{ fetch_priority }}"
+          data-testid="hero-desktop-image-1"
+        >
       {%- else -%}
         {{
           section.settings.image_1
@@ -370,16 +366,14 @@
 {% capture media_blurred %}
   {% if media_1 == 'image' %}
     {%- if is_asset_image_1 -%}
-      {{
-        asset_image_1
-        | asset_url
-        | image_tag:
-          width: 1580,
-          height: 656,
-          alt: '',
-          class: 'hero__media',
-          sizes: sizes
-      }}
+      <img
+        src="{{ asset_image_1 | asset_url }}"
+        width="1580"
+        height="656"
+        alt=""
+        class="hero__media"
+        sizes="{{ sizes }}"
+      >
     {%- else -%}
       {{
         section.settings.image_1
@@ -482,16 +476,14 @@
             }}
         {% elsif media_1 == 'image' %}
           {%- if is_asset_image_1 -%}
-            {{
-              asset_image_1
-              | asset_url
-              | image_tag:
-                width: 1580,
-                height: 656,
-                alt: '',
-                class: 'hero__media',
-                sizes: sizes
-            }}
+            <img
+              src="{{ asset_image_1 | asset_url }}"
+              width="1580"
+              height="656"
+              alt=""
+              class="hero__media"
+              sizes="{{ sizes }}"
+            >
           {%- else -%}
             {{ section.settings.image_1
               | image_url: width: 1600
