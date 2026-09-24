@@ -746,9 +746,15 @@ html[lang^='ar'] .ln-payments__cod { letter-spacing: 0; text-transform: none; }
 
 /* Homepage hero artwork carries its own headline and button: show it at its natural
    proportions so nothing is cropped, and keep the H1 for SEO / screen readers only. */
-[id$='__hero'] .hero {
-  /* Full width at the artwork ratio (1580 x 656); Dwell sizes the media from --hero-min-height. */
-  --hero-min-height: calc(100vw * 656 / 1580) !important;
+/* Desktop: hero fills the screen below the header, artwork covers it edge to edge.
+   Mobile: show the whole artwork at its ratio (1580 x 656) so its text is never cropped;
+   Dwell subtracts the header height, so it is added back here. */
+[id$='__hero'] .hero__media { object-fit: cover; }
+
+@media (max-width: 749px) {
+  [id$='__hero'] .hero {
+    --hero-min-height: calc(100vw * 656 / 1580 + var(--header-group-height, 0px)) !important;
+  }
 }
 
 [id$='__hero'] .hero .text-block {

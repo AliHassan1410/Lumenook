@@ -124,7 +124,7 @@
         "vertical_alignment_flex_direction_column": "flex-end",
         "gap": 16,
         "section_width": "full-width",
-        "section_height": "auto",
+        "section_height": "full-screen",
         "section_height_custom": 92,
         "background_color": "{{ settings.color_palette.color2 }}",
         "toggle_overlay": false,
