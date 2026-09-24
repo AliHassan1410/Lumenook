@@ -1,0 +1,45 @@
+{% comment %}
+  Bottom of the collection page (brief Section 9): empty state when there are no products, then the
+  SEO text (description after its first paragraph), collapsed after 4 lines with "Read more".
+{% endcomment %}
+{%- liquid
+  assign parts = collection.description | split: '</p>'
+  assign intro = parts | first | append: '</p>'
+  assign seo_text = collection.description | remove_first: intro | strip
+-%}
+{%- if collection.products_count == 0 -%}
+  <section class="ln-section ln-empty">
+    <div class="ln-container">
+      <p class="ln-empty__title">{{ 'lumenook.collection.empty_title' | t }}</p>
+      <a class="button button-secondary" href="{{ routes.collections_url }}/new-arrivals">{{ 'lumenook.collection.empty_link' | t }}</a>
+    </div>
+  </section>
+{%- endif -%}
+{%- if seo_text != blank -%}
+  <section class="ln-section ln-seo">
+    <div class="ln-container">
+      <ln-read-more class="ln-read-more">
+        <div class="ln-read-more__body rte" id="LnSeo-{{ section.id }}" data-body>{{ seo_text }}</div>
+        <button
+          type="button"
+          class="button-unstyled ln-link ln-read-more__button"
+          aria-expanded="false"
+          aria-controls="LnSeo-{{ section.id }}"
+          data-more="{{ 'lumenook.general.read_more' | t }}"
+          data-less="{{ 'lumenook.general.read_less' | t }}"
+        >
+          {{- 'lumenook.general.read_more' | t -}}
+        </button>
+      </ln-read-more>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "LN collection SEO text",
+  "settings": [],
+  "enabled_on": { "templates": ["collection"] },
+  "presets": [{ "name": "LN collection SEO text" }]
+}
+{% endschema %}

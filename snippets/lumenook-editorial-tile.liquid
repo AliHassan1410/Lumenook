@@ -1,0 +1,21 @@
+{% doc %}
+  Editorial tile inserted after the 6th product on page 1 of a collection (brief Section 9).
+  Spans two grid columns. Renders nothing without an image.
+
+  @param {object} section - The main-collection section (for its ln_tile_* settings)
+{% enddoc %}
+{%- assign s = section.settings -%}
+{%- if s.ln_tile_image != blank -%}
+  <li class="ln-tile">
+    {%- if s.ln_tile_link != blank -%}<a class="ln-tile__link" href="{{ s.ln_tile_link }}">{%- endif -%}
+    {{
+      s.ln_tile_image
+      | image_url: width: 1400
+      | image_tag: widths: '600, 900, 1200, 1400', sizes: '(min-width: 990px) 66vw, 100vw', loading: 'lazy', class: 'ln-tile__image', alt: s.ln_tile_image.alt
+    }}
+    {%- if s.ln_tile_text != blank -%}
+      <p class="ln-tile__text">{{ s.ln_tile_text }}</p>
+    {%- endif -%}
+    {%- if s.ln_tile_link != blank -%}</a>{%- endif -%}
+  </li>
+{%- endif -%}

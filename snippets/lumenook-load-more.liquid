@@ -1,0 +1,14 @@
+{% doc %}
+  "Load more" for collection grids (brief Section 9). A real link to the next page that
+  <ln-load-more> upgrades to append the next page's cards in place.
+
+  @param {object} paginate - The paginate object
+  @param {string} grid - CSS selector of the grid <ul> to append to
+{% enddoc %}
+{%- if paginate.next -%}
+  <ln-load-more class="ln-load-more" data-next-url="{{ paginate.next.url }}" data-grid="{{ grid }}">
+    <a class="button button-secondary ln-load-more__button" href="{{ paginate.next.url }}">
+      {{- 'lumenook.collection.load_more' | t -}}
+    </a>
+  </ln-load-more>
+{%- endif -%}

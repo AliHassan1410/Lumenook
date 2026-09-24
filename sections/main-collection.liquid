@@ -76,6 +76,9 @@
                 product_view_context: 'collection'
               %}
             </li>
+            {%- if forloop.index == 6 and paginate.current_page == 1 -%}
+              {% render 'lumenook-editorial-tile', section: section %}
+            {%- endif -%}
           {% endfor %}
         {% endcapture %}
 
@@ -86,6 +89,10 @@
           paginate: paginate,
           enable_infinite_scroll: section.settings.enable_infinite_scroll
         %}
+        {%- unless section.settings.enable_infinite_scroll -%}
+          {%- assign ln_grid_selector = '.product-grid--' | append: section.id -%}
+          {% render 'lumenook-load-more', paginate: paginate, grid: ln_grid_selector %}
+        {%- endunless -%}
       {% endpaginate %}
     </div>
   </results-list>
@@ -95,7 +102,9 @@
 {
   "name": "t:names.collection_container",
   "enabled_on": {
-    "templates": ["collection"]
+    "templates": [
+      "collection"
+    ]
   },
   "settings": [
     {
@@ -267,6 +276,26 @@
       "step": 1,
       "unit": "px",
       "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Lumenook editorial tile"
+    },
+    {
+      "type": "image_picker",
+      "id": "ln_tile_image",
+      "label": "Image",
+      "info": "Shown after the 6th product on the first page. Leave empty to hide."
+    },
+    {
+      "type": "text",
+      "id": "ln_tile_text",
+      "label": "Text"
+    },
+    {
+      "type": "url",
+      "id": "ln_tile_link",
+      "label": "Link"
     }
   ],
   "presets": []

@@ -1,0 +1,51 @@
+{% comment %}
+  Collection banner (brief Section 9): collection image (21:9 desktop, 4:5 mobile) under a 35% Night overlay,
+  eyebrow = parent department, H1 = title, intro = first paragraph of the description.
+  Without an image it falls back to a plain Ivory header.
+{% endcomment %}
+{%- liquid
+  assign intro = collection.description | split: '</p>' | first | strip_html | strip
+  assign dept = ''
+  assign lighting_handles = 'table-lamps,floor-lamps,desk-lamps,ambient-lighting,room-living,room-bedroom,room-office,room-majlis'
+  assign desk_handles = 'smart-clocks,sound-display,charging,little-luxuries,home-office-edit'
+  assign lighting_list = lighting_handles | split: ','
+  assign desk_list = desk_handles | split: ','
+  if lighting_list contains collection.handle
+    assign dept = collections['lighting'].title | default: 'Lighting'
+  elsif desk_list contains collection.handle
+    assign dept = collections['desk-objects'].title | default: 'Desk Objects'
+  endif
+  assign count = collection.products_count
+-%}
+<section class="ln-banner{% if collection.image %} ln-banner--image{% endif %}">
+  {%- if collection.image -%}
+    <div class="ln-banner__media">
+      {{
+        collection.image
+        | image_url: width: 2400
+        | image_tag: widths: '750, 1100, 1500, 1900, 2400', sizes: '100vw', fetchpriority: 'high', loading: 'eager', class: 'ln-banner__image', alt: ''
+      }}
+    </div>
+  {%- endif -%}
+  <div class="ln-container ln-banner__content">
+    {%- if dept != blank -%}
+      <p class="ln-eyebrow ln-banner__eyebrow">{{ dept }}</p>
+    {%- endif -%}
+    <h1 class="ln-banner__title">{{ collection.title }}</h1>
+    {%- if intro != blank -%}
+      <p class="ln-banner__intro">{{ intro }}</p>
+    {%- endif -%}
+    {%- if count > 0 -%}
+      <p class="ln-banner__count">{{ 'lumenook.collection.pieces' | t: count: count }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LN collection banner",
+  "settings": [],
+  "enabled_on": { "templates": ["collection"] },
+  "presets": [{ "name": "LN collection banner" }]
+}
+{% endschema %}
