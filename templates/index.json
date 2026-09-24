@@ -95,8 +95,8 @@
         "vertical_alignment_flex_direction_column": "flex-end",
         "gap": 16,
         "section_width": "full-width",
-        "section_height": "full-screen",
-        "section_height_custom": 50,
+        "section_height": "custom",
+        "section_height_custom": 92,
         "background_color": "{{ settings.color_palette.color2 }}",
         "toggle_overlay": true,
         "overlay_color": "#1C191759",
@@ -956,6 +956,69 @@
       "settings": {
         "scheme": "sand"
       }
+    },
+    "journal": {
+      "type": "featured-blog-posts",
+      "blocks": {
+        "static-blog-title": {
+          "type": "_featured-blog-posts-title",
+          "settings": {
+            "text": "<h2>From the Journal</h2>",
+            "type_preset": "rte"
+          },
+          "blocks": {},
+          "static": true
+        },
+        "static-blog-post-card": {
+          "type": "_featured-blog-posts-card",
+          "settings": {},
+          "blocks": {
+            "title": {
+              "type": "_heading",
+              "settings": {
+                "text": "<h4>{{ closest.article.title }}</h4>",
+                "show_alignment": false
+              },
+              "blocks": {},
+              "static": true
+            },
+            "blog-post-info-text": {
+              "type": "_blog-post-info-text",
+              "settings": {
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "show_alignment": false
+              },
+              "blocks": {},
+              "static": true
+            },
+            "blog-post-description": {
+              "type": "_blog-post-description",
+              "settings": {
+                "padding-block-start": 8,
+                "padding-block-end": 0
+              },
+              "blocks": {},
+              "static": true
+            }
+          },
+          "static": true
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "post_limit": 3,
+        "columns": 3,
+        "columns_gap": 8,
+        "mobile_card_size": "60cqw",
+        "icons_style": "arrow",
+        "icons_shape": "circle",
+        "gap": 12,
+        "padding-block-start": 48,
+        "padding-block-end": 48,
+        "blog": "journal",
+        "background_color": "{{ settings.color_palette.background }}"
+      }
     }
   },
   "order": [
@@ -965,6 +1028,7 @@
     "after_dark",
     "desk",
     "promise",
-    "quote"
+    "quote",
+    "journal"
   ]
 }
