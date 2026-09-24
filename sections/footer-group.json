@@ -20,7 +20,7 @@
           "settings": {
             "width": "fill",
             "custom_width": 100,
-            "heading": "NEWSLETTER",
+            "heading": "Join the Lumenook circle",
             "heading_preset": "h6",
             "border_style": "underline",
             "input_style": "custom",
@@ -28,7 +28,7 @@
             "border_radius": 100,
             "input_background_color": "{{ settings.color_palette.background }}",
             "input_text_color": "{{ settings.color_palette.foreground }}",
-            "input_border_color": "{{ settings.color_palette.color4 }}",
+            "input_border_color": "{{ settings.color_palette.foreground }}",
             "input_type_preset": "h3",
             "style_class": "button-unstyled",
             "display_type": "text",
@@ -38,7 +38,8 @@
             "padding-block-start": 60,
             "padding-block-end": 60,
             "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-end": 0,
+            "heading_text_color": "{{ settings.color_palette.background }}"
           },
           "blocks": {}
         }
@@ -59,7 +60,7 @@
         "section_width": "page-width",
         "section_height_custom": 50,
         "background_media": "none",
-        "background_color": "{{ settings.color_palette.color3 }}",
+        "background_color": "{{ settings.color_palette.color2 }}",
         "video_position": "cover",
         "background_image_position": "cover",
         "border": "none",
@@ -217,7 +218,7 @@
                     "thickness": 1,
                     "corner_radius": "square",
                     "width_percent": 100,
-                    "divider_color": "{{ settings.color_palette.color4 }}",
+                    "divider_color": "{{ settings.color_palette.foreground }}",
                     "padding-block-start": 0,
                     "padding-block-end": 0
                   },
@@ -263,13 +264,13 @@
                       "type": "menu",
                       "name": "t:names.menu",
                       "settings": {
-                        "menu": "footer",
+                        "menu": "footer-shop",
                         "heading": "SHOP",
                         "menu_spacing": 12,
                         "show_as_accordion": false,
                         "accordion_icon": "caret",
                         "accordion_dividers": false,
-                        "text_color": "{{ settings.color_palette.foreground }}",
+                        "text_color": "{{ settings.color_palette.background }}",
                         "heading_preset": "h6",
                         "link_preset": "paragraph",
                         "padding-block-start": 0,
@@ -291,7 +292,7 @@
                     "thickness": 1,
                     "corner_radius": "square",
                     "width_percent": 100,
-                    "divider_color": "{{ settings.color_palette.color4 }}",
+                    "divider_color": "{{ settings.color_palette.foreground }}",
                     "padding-block-start": 0,
                     "padding-block-end": 0
                   },
@@ -337,15 +338,15 @@
                       "type": "menu",
                       "name": "t:names.menu",
                       "settings": {
-                        "menu": "",
-                        "heading": "CUSTOMER CARE",
+                        "menu": "footer-help",
+                        "heading": "HELP",
                         "menu_spacing": 12,
                         "show_as_accordion": false,
                         "accordion_icon": "caret",
                         "accordion_dividers": false,
                         "heading_preset": "h6",
                         "link_preset": "paragraph",
-                        "text_color": "{{ settings.color_palette.foreground }}",
+                        "text_color": "{{ settings.color_palette.background }}",
                         "padding-block-start": 0,
                         "padding-block-end": 0,
                         "padding-inline-start": 0,
@@ -365,7 +366,7 @@
                     "thickness": 1,
                     "corner_radius": "square",
                     "width_percent": 100,
-                    "divider_color": "{{ settings.color_palette.color4 }}",
+                    "divider_color": "{{ settings.color_palette.foreground }}",
                     "padding-block-start": 0,
                     "padding-block-end": 0
                   },
@@ -411,13 +412,13 @@
                       "type": "menu",
                       "name": "t:names.menu",
                       "settings": {
-                        "menu": "",
-                        "heading": "INFORMATION",
+                        "menu": "footer-lumenook",
+                        "heading": "LUMENOOK",
                         "menu_spacing": 12,
                         "show_as_accordion": false,
                         "accordion_icon": "caret",
                         "accordion_dividers": false,
-                        "text_color": "{{ settings.color_palette.foreground }}",
+                        "text_color": "{{ settings.color_palette.background }}",
                         "heading_preset": "h6",
                         "link_preset": "paragraph",
                         "padding-block-start": 0,
@@ -431,6 +432,68 @@
                   "block_order": [
                     "menu_EDFPCM"
                   ]
+                },
+                "divider_ln_contact": {
+                  "type": "_divider",
+                  "name": "t:names.divider",
+                  "settings": {
+                    "thickness": 1,
+                    "corner_radius": "square",
+                    "width_percent": 100,
+                    "divider_color": "{{ settings.color_palette.foreground }}",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0
+                  },
+                  "blocks": {}
+                },
+                "group_ln_contact": {
+                  "type": "group",
+                  "name": "t:names.menu",
+                  "settings": {
+                    "content_direction": "row",
+                    "vertical_on_mobile": true,
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "center",
+                    "align_baseline": false,
+                    "horizontal_alignment_flex_direction_column": "flex-start",
+                    "vertical_alignment_flex_direction_column": "center",
+                    "gap": 30,
+                    "width": "fill",
+                    "custom_width": 100,
+                    "width_mobile": "fill",
+                    "custom_width_mobile": 100,
+                    "height": "fit",
+                    "custom_height": 100,
+                    "background_media": "none",
+                    "video_position": "cover",
+                    "background_image_position": "cover",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "toggle_overlay": false,
+                    "overlay_color": "#00000026",
+                    "overlay_style": "solid",
+                    "gradient_direction": "to top",
+                    "open_in_new_tab": false,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {
+                    "text_ln_contact": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<h6>CONTACT</h6><p><a href=\"mailto:hello@lumenook.com\">hello@lumenook.com</a></p><p>Sun–Thu, 10:00–19:00 GST</p>",
+                        "text_color": "{{ settings.color_palette.background }}"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_ln_contact"
+                  ]
                 }
               },
               "block_order": [
@@ -439,7 +502,9 @@
                 "divider_aX3wRc",
                 "group_CpwfV9",
                 "divider_6pCnMp",
-                "group_KrgHqm"
+                "group_KrgHqm",
+                "divider_ln_contact",
+                "group_ln_contact"
               ]
             }
           },
@@ -455,7 +520,7 @@
       "settings": {
         "section_width": "page-width",
         "gap": 12,
-        "background_color": "{{ settings.color_palette.color3 }}",
+        "background_color": "{{ settings.color_palette.color2 }}",
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -466,7 +531,7 @@
         "copyright": {
           "type": "footer-copyright",
           "settings": {
-            "show_powered_by": true,
+            "show_powered_by": false,
             "font_size": "0.75rem",
             "case": "none"
           },
@@ -501,8 +566,8 @@
         "section_width": "page-width",
         "gap": 24,
         "divider_thickness": 1,
-        "divider_color": "{{ settings.color_palette.color4 }}",
-        "background_color": "{{ settings.color_palette.color3 }}",
+        "divider_color": "{{ settings.color_palette.foreground }}",
+        "background_color": "{{ settings.color_palette.color2 }}",
         "padding-block-start": 20,
         "padding-block-end": 20
       }
