@@ -395,7 +395,11 @@
       "returns": "إرجاع خلال 14 يومًا"
     },
     "delivery": {
-      "free_over": "توصيل مجاني للطلبات فوق 300 درهم"
+      "free_over": "توصيل مجاني للطلبات فوق 300 درهم",
+      "choose_emirate": "التوصيل إلى",
+      "before_cutoff": "اطلب خلال [hours] س و[minutes] د – يصل إلى [emirate] [date]",
+      "after_cutoff": "اطلب الآن – يصل إلى [emirate] [date]",
+      "tomorrow": "غدًا"
     },
     "specs": {
       "heading": "المواصفات",
@@ -411,7 +415,45 @@
     },
     "general": {
       "yes": "نعم",
-      "no": "لا"
+      "no": "لا",
+      "read_more": "اقرأ المزيد",
+      "read_less": "عرض أقل"
+    },
+    "cart": {
+      "free_delivery_remaining": "تبقّى {{ amount }} للحصول على توصيل مجاني",
+      "free_delivery_unlocked": "لقد حصلت على توصيل مجاني",
+      "upsell_heading": "لمسة إضافية صغيرة"
+    },
+    "badges": {
+      "new": "جديد",
+      "limited": "كمية محدودة",
+      "sold_out": "نفدت الكمية"
+    },
+    "product": {
+      "from_price": "ابتداءً من {{ price }}",
+      "description": "الوصف",
+      "in_the_box": "محتويات العلبة",
+      "care": "العناية",
+      "shipping_returns": "الشحن والإرجاع",
+      "read_policy": "اقرأ السياسة كاملة",
+      "breadcrumb": "مسار التنقل",
+      "home": "الرئيسية",
+      "light_off": "إطفاء",
+      "light_on": "تشغيل",
+      "toggle_light": "تشغيل المصباح أو إطفاؤه"
+    },
+    "whatsapp": {
+      "label": "تحدث معنا عبر واتساب",
+      "product_message": "مرحبًا Lumenook، لدي سؤال عن {{ title }}"
+    },
+    "collection": {
+      "load_more": "عرض المزيد",
+      "pieces": {
+        "one": "قطعة واحدة",
+        "other": "{{ count }} قطعة"
+      },
+      "empty_title": "قطع جديدة قريبًا",
+      "empty_link": "تصفح أحدث القطع"
     }
   }
 }

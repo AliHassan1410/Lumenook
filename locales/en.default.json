@@ -386,7 +386,11 @@
       "returns": "14-day returns"
     },
     "delivery": {
-      "free_over": "Complimentary delivery over AED 300"
+      "free_over": "Complimentary delivery over AED 300",
+      "choose_emirate": "Deliver to",
+      "before_cutoff": "Order in the next [hours]h [minutes]m – arrives in [emirate] [date]",
+      "after_cutoff": "Order now – arrives in [emirate] [date]",
+      "tomorrow": "tomorrow"
     },
     "specs": {
       "heading": "Specifications",
@@ -402,7 +406,45 @@
     },
     "general": {
       "yes": "Yes",
-      "no": "No"
+      "no": "No",
+      "read_more": "Read more",
+      "read_less": "Read less"
+    },
+    "cart": {
+      "free_delivery_remaining": "You're {{ amount }} away from complimentary delivery",
+      "free_delivery_unlocked": "You've unlocked complimentary delivery",
+      "upsell_heading": "A little something extra"
+    },
+    "badges": {
+      "new": "New",
+      "limited": "Limited",
+      "sold_out": "Sold out"
+    },
+    "product": {
+      "from_price": "From {{ price }}",
+      "description": "Description",
+      "in_the_box": "What's in the box",
+      "care": "Care",
+      "shipping_returns": "Shipping & Returns",
+      "read_policy": "Read the full policy",
+      "breadcrumb": "Breadcrumb",
+      "home": "Home",
+      "light_off": "Off",
+      "light_on": "On",
+      "toggle_light": "Switch the lamp on or off"
+    },
+    "whatsapp": {
+      "label": "Chat with us on WhatsApp",
+      "product_message": "Hi Lumenook, I have a question about {{ title }}"
+    },
+    "collection": {
+      "load_more": "Load more",
+      "pieces": {
+        "one": "{{ count }} piece",
+        "other": "{{ count }} pieces"
+      },
+      "empty_title": "New pieces arriving soon",
+      "empty_link": "See new arrivals"
     }
   }
 }
