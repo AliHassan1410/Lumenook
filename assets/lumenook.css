@@ -557,11 +557,11 @@ html[lang^='ar'] {
    ===================================================================== */
 @media (min-width: 990px) {
   .header__columns {
-    min-block-size: 88px;
+    min-block-size: 64px;
     transition: min-block-size var(--ln-dur) var(--ln-ease);
   }
 
-  html.ln-scrolled .header__columns { min-block-size: 64px; }
+  html.ln-scrolled .header__columns { min-block-size: 56px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -696,3 +696,53 @@ html[lang^='ar'] .ln-payments__cod { letter-spacing: 0; text-transform: none; }
 .ln-quote--ivory { background: var(--ln-scheme-1-bg); color: var(--ln-scheme-1-text); }
 .ln-quote--sand { background: var(--ln-scheme-2-bg); color: var(--ln-scheme-2-text); }
 .ln-quote--night { background: var(--ln-scheme-3-bg); color: var(--ln-scheme-3-text); }
+
+/* =====================================================================
+   Product Page Media: compact, refined, boutique luxury sizing
+   ===================================================================== */
+@media screen and (min-width: 750px) {
+  .product-information__media {
+    max-width: 420px !important;
+    margin-inline: auto !important;
+  }
+
+  .product-information .media-gallery__grid {
+    max-width: 420px !important;
+    margin-inline: auto !important;
+  }
+
+  .product-information .product-media-container img {
+    max-height: 380px !important;
+    object-fit: contain !important;
+    background-color: var(--ln-sand, #f7f3ee);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .product-information__media {
+    max-width: 76vw !important;
+    margin-inline: auto !important;
+  }
+
+  .product-information .product-media-container img {
+    max-height: 44vh !important;
+    object-fit: contain !important;
+  }
+}
+
+/* =====================================================================
+   Product grid: generous spacing between cards
+   ===================================================================== */
+.product-list__grid,
+.product-grid {
+  row-gap: 48px !important;
+  column-gap: 24px !important;
+}
+
+@media screen and (max-width: 749px) {
+  .product-list__grid,
+  .product-grid {
+    row-gap: 36px !important;
+    column-gap: 16px !important;
+  }
+}
