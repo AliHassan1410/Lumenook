@@ -751,9 +751,20 @@ html[lang^='ar'] .ln-payments__cod { letter-spacing: 0; text-transform: none; }
    Dwell subtracts the header height, so it is added back here. */
 [id$='__hero'] .hero__media { object-fit: cover; }
 
+/* The transparent header floats over the hero; start the artwork below it so nothing in
+   the image (lamp tops) is hidden behind the header. The strip behind the header shows
+   the hero's Night background. */
+[id$='__hero'] .hero__media-grid { inset-block-start: var(--header-height, 0px); }
+
+@media (min-width: 750px) {
+  /* Fill to the bottom of the screen: Dwell subtracts the header group, but the hero also
+     slides up under the transparent header, so add one header height back. */
+  [id$='__hero'] .hero { --hero-min-height: calc(100svh + var(--header-height, 0px)) !important; }
+}
+
 @media (max-width: 749px) {
   [id$='__hero'] .hero {
-    --hero-min-height: calc(100vw * 656 / 1580 + var(--header-group-height, 0px)) !important;
+    --hero-min-height: calc(100vw * 656 / 1580 + var(--header-group-height, 0px) + var(--header-height, 0px)) !important;
   }
 }
 
