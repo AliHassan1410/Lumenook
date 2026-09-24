@@ -2193,6 +2193,161 @@
         "id": "ln_holidays",
         "label": "Holidays (no dispatch or delivery)",
         "info": "One date per line, YYYY-MM-DD."
+      },
+      {
+        "type": "header",
+        "content": "Instalments"
+      },
+      {
+        "type": "select",
+        "id": "ln_bnpl_provider",
+        "label": "Instalment provider line",
+        "default": "none",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "Tabby",
+            "label": "Tabby"
+          },
+          {
+            "value": "Tamara",
+            "label": "Tamara"
+          }
+        ],
+        "info": "Shows \"Or 4 interest-free payments of … with Tabby\" under the price. Only enable once the provider is live at checkout."
+      },
+      {
+        "type": "range",
+        "id": "ln_bnpl_instalments",
+        "label": "Number of instalments",
+        "min": 2,
+        "max": 6,
+        "step": 1,
+        "default": 4
+      }
+    ]
+  },
+  {
+    "name": "Lumenook colour schemes",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "The four brief colour schemes. Lumenook sections use them via the ln-scheme-1 … ln-scheme-4 classes."
+      },
+      {
+        "type": "header",
+        "content": "Scheme 1: Ivory"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_1_background",
+        "label": "Background",
+        "default": "#F6F1EA"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_1_text",
+        "label": "Text",
+        "default": "#2B2320"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_1_button",
+        "label": "Button background",
+        "default": "#2B2320"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_1_button_text",
+        "label": "Button text",
+        "default": "#F6F1EA"
+      },
+      {
+        "type": "header",
+        "content": "Scheme 2: Sand"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_2_background",
+        "label": "Background",
+        "default": "#E6DCCF"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_2_text",
+        "label": "Text",
+        "default": "#2B2320"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_2_button",
+        "label": "Button background",
+        "default": "#2B2320"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_2_button_text",
+        "label": "Button text",
+        "default": "#F6F1EA"
+      },
+      {
+        "type": "header",
+        "content": "Scheme 3: Night"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_3_background",
+        "label": "Background",
+        "default": "#1C1917"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_3_text",
+        "label": "Text",
+        "default": "#EFE6DA"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_3_button",
+        "label": "Button background",
+        "default": "#B08D57"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_3_button_text",
+        "label": "Button text",
+        "default": "#1C1917"
+      },
+      {
+        "type": "header",
+        "content": "Scheme 4: Brass"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_4_background",
+        "label": "Background",
+        "default": "#B08D57"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_4_text",
+        "label": "Text",
+        "default": "#1C1917"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_4_button",
+        "label": "Button background",
+        "default": "#1C1917"
+      },
+      {
+        "type": "color",
+        "id": "ln_scheme_4_button_text",
+        "label": "Button text",
+        "default": "#F6F1EA"
       }
     ]
   }

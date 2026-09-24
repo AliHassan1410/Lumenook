@@ -253,3 +253,115 @@ class LnReadMore extends HTMLElement {
   }
 }
 if (!customElements.get('ln-read-more')) customElements.define('ln-read-more', LnReadMore);
+
+/* Header: toggles html.ln-scrolled after 40px so the sticky header shrinks 88px -> 64px (brief Section 11). */
+(() => {
+  const root = document.documentElement;
+  let ticking = false;
+  const scrollTop = () => Math.max(window.scrollY, document.querySelector('.page-wrapper')?.scrollTop || 0);
+  const update = () => {
+    ticking = false;
+    root.classList.toggle('ln-scrolled', scrollTop() > 40);
+  };
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  document.querySelector('.page-wrapper')?.addEventListener('scroll', onScroll, { passive: true });
+  update();
+})();
+
+/* Mobile sticky add-to-bag (brief Section 10F): shows once the main add-to-cart button leaves the
+   viewport, hides near the footer, and submits the main product form so the variant stays in sync. */
+class LnStickyAtc extends HTMLElement {
+  connectedCallback() {
+    this.form = document.querySelector('.product-information form[data-type="add-to-cart-form"]');
+    this.mainButton = this.form?.querySelector('[type="submit"], button[name="add"]');
+    this.button = this.querySelector('[data-button]');
+    if (!this.form || !this.mainButton || !this.button || !('IntersectionObserver' in window)) return;
+
+    if (!this.form.id) this.form.id = 'LnProductForm';
+    this.button.setAttribute('form', this.form.id);
+
+    this.mainVisible = true;
+    this.footerVisible = false;
+    const mq = window.matchMedia('(max-width: 749px)');
+    const sync = () => {
+      const show = mq.matches && !this.mainVisible && !this.footerVisible && !this.mainButton.disabled;
+      this.hidden = !show;
+      document.documentElement.classList.toggle('ln-sticky-atc-open', show);
+    };
+
+    new IntersectionObserver(([entry]) => {
+      this.mainVisible = entry.isIntersecting || entry.boundingClientRect.top > 0;
+      sync();
+    }).observe(this.mainButton);
+
+    const footer = document.querySelector('footer');
+    if (footer) {
+      new IntersectionObserver(([entry]) => {
+        this.footerVisible = entry.isIntersecting;
+        sync();
+      }).observe(footer);
+    }
+    mq.addEventListener('change', sync);
+
+    // Mirror the main price and availability when the shopper changes variant.
+    const mainPrice = document.querySelector('.product-information product-price');
+    const priceTarget = this.querySelector('[data-price]');
+    if (mainPrice && priceTarget) {
+      const mirror = () => {
+        const current = mainPrice.querySelector('.price, [ref="priceContainer"]') || mainPrice;
+        const text = current.textContent.trim().split(/\s{2,}/)[0];
+        if (text) priceTarget.textContent = text;
+      };
+      new MutationObserver(mirror).observe(mainPrice, { childList: true, subtree: true, characterData: true });
+    }
+    new MutationObserver(() => {
+      this.button.disabled = this.mainButton.disabled;
+      sync();
+    }).observe(this.mainButton, { attributes: true, attributeFilter: ['disabled'] });
+  }
+}
+if (!customElements.get('ln-sticky-atc')) customElements.define('ln-sticky-atc', LnStickyAtc);
+
+/* Product gallery on mobile: thin progress bar instead of dots (brief Section 10). */
+(() => {
+  const scroller = document.querySelector('.product-information slideshow-slides');
+  if (!scroller) return;
+  const bar = document.createElement('div');
+  bar.className = 'ln-gallery-progress';
+  bar.setAttribute('aria-hidden', 'true');
+  bar.innerHTML = '<span></span>';
+  scroller.closest('slideshow-component')?.after(bar);
+  const fill = bar.firstElementChild;
+  const update = () => {
+    const max = scroller.scrollWidth - scroller.clientWidth;
+    const ratio = max > 0 ? Math.abs(scroller.scrollLeft) / max : 0;
+    const slides = Math.max(1, Math.round(scroller.scrollWidth / Math.max(1, scroller.clientWidth)));
+    fill.style.inlineSize = `${100 / slides}%`;
+    fill.style.transform = `translateX(${ratio * (slides - 1) * 100 * (document.dir === 'rtl' ? -1 : 1)}%)`;
+  };
+  scroller.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+
+/* Product gallery videos: autoplay muted while in view, unless the shopper saves data or prefers reduced motion. */
+(() => {
+  const saveData = navigator.connection?.saveData;
+  if (saveData || reduceMotion() || !('IntersectionObserver' in window)) return;
+  const videos = document.querySelectorAll('.product-information video');
+  if (!videos.length) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(({ target, isIntersecting }) => {
+      target.muted = true;
+      target.playsInline = true;
+      if (isIntersecting) target.play().catch(() => {});
+      else target.pause();
+    });
+  }, { threshold: 0.5 });
+  videos.forEach((v) => io.observe(v));
+})();

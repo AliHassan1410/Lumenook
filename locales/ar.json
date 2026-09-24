@@ -244,7 +244,7 @@
     "reviews": "المراجعات",
     "read_more": "قراءة المزيد...",
     "search_input_label": "بحث",
-    "search_input_placeholder": "بحث",
+    "search_input_placeholder": "ابحث عن مصابيح، ساعات، هدايا...",
     "search": "بحث",
     "search_results": "نتائج البحث",
     "search_results_label": "نتائج البحث",
@@ -417,7 +417,8 @@
       "yes": "نعم",
       "no": "لا",
       "read_more": "اقرأ المزيد",
-      "read_less": "عرض أقل"
+      "read_less": "عرض أقل",
+      "discover": "اكتشف"
     },
     "cart": {
       "free_delivery_remaining": "تبقّى {{ amount }} للحصول على توصيل مجاني",
@@ -440,11 +441,14 @@
       "home": "الرئيسية",
       "light_off": "إطفاء",
       "light_on": "تشغيل",
-      "toggle_light": "تشغيل المصباح أو إطفاؤه"
+      "toggle_light": "تشغيل المصباح أو إطفاؤه",
+      "vat_included": "شامل ضريبة القيمة المضافة",
+      "instalments": "أو {{ count }} دفعات بدون فوائد بقيمة {{ amount }} مع {{ provider }}"
     },
     "whatsapp": {
       "label": "تحدث معنا عبر واتساب",
-      "product_message": "مرحبًا Lumenook، لدي سؤال عن {{ title }}"
+      "product_message": "مرحبًا Lumenook، لدي سؤال عن {{ title }}",
+      "footer_label": "راسلنا عبر واتساب"
     },
     "collection": {
       "load_more": "عرض المزيد",
@@ -454,6 +458,10 @@
       },
       "empty_title": "قطع جديدة قريبًا",
       "empty_link": "تصفح أحدث القطع"
+    },
+    "footer": {
+      "prices_note": "الأسعار بالدرهم الإماراتي شاملة ضريبة القيمة المضافة.",
+      "payment_methods": "طرق الدفع"
     }
   }
 }

@@ -253,7 +253,7 @@
     "reviews": "reviews",
     "read_more": "Read more...",
     "search_input_label": "Search",
-    "search_input_placeholder": "Search",
+    "search_input_placeholder": "Search lamps, clocks, gifts...",
     "search": "Search",
     "search_results": "Search results",
     "search_results_label": "Search results",
@@ -408,7 +408,8 @@
       "yes": "Yes",
       "no": "No",
       "read_more": "Read more",
-      "read_less": "Read less"
+      "read_less": "Read less",
+      "discover": "Discover"
     },
     "cart": {
       "free_delivery_remaining": "You're {{ amount }} away from complimentary delivery",
@@ -431,11 +432,14 @@
       "home": "Home",
       "light_off": "Off",
       "light_on": "On",
-      "toggle_light": "Switch the lamp on or off"
+      "toggle_light": "Switch the lamp on or off",
+      "vat_included": "VAT included",
+      "instalments": "Or {{ count }} interest-free payments of {{ amount }} with {{ provider }}"
     },
     "whatsapp": {
       "label": "Chat with us on WhatsApp",
-      "product_message": "Hi Lumenook, I have a question about {{ title }}"
+      "product_message": "Hi Lumenook, I have a question about {{ title }}",
+      "footer_label": "WhatsApp us"
     },
     "collection": {
       "load_more": "Load more",
@@ -445,6 +449,10 @@
       },
       "empty_title": "New pieces arriving soon",
       "empty_link": "See new arrivals"
+    },
+    "footer": {
+      "prices_note": "Prices in AED incl. VAT.",
+      "payment_methods": "Payment methods"
     }
   }
 }

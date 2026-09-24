@@ -464,3 +464,235 @@ html[lang^='ar'] :is(.ln-accordion__summary, .ln-lit__button, .ln-read-more__but
   text-transform: none;
 }
 .ln-product-type { margin: 0; }
+
+/* =====================================================================
+   Brief Section 5, exact values
+   ===================================================================== */
+
+/* Fonts: self-hosted Cormorant Garamond for headings (Cormorant from the Shopify library as fallback). */
+:root {
+  --font-heading--family: 'Cormorant Garamond', Cormorant, 'Times New Roman', serif;
+  --font-subheading--family: 'Cormorant Garamond', Cormorant, 'Times New Roman', serif;
+
+  /* Sizes, mobile first: H1 36 / H2 28 / H3 24 / body 15 */
+  --font-h1--size: 36px;
+  --font-h2--size: 28px;
+  --font-h3--size: 24px;
+  --font-paragraph--size: 15px;
+  --font-h6--size: 12px;
+  --font-h6--letter-spacing: .18em;
+}
+
+@media (min-width: 750px) {
+  :root {
+    /* Desktop: H1 56 / H2 38 / H3 30 / body 16 */
+    --font-h1--size: 56px;
+    --font-h2--size: 38px;
+    --font-h3--size: 30px;
+    --font-paragraph--size: 16px;
+  }
+}
+
+html[lang^='ar'] {
+  --font-h6--letter-spacing: 0;
+}
+
+/* Focus rings: 2px brass (brass-dark on light backgrounds for 4.5:1 contrast, brass on Night). */
+*:focus-visible {
+  outline-color: var(--ln-brass-dark);
+}
+
+:is(footer, .ln-scheme-3, .ln-scheme-4, .ln-quote--night) *:focus-visible {
+  outline-color: var(--ln-brass);
+}
+
+/* The four brief colour schemes as reusable classes (values from Theme settings > Lumenook colour schemes). */
+.ln-scheme-1, .ln-scheme-2, .ln-scheme-3, .ln-scheme-4 {
+  background-color: var(--ln-s-bg);
+  color: var(--ln-s-text);
+  --color-background: var(--ln-s-bg);
+  --color-foreground: var(--ln-s-text);
+  --button-background-color: var(--ln-s-button);
+  --button-color: var(--ln-s-button-text);
+}
+
+.ln-scheme-1 { --ln-s-bg: var(--ln-scheme-1-bg); --ln-s-text: var(--ln-scheme-1-text); --ln-s-button: var(--ln-scheme-1-button); --ln-s-button-text: var(--ln-scheme-1-button-text); }
+.ln-scheme-2 { --ln-s-bg: var(--ln-scheme-2-bg); --ln-s-text: var(--ln-scheme-2-text); --ln-s-button: var(--ln-scheme-2-button); --ln-s-button-text: var(--ln-scheme-2-button-text); }
+.ln-scheme-3 { --ln-s-bg: var(--ln-scheme-3-bg); --ln-s-text: var(--ln-scheme-3-text); --ln-s-button: var(--ln-scheme-3-button); --ln-s-button-text: var(--ln-scheme-3-button-text); }
+.ln-scheme-4 { --ln-s-bg: var(--ln-scheme-4-bg); --ln-s-text: var(--ln-scheme-4-text); --ln-s-button: var(--ln-scheme-4-button); --ln-s-button-text: var(--ln-scheme-4-button-text); }
+
+.ln-scheme-3 .ln-eyebrow { color: var(--ln-brass); }
+
+/* =====================================================================
+   Logo (Section 5): wordmark + glow mark. 150px wide desktop, 118px mobile.
+   ===================================================================== */
+.ln-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: .55em;
+  color: currentColor;
+  line-height: 1;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.ln-logo__mark { inline-size: 2em; block-size: 2em; flex: none; }
+
+.ln-logo__word {
+  font-family: 'Cormorant Garamond', Cormorant, serif;
+  font-weight: 500;
+  font-size: 1.25em;
+  letter-spacing: .28em;
+  margin-inline-end: -.28em;
+}
+
+@media (min-width: 750px) {
+  .ln-logo--header { font-size: 14px; }
+}
+
+.ln-logo--footer { font-size: 20px; }
+
+/* =====================================================================
+   Header (Section 11): shrinks 88px -> 64px after 40px of scroll.
+   ===================================================================== */
+@media (min-width: 990px) {
+  .header__columns {
+    min-block-size: 88px;
+    transition: min-block-size var(--ln-dur) var(--ln-ease);
+  }
+
+  html.ln-scrolled .header__columns { min-block-size: 64px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header__columns { transition: none; }
+}
+
+/* Mega menu image card, 3:4 with caption */
+.ln-mega-card { display: grid; gap: 10px; color: inherit; text-decoration: none; max-inline-size: 320px; }
+.ln-mega-card__media { display: block; aspect-ratio: 3 / 4; overflow: hidden; background: var(--ln-sand); border-radius: var(--ln-radius); }
+.ln-mega-card__image { inline-size: 100%; block-size: 100%; object-fit: cover; transition: transform .8s var(--ln-ease); }
+.ln-mega-card:hover .ln-mega-card__image { transform: scale(1.03); }
+.ln-mega-card__caption { font-family: var(--font-heading--family); font-size: 22px; font-weight: 500; line-height: 1.2; }
+.ln-mega-card__cta { color: var(--ln-brass-dark); }
+
+/* Cart drawer: the only soft shadow in the design; payment icons under checkout */
+#cart-drawer dialog { box-shadow: 0 0 48px rgb(28 25 23 / .12); }
+
+.ln-payments { display: grid; justify-items: center; gap: 8px; margin-block-start: 12px; }
+.ln-payments__list { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.ln-payments__icon { inline-size: 38px; block-size: 24px; }
+.ln-payments__cod { margin: 0; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ln-muted); }
+html[lang^='ar'] .ln-payments__cod { letter-spacing: 0; text-transform: none; }
+
+/* Footer contact column */
+.ln-footer-contact__heading { margin: 0 0 12px; }
+.ln-footer-contact__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 14px; }
+.ln-footer-contact__list a { color: inherit; }
+
+/* =====================================================================
+   Homepage (Section 8)
+   ===================================================================== */
+/* Hero: 92vh desktop, 78vh mobile */
+@media (max-width: 749px) {
+  [id$='__hero'] .hero { --hero-min-height: 78svh !important; }
+}
+
+/* Shop by Room: serif label, thin arrow (mirrored in RTL), image zoom on hover */
+[id$='__rooms'] .collection-card__content .text-block {
+  font-family: var(--font-heading--family);
+  font-size: 22px;
+  font-weight: 500;
+}
+
+[id$='__rooms'] .collection-card__content .text-block > :last-child::after {
+  content: '\2192';
+  display: inline-block;
+  margin-inline-start: .4em;
+  font-family: var(--font-body--family);
+  font-weight: 300;
+}
+
+[dir='rtl'] [id$='__rooms'] .collection-card__content .text-block > :last-child::after { transform: scaleX(-1); }
+[id$='__rooms'] .collection-card img { transition: transform .8s var(--ln-ease); }
+[id$='__rooms'] .collection-card:hover img { transform: scale(1.03); }
+
+/* =====================================================================
+   Collection (Section 9): sticky toolbar
+   ===================================================================== */
+.collection-wrapper .facets--horizontal {
+  position: sticky;
+  inset-block-start: var(--header-height, 64px);
+  z-index: 4;
+  background: var(--color-background, var(--ln-ivory));
+}
+
+.ln-card__quick-add { margin-block-start: 10px; }
+.ln-card__quick-add .quick-add { position: static; opacity: 1; visibility: visible; transform: none; }
+
+/* =====================================================================
+   Product page (Section 10)
+   ===================================================================== */
+.ln-price-note { display: grid; gap: 4px; }
+.ln-price-note p { margin: 0; }
+.ln-price-note__vat { font-size: 12px; color: var(--ln-muted); }
+.ln-price-note__bnpl { font-size: 13px; }
+
+/* Variants: round colour swatches, outlined pills, espresso 1px selected border */
+.variant-option--swatches .swatch { border-radius: 50%; }
+.variant-option__button-label:has(:checked) { box-shadow: inset 0 0 0 1px var(--ln-espresso); }
+
+/* Mobile gallery: thin progress bar instead of dots */
+.ln-gallery-progress { display: none; }
+
+@media (max-width: 749px) {
+  .product-information slideshow-controls { display: none; }
+
+  .ln-gallery-progress {
+    display: block;
+    block-size: 2px;
+    margin: 12px 16px 0;
+    background: var(--ln-stone);
+    overflow: hidden;
+  }
+
+  .ln-gallery-progress span {
+    display: block;
+    block-size: 100%;
+    background: var(--ln-espresso);
+    transition: transform .2s linear;
+  }
+}
+
+/* Mobile sticky add-to-bag */
+.ln-sticky-atc {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: 16;
+  background: var(--ln-ivory);
+  border-block-start: 1px solid var(--ln-stone);
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+}
+
+.ln-sticky-atc[hidden] { display: none; }
+.ln-sticky-atc__inner { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; }
+.ln-sticky-atc__image { inline-size: 48px; block-size: 60px; object-fit: cover; background: var(--ln-sand); border-radius: var(--ln-radius); }
+.ln-sticky-atc__text { min-inline-size: 0; }
+.ln-sticky-atc__title { margin: 0; font-family: var(--font-heading--family); font-size: 17px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ln-sticky-atc__price { margin: 0; font-size: 14px; }
+.ln-sticky-atc__button { min-block-size: 48px; padding-inline: 18px; }
+
+@media (min-width: 750px) {
+  .ln-sticky-atc { display: none !important; }
+}
+
+@media (max-width: 749px) {
+  .ln-whatsapp { inset-block-end: 20px; }
+  html.ln-sticky-atc-open .ln-whatsapp { inset-block-end: 92px; }
+}
+
+/* Editorial quote backgrounds now follow the brief schemes */
+.ln-quote--ivory { background: var(--ln-scheme-1-bg); color: var(--ln-scheme-1-text); }
+.ln-quote--sand { background: var(--ln-scheme-2-bg); color: var(--ln-scheme-2-text); }
+.ln-quote--night { background: var(--ln-scheme-3-bg); color: var(--ln-scheme-3-text); }
