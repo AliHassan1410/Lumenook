@@ -83,7 +83,7 @@
           "type": "_header-menu",
           "static": true,
           "settings": {
-            "menu": "lumenook-main",
+            "menu": "main-menu",
             "type_font_primary_size": "0.75rem",
             "menu_font_style": "regular",
             "type_font_primary_link": "accent",
