@@ -1,0 +1,52 @@
+{% comment %}
+  Brand promise (brief Section 8, row 8): up to 4 columns of thin line icons with a short line each.
+{% endcomment %}
+<section class="ln-section ln-promise" aria-label="{{ section.settings.label | escape }}">
+  <div class="ln-container">
+    <ul class="ln-promise__list" role="list">
+      {%- for block in section.blocks -%}
+        <li class="ln-promise__item ln-fade" {{ block.shopify_attributes }}>
+          {% render 'lumenook-icon', icon: block.settings.icon %}
+          <p class="ln-promise__title">{{ block.settings.title }}</p>
+          {%- if block.settings.text != blank -%}
+            <p class="ln-promise__text">{{ block.settings.text }}</p>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lumenook brand promise",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "label", "label": "Accessible label", "default": "Our promise" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Promise",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "shield", "options": [
+          { "value": "shield", "label": "Shield" }, { "value": "truck", "label": "Truck" }, { "value": "cash", "label": "Cash" },
+          { "value": "lock", "label": "Lock" }, { "value": "return", "label": "Return" }, { "value": "gift", "label": "Gift" } ] },
+        { "type": "text", "id": "title", "label": "Title", "default": "2-year warranty" },
+        { "type": "text", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lumenook brand promise",
+      "blocks": [
+        { "type": "item", "settings": { "icon": "shield", "title": "2-year warranty" } },
+        { "type": "item", "settings": { "icon": "truck", "title": "Delivery in 1–3 days across the UAE" } },
+        { "type": "item", "settings": { "icon": "return", "title": "Easy 14-day returns" } },
+        { "type": "item", "settings": { "icon": "gift", "title": "Gift wrapping" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

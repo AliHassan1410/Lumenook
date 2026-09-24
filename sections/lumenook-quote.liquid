@@ -1,0 +1,25 @@
+{% comment %}
+  Editorial quote (brief Section 8, row 9): one large serif line about the brand with a small caption.
+  Brand voice only; never use it for customer reviews.
+{% endcomment %}
+<section class="ln-section ln-quote ln-quote--{{ section.settings.scheme }}">
+  <div class="ln-container ln-quote__inner ln-fade">
+    <blockquote class="ln-quote__text">{{ section.settings.quote }}</blockquote>
+    {%- if section.settings.caption != blank -%}
+      <p class="ln-eyebrow ln-quote__caption">{{ section.settings.caption }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lumenook editorial quote",
+  "settings": [
+    { "type": "textarea", "id": "quote", "label": "Quote", "default": "We choose light the way you choose the people you sit with in the evening: warm, calm and good company." },
+    { "type": "text", "id": "caption", "label": "Caption", "default": "The Lumenook edit" },
+    { "type": "select", "id": "scheme", "label": "Background", "default": "sand", "options": [
+      { "value": "ivory", "label": "Ivory" }, { "value": "sand", "label": "Sand" }, { "value": "night", "label": "Night" } ] }
+  ],
+  "presets": [{ "name": "Lumenook editorial quote" }]
+}
+{% endschema %}
