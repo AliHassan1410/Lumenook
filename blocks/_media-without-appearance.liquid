@@ -36,6 +36,19 @@
       "visible_if": "{{ block.settings.media_type == 'image' }}"
     },
     {
+      "type": "text",
+      "id": "asset_url",
+      "label": "Asset image filename (fallback)",
+      "info": "Enter a theme asset filename (e.g. after-dark.jpg) to use when no image is selected above.",
+      "visible_if": "{{ block.settings.media_type == 'image' }}"
+    },
+    {
+      "type": "text",
+      "id": "asset_alt",
+      "label": "Asset image alt text",
+      "visible_if": "{{ block.settings.media_type == 'image' }}"
+    },
+    {
       "type": "url",
       "id": "link",
       "label": "t:settings.link",

@@ -48,6 +48,13 @@
           class: 'media-block__media border-style',
           unset_image_tag: unset_image_tag
         %}
+      {% elsif block_settings.asset_url != blank %}
+        <img
+          src="{{ block_settings.asset_url | asset_url }}"
+          alt="{{ block_settings.asset_alt | default: '' }}"
+          class="media-block__media border-style"
+          loading="lazy"
+        >
       {% else %}
         <div class="media-block__media border-style">
           {{ 'detailed-apparel-1' | placeholder_svg_tag: 'media-block__placeholder' }}

@@ -568,6 +568,8 @@
           "static": true,
           "settings": {
             "media_type": "image",
+            "asset_url": "after-dark.jpg",
+            "asset_alt": "Warm ambient lighting scene with a touch lamp and candle warmer on a bedside table",
             "video_loop": true,
             "video_autoplay": false,
             "image_position": "cover",
