@@ -747,9 +747,8 @@ html[lang^='ar'] .ln-payments__cod { letter-spacing: 0; text-transform: none; }
 /* Homepage hero artwork carries its own headline and button: show it at its natural
    proportions so nothing is cropped, and keep the H1 for SEO / screen readers only. */
 [id$='__hero'] .hero {
-  --hero-min-height: 0px !important;
-  aspect-ratio: 1580 / 656;
-  min-block-size: 0;
+  /* Full width at the artwork ratio (1580 x 656); Dwell sizes the media from --hero-min-height. */
+  --hero-min-height: calc(100vw * 656 / 1580) !important;
 }
 
 [id$='__hero'] .hero .text-block {
