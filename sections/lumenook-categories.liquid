@@ -1,0 +1,417 @@
+{% comment %}
+  Lumenook Curated Categories - Full Width of Screen
+  Renders the two core categories (Sculptural Lighting & Considered Desk Objects)
+  covering the full width of the screen (100vw edge-to-edge), with luxury imagery,
+  rich ambient gradient overlay, and high-end Cormorant Garamond typography.
+{% endcomment %}
+
+<section class="ln-categories-fullwidth ln-categories--{{ section.settings.layout_style | default: 'stacked' }}" aria-label="{{ section.settings.heading | default: 'Curated Categories' | escape }}">
+  {% if section.settings.eyebrow != blank or section.settings.heading != blank %}
+    <div class="ln-categories__header">
+      {% if section.settings.eyebrow != blank %}
+        <p class="ln-categories__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="ln-categories__main-heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="ln-categories__container">
+    {%- for block in section.blocks -%}
+      {% liquid
+        assign image_src = block.settings.image
+        assign asset_src = block.settings.asset_image
+      %}
+      <div class="ln-category-banner" {{ block.shopify_attributes }}>
+        <a href="{{ block.settings.link | default: block.settings.fallback_link | default: '#' }}" class="ln-category-banner__link" aria-label="{{ block.settings.title | escape }}">
+          <div class="ln-category-banner__media">
+            {% if image_src != blank %}
+              {{
+                image_src
+                | image_url: width: 2400
+                | image_tag: widths: '600, 900, 1200, 1600, 2000, 2400', sizes: '(min-width: 750px) 50vw, 100vw', loading: 'lazy', class: 'ln-category-banner__img', alt: block.settings.title
+              }}
+            {% elsif asset_src != blank %}
+              <img
+                src="{{ asset_src | asset_url }}"
+                alt="{{ block.settings.title | escape }}"
+                class="ln-category-banner__img"
+                width="1264"
+                height="848"
+                loading="lazy"
+              >
+            {% else %}
+              <div class="ln-category-banner__placeholder"></div>
+            {% endif %}
+            <div class="ln-category-banner__overlay"></div>
+          </div>
+
+          <div class="ln-category-banner__content">
+            <div class="ln-category-banner__inner">
+              {% if block.settings.tag != blank %}
+                <span class="ln-category-banner__tag">{{ block.settings.tag }}</span>
+              {% endif %}
+              <h3 class="ln-category-banner__title">{{ block.settings.title }}</h3>
+              {% if block.settings.subtitle != blank %}
+                <p class="ln-category-banner__subtitle">{{ block.settings.subtitle }}</p>
+              {% endif %}
+              <div class="ln-category-banner__cta">
+                <span class="ln-category-banner__cta-text">{{ block.settings.cta_text | default: 'Explore collection' }}</span>
+                <span class="ln-category-banner__cta-arrow" aria-hidden="true">&rarr;</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .ln-categories-fullwidth {
+    /* Full-bleed: break out of any page-width container */
+    width: 100dvw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--color-background, #FAF7F2);
+    overflow: hidden;
+    padding-block: 0;
+    margin-block: var(--ln-categories-padding, 24px);
+  }
+
+  .ln-categories__header {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 32px;
+    padding-inline: 24px;
+  }
+
+  .ln-categories__eyebrow {
+    font-family: var(--font-body--family);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ln-brass-dark, #8A6D3B);
+    margin: 0 0 10px;
+    font-weight: 500;
+  }
+
+  .ln-categories__main-heading {
+    font-family: var(--font-heading--family);
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--color-foreground, #1C1917);
+    margin: 0;
+  }
+
+  /* Stacked layout: each category banner spans 100% full width of screen */
+  .ln-categories--stacked .ln-categories__container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .ln-categories--stacked .ln-category-banner {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    min-height: 480px;
+    max-height: 780px;
+    overflow: hidden;
+    background-color: #1C1917;
+  }
+
+  @media screen and (min-width: 990px) {
+    .ln-categories--stacked .ln-category-banner {
+      height: 78vh;
+      min-height: 560px;
+      max-height: 860px;
+    }
+  }
+
+  /* Split layout: two side-by-side columns full width */
+  .ln-categories--split .ln-categories__container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ln-categories--split .ln-categories__container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .ln-categories--split .ln-category-banner {
+    position: relative;
+    width: 100%;
+    height: 65vh;
+    min-height: 460px;
+    overflow: hidden;
+    background-color: #1C1917;
+  }
+
+  .ln-category-banner__link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: #FFFFFF;
+  }
+
+  .ln-category-banner__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ln-category-banner__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: scale(1.001);
+  }
+
+  .ln-category-banner:hover .ln-category-banner__img {
+    transform: scale(1.04);
+  }
+
+  .ln-category-banner__placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #262320;
+  }
+
+  .ln-category-banner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(20, 18, 16, 0.1) 0%,
+      rgba(20, 18, 16, 0.3) 40%,
+      rgba(20, 18, 16, 0.85) 100%
+    );
+    transition: background 0.6s ease;
+  }
+
+  .ln-category-banner:hover .ln-category-banner__overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(20, 18, 16, 0.05) 0%,
+      rgba(20, 18, 16, 0.25) 40%,
+      rgba(20, 18, 16, 0.88) 100%
+    );
+  }
+
+  .ln-category-banner__content {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: clamp(28px, 5vw, 64px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .ln-category-banner:hover .ln-category-banner__content {
+    transform: translateY(-4px);
+  }
+
+  .ln-category-banner__inner {
+    max-width: 680px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .ln-category-banner__tag {
+    font-family: var(--font-body--family);
+    font-size: 11px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: #DFD5C6;
+    font-weight: 500;
+  }
+
+  .ln-category-banner__title {
+    font-family: var(--font-heading--family);
+    font-size: clamp(32px, 4.2vw, 54px);
+    font-weight: 400;
+    line-height: 1.1;
+    color: #FAF7F2;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .ln-category-banner__subtitle {
+    font-family: var(--font-body--family);
+    font-size: clamp(14px, 1.4vw, 17px);
+    font-weight: 300;
+    color: #E2DBD0;
+    line-height: 1.5;
+    margin: 4px 0 16px;
+    max-width: 520px;
+    letter-spacing: 0.01em;
+  }
+
+  .ln-category-banner__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-body--family);
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #FAF7F2;
+    border-bottom: 1px solid rgba(250, 247, 242, 0.5);
+    padding-bottom: 5px;
+    transition: border-color 0.3s ease, gap 0.3s ease;
+  }
+
+  .ln-category-banner:hover .ln-category-banner__cta {
+    border-color: #FAF7F2;
+    gap: 16px;
+  }
+
+  .ln-category-banner__cta-arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+
+  .ln-category-banner:hover .ln-category-banner__cta-arrow {
+    transform: translateX(4px);
+  }
+
+  [dir="rtl"] .ln-category-banner:hover .ln-category-banner__cta-arrow {
+    transform: translateX(-4px) scaleX(-1);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Lumenook Fullwidth Edits",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout_style",
+      "label": "Layout style",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "Full width stacked (100% width each)"
+        },
+        {
+          "value": "split",
+          "label": "Side-by-side split (50% each)"
+        }
+      ],
+      "default": "stacked"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "CURATED EDITS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Two worlds. One quiet aesthetic."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category Banner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "asset_image",
+          "label": "Asset image fallback (filename)",
+          "info": "e.g. category-lighting-wide.jpg"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag / Number",
+          "default": "COLLECTION 01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Sculptural Lighting"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Touch lamps, floor silhouettes & ambient evening glow"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "CTA Text",
+          "default": "Explore Lighting"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "fallback_link",
+          "label": "Custom link path",
+          "default": "/collections/lighting"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lumenook Fullwidth Edits",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "asset_image": "category-lighting-wide.jpg",
+            "tag": "COLLECTION 01",
+            "title": "Sculptural Lighting",
+            "subtitle": "Touch lamps, floor silhouettes & ambient evening glow",
+            "cta_text": "Explore Lighting",
+            "fallback_link": "/collections/lighting"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "asset_image": "category-desk-wide.jpg",
+            "tag": "COLLECTION 02",
+            "title": "Considered Desk Objects",
+            "subtitle": "Smart clocks, wireless charging docks & tactile desk pieces",
+            "cta_text": "Explore Desk Objects",
+            "fallback_link": "/collections/desk-objects"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
