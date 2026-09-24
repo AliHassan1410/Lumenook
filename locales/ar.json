@@ -380,5 +380,38 @@
       "default_title": "العنوان الافتراضي",
       "sticky_add_to_cart": "شريط الإضافة السريعة إلى سلة التسوق"
     }
+  },
+  "lumenook": {
+    "brand": {
+      "tagline": "ضوء لركنك الهادئ"
+    },
+    "cta": {
+      "add_to_bag": "أضف إلى الحقيبة"
+    },
+    "trust": {
+      "warranty": "ضمان لمدة سنتين",
+      "cod": "الدفع عند الاستلام",
+      "secure_checkout": "دفع آمن",
+      "returns": "إرجاع خلال 14 يومًا"
+    },
+    "delivery": {
+      "free_over": "توصيل مجاني للطلبات فوق 300 درهم"
+    },
+    "specs": {
+      "heading": "المواصفات",
+      "material": "الخامة",
+      "dimensions": "الأبعاد",
+      "weight": "الوزن",
+      "light_source": "مصدر الضوء",
+      "color_temperature": "درجة حرارة اللون",
+      "dimmable": "قابل للتعتيم",
+      "power": "الطاقة",
+      "control": "التحكم",
+      "warranty": "الضمان"
+    },
+    "general": {
+      "yes": "نعم",
+      "no": "لا"
+    }
   }
 }
