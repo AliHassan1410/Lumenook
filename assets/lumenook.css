@@ -23,6 +23,10 @@
   --font-h1--letter-spacing: -0.01em;
   --font-h1--line-height: 1.1;
   --font-h2--line-height: 1.15;
+
+  /* Visible 2px focus ring (Section 13). Dwell draws it in currentcolor, which always
+     contrasts with its background; brass on ivory would be only 2.75:1. */
+  --focus-outline-width: 2px;
 }
 
 /* Utilities */
@@ -62,8 +66,21 @@
 }
 
 /* Buttons: Jost 500 uppercase 13px, 0.14em tracking, 52px tall.
-   Radius and case come from theme settings; this sets what settings can't. */
-:is(.button, .button-secondary):not(.button-unstyled),
+   Radius and case come from theme settings; this sets what settings can't.
+   Dwell also puts .button on icon/utility controls (drawer close, remove, language
+   selector, search), which must keep their own size, so those are excluded. */
+:is(.button, .button-secondary):not(
+    .button-unstyled,
+    .close-button,
+    .menu-drawer__back-button,
+    .localization-selector,
+    .cart-items__remove,
+    .variant-item__remove,
+    .predictive-search__search-button,
+    .predictive-search__close-modal-button,
+    .quick-add__button,
+    .skip-to-content-link
+  ),
 button.shopify-payment-button__button--unbranded {
   font-size: 13px;
   font-weight: 500;
