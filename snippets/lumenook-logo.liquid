@@ -1,0 +1,15 @@
+{% doc %}
+  Lumenook wordmark with the glow mark (brief Section 5, Logo). Inline SVG mark + text in
+  Cormorant Garamond, both in currentColor, so it works on ivory (espresso) and night (ivory)
+  backgrounds and on the transparent header. Used whenever no logo image is uploaded.
+
+  @param {string} [class] - Extra class for the wrapper
+{% enddoc %}
+<span class="ln-logo {{ class }}">
+  <svg class="ln-logo__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+    <circle cx="20" cy="20" r="18" fill="none" stroke="var(--ln-brass)" stroke-width="1"/>
+    <circle cx="20" cy="20" r="12" fill="currentColor" opacity=".16"/>
+    <circle cx="20" cy="20" r="5" fill="var(--ln-brass)"/>
+  </svg>
+  <span class="ln-logo__word">{{ shop.name | strip | upcase }}</span>
+</span>

@@ -1,14 +1,95 @@
 {% doc %}
   Lumenook brand layer. Rendered once in layout/theme.liquid after Dwell's theme variables,
-  so tokens in lumenook.css can refine them. Arabic web fonts are requested only on Arabic pages.
+  so tokens in lumenook.css can refine them.
+  - Self-hosted brief fonts (SIL OFL): Cormorant Garamond for headings; Arabic fonts only on Arabic pages.
+  - The four brief colour schemes (Theme settings > Lumenook colour schemes) as CSS variables.
+  - Brand favicon when none is uploaded in theme settings.
 {% enddoc %}
-{%- if request.locale.iso_code == 'ar' -%}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500&family=Noto+Naskh+Arabic:wght@500;600&display=swap"
-  >
+{%- liquid
+  assign is_arabic = false
+  if request.locale.iso_code == 'ar'
+    assign is_arabic = true
+  endif
+-%}
+{%- unless is_arabic -%}
+  {{ 'lumenook-cormorant-garamond-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+{%- endunless -%}
+<style>
+  @font-face {
+    font-family: 'Cormorant Garamond';
+    font-style: normal;
+    font-weight: 500 600;
+    font-display: swap;
+    src: url({{ 'lumenook-cormorant-garamond-latin.woff2' | asset_url }}) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: 'Cormorant Garamond';
+    font-style: normal;
+    font-weight: 500 600;
+    font-display: swap;
+    src: url({{ 'lumenook-cormorant-garamond-latin-ext.woff2' | asset_url }}) format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  {%- if is_arabic %}
+  @font-face {
+    font-family: 'Noto Naskh Arabic';
+    font-style: normal;
+    font-weight: 500 600;
+    font-display: swap;
+    src: url({{ 'lumenook-naskh-arabic.woff2' | asset_url }}) format('woff2');
+    unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+  }
+  @font-face {
+    font-family: 'IBM Plex Sans Arabic';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url({{ 'lumenook-plex-arabic-400.woff2' | asset_url }}) format('woff2');
+    unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+  }
+  @font-face {
+    font-family: 'IBM Plex Sans Arabic';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url({{ 'lumenook-plex-arabic-400-latin.woff2' | asset_url }}) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: 'IBM Plex Sans Arabic';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url({{ 'lumenook-plex-arabic-500.woff2' | asset_url }}) format('woff2');
+    unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+  }
+  @font-face {
+    font-family: 'IBM Plex Sans Arabic';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url({{ 'lumenook-plex-arabic-500-latin.woff2' | asset_url }}) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  {%- endif %}
+
+  /* Brief Section 5 colour schemes, editable in Theme settings > Lumenook colour schemes. */
+  :root {
+    {%- for i in (1..4) -%}
+      {%- assign bg_key = 'ln_scheme_' | append: i | append: '_background' -%}
+      {%- assign text_key = 'ln_scheme_' | append: i | append: '_text' -%}
+      {%- assign btn_key = 'ln_scheme_' | append: i | append: '_button' -%}
+      {%- assign btn_text_key = 'ln_scheme_' | append: i | append: '_button_text' %}
+    --ln-scheme-{{ i }}-bg: {{ settings[bg_key] }};
+    --ln-scheme-{{ i }}-text: {{ settings[text_key] }};
+    --ln-scheme-{{ i }}-button: {{ settings[btn_key] }};
+    --ln-scheme-{{ i }}-button-text: {{ settings[btn_text_key] }};
+    {%- endfor %}
+  }
+</style>
+{%- if settings.favicon == blank -%}
+  <link rel="icon" type="image/svg+xml" href="{{ 'lumenook-favicon.svg' | asset_url }}">
 {%- endif -%}
 {{ 'lumenook.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'lumenook.js' | asset_url }}" defer></script>
