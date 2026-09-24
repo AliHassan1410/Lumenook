@@ -418,7 +418,8 @@
       "no": "لا",
       "read_more": "اقرأ المزيد",
       "read_less": "عرض أقل",
-      "discover": "اكتشف"
+      "discover": "اكتشف",
+      "announcements": "الإعلانات"
     },
     "cart": {
       "free_delivery_remaining": "تبقّى {{ amount }} للحصول على توصيل مجاني",

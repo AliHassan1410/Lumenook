@@ -409,7 +409,8 @@
       "no": "No",
       "read_more": "Read more",
       "read_less": "Read less",
-      "discover": "Discover"
+      "discover": "Discover",
+      "announcements": "Announcements"
     },
     "cart": {
       "free_delivery_remaining": "You're {{ amount }} away from complimentary delivery",

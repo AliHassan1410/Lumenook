@@ -11,61 +11,6 @@
   "type": "header",
   "name": "t:names.header",
   "sections": {
-    "header_announcements_pbXTDf": {
-      "type": "header-announcements",
-      "blocks": {
-        "announcement_KMAGKG": {
-          "type": "_announcement",
-          "settings": {
-            "text": "Complimentary delivery across the UAE over AED 300",
-            "font": "var(--font-accent--family)",
-            "font_size": "0.75rem",
-            "letter_spacing": "loose",
-            "case": "uppercase",
-            "text_color": "{{ settings.color_palette.color2 }}"
-          },
-          "blocks": {}
-        },
-        "announcement_ln_cod": {
-          "type": "_announcement",
-          "settings": {
-            "text": "Cash on delivery available",
-            "font": "var(--font-accent--family)",
-            "font_size": "0.75rem",
-            "letter_spacing": "loose",
-            "case": "uppercase",
-            "text_color": "{{ settings.color_palette.color2 }}"
-          },
-          "blocks": {}
-        },
-        "announcement_ln_gift": {
-          "type": "_announcement",
-          "settings": {
-            "text": "Gift wrapping on request",
-            "font": "var(--font-accent--family)",
-            "font_size": "0.75rem",
-            "letter_spacing": "loose",
-            "case": "uppercase",
-            "text_color": "{{ settings.color_palette.color2 }}"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "announcement_KMAGKG",
-        "announcement_ln_cod",
-        "announcement_ln_gift"
-      ],
-      "name": "t:names.announcement_bar",
-      "settings": {
-        "speed": 6,
-        "section_width": "full-width",
-        "background_color": "{{ settings.color_palette.color1 }}",
-        "divider_width": 0,
-        "padding-block-start": 15,
-        "padding-block-end": 15
-      }
-    },
     "header_section": {
       "type": "header",
       "blocks": {
@@ -138,10 +83,46 @@
         "home_inverse_logo": true,
         "text_color_transparent_home": "{{ settings.color_palette.background }}"
       }
+    },
+    "ln_marquee": {
+      "type": "lumenook-announcement-marquee",
+      "blocks": {
+        "announcement_KMAGKG": {
+          "type": "message",
+          "settings": {
+            "text": "Complimentary delivery across the UAE over AED 300"
+          },
+          "blocks": {}
+        },
+        "announcement_ln_cod": {
+          "type": "message",
+          "settings": {
+            "text": "Cash on delivery available"
+          },
+          "blocks": {}
+        },
+        "announcement_ln_gift": {
+          "type": "message",
+          "settings": {
+            "text": "Gift wrapping on request"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "announcement_KMAGKG",
+        "announcement_ln_cod",
+        "announcement_ln_gift"
+      ],
+      "settings": {
+        "speed": 8,
+        "background_color": "#B08D57",
+        "text_color": "#1C1917"
+      }
     }
   },
   "order": [
-    "header_announcements_pbXTDf",
+    "ln_marquee",
     "header_section"
   ]
 }
