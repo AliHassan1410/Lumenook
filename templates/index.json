@@ -415,7 +415,9 @@
         "gap": 28,
         "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 24,
-        "padding-block-end": 48
+        "padding-block-end": 48,
+        "ln_autoplay": true,
+        "ln_autoplay_speed": 3
       }
     },
     "after_dark": {

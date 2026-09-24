@@ -22,6 +22,12 @@
     assign gutter_style = '--gutter-slide-width: 0px;'
   endif
 
+  # Lumenook: optional auto-scroll (product list setting), looping right to left
+  assign ln_autoplay = false
+  if settings.ln_autoplay == true
+    assign ln_autoplay = true
+  endif
+
   assign show_arrows = false
   if settings.icons_style != 'none'
     assign show_arrows = true
@@ -47,7 +53,9 @@
     icon_style: settings.icons_style,
     icon_shape: settings.icons_shape,
     auto_hide_controls: false,
-    infinite: false,
+    infinite: ln_autoplay,
+    autoplay: ln_autoplay,
+    autoplay_speed: settings.ln_autoplay_speed,
     initial_slide: 0,
     slide_count: slide_count,
     slideshow_gutters: slideshow_gutters

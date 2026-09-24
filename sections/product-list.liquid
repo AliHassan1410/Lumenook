@@ -102,7 +102,10 @@
     }
   ],
   "disabled_on": {
-    "groups": ["header", "footer"]
+    "groups": [
+      "header",
+      "footer"
+    ]
   },
   "settings": [
     {
@@ -129,6 +132,24 @@
         }
       ],
       "default": "grid"
+    },
+    {
+      "type": "checkbox",
+      "id": "ln_autoplay",
+      "label": "Auto-scroll carousel",
+      "default": false,
+      "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "range",
+      "id": "ln_autoplay_speed",
+      "label": "Seconds per product",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "unit": "s",
+      "default": 3,
+      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.ln_autoplay }}"
     },
     {
       "type": "checkbox",
@@ -436,7 +457,10 @@
               }
             }
           },
-          "block_order": ["product_list_text", "product_list_button"]
+          "block_order": [
+            "product_list_text",
+            "product_list_button"
+          ]
         },
         "static-product-card": {
           "type": "_product-card",
@@ -514,7 +538,11 @@
               }
             }
           },
-          "block_order": ["product-card-gallery", "product_title", "price"]
+          "block_order": [
+            "product-card-gallery",
+            "product_title",
+            "price"
+          ]
         }
       },
       "block_order": []
@@ -606,7 +634,10 @@
               }
             }
           },
-          "block_order": ["product_list_text", "product_list_button"]
+          "block_order": [
+            "product_list_text",
+            "product_list_button"
+          ]
         },
         "static-product-card": {
           "type": "_product-card",
@@ -684,7 +715,11 @@
               }
             }
           },
-          "block_order": ["product-card-gallery", "product_title", "price"]
+          "block_order": [
+            "product-card-gallery",
+            "product_title",
+            "price"
+          ]
         }
       },
       "block_order": []
@@ -777,7 +812,10 @@
               }
             }
           },
-          "block_order": ["product_list_text", "product_list_button"]
+          "block_order": [
+            "product_list_text",
+            "product_list_button"
+          ]
         },
         "static-product-card": {
           "type": "_product-card",
@@ -855,7 +893,11 @@
               }
             }
           },
-          "block_order": ["product-card-gallery", "product_title", "price"]
+          "block_order": [
+            "product-card-gallery",
+            "product_title",
+            "price"
+          ]
         }
       },
       "block_order": []
