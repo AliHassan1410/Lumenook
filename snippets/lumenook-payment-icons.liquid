@@ -1,0 +1,14 @@
+{% doc %}
+  Payment icons for the store's enabled payment methods, plus a cash-on-delivery label
+  (brief Sections 8 and 11). Icons appear automatically as methods are enabled in admin.
+{% enddoc %}
+<div class="ln-payments">
+  {%- if shop.enabled_payment_types.size > 0 -%}
+    <ul class="ln-payments__list" role="list" aria-label="{{ 'lumenook.footer.payment_methods' | t }}">
+      {%- for type in shop.enabled_payment_types -%}
+        <li>{{ type | payment_type_svg_tag: class: 'ln-payments__icon' }}</li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+  <p class="ln-payments__cod">{{ 'lumenook.trust.cod' | t }}</p>
+</div>

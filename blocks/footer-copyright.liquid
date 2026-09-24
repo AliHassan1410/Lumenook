@@ -14,7 +14,8 @@
 >
   <span class="footer-utilities__text">
     &copy; {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url -}}
+    {{ shop.name | strip | link_to: routes.root_url -}}.
+    {{ 'lumenook.footer.prices_note' | t -}}
     {%- if block_settings.show_powered_by -%}
       , {{ powered_by_link }}
     {%- endif -%}

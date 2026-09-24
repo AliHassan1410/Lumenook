@@ -169,10 +169,27 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {}
+                },
+                "ln_statement": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Light for your quiet corner. Curated lamps and desk objects, delivered across the UAE.</p>",
+                    "type_preset": "rte",
+                    "text_color": "{{ settings.color_palette.background }}",
+                    "width": "100%"
+                  },
+                  "blocks": {}
+                },
+                "ln_payments": {
+                  "type": "payment-icons",
+                  "settings": {},
+                  "blocks": {}
                 }
               },
               "block_order": [
-                "logo_69UMHB"
+                "logo_69UMHB",
+                "ln_statement",
+                "ln_payments"
               ]
             },
             "group_w3D4PV": {
@@ -482,17 +499,18 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {
-                    "text_ln_contact": {
-                      "type": "text",
+                    "ln_contact": {
+                      "type": "lumenook-footer-contact",
                       "settings": {
-                        "text": "<h6>CONTACT</h6><p><a href=\"mailto:hello@lumenook.com\">hello@lumenook.com</a></p><p>Sun–Thu, 10:00–19:00 GST</p>",
-                        "text_color": "{{ settings.color_palette.background }}"
+                        "heading": "CONTACT",
+                        "email": "hello@lumenook.com",
+                        "hours": "Sun–Thu, 10:00–19:00 GST"
                       },
                       "blocks": {}
                     }
                   },
                   "block_order": [
-                    "text_ln_contact"
+                    "ln_contact"
                   ]
                 }
               },
