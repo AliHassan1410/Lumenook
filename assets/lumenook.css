@@ -1,0 +1,107 @@
+/* Lumenook brand foundation (brief Section 5).
+   Loaded once via snippets/lumenook-head.liquid, after Dwell's inline theme variables,
+   so :root overrides here win over theme defaults of equal specificity. */
+
+:root {
+  --ln-ivory: #F6F1EA;
+  --ln-sand: #E6DCCF;
+  --ln-stone: #D9CFC2;
+  --ln-brass: #B08D57;
+  --ln-brass-dark: #8A6A3B;
+  --ln-espresso: #2B2320;
+  --ln-night: #1C1917;
+  --ln-muted: #6B5F58;
+  --ln-ivory-on-dark: #EFE6DA;
+  --ln-radius: 2px; /* near-square = premium */
+  --ln-gap: clamp(16px, 2.5vw, 32px);
+  --ln-section-y: clamp(64px, 9vw, 128px);
+  --ln-ease: cubic-bezier(.2, .7, .2, 1);
+  --ln-dur: 450ms;
+
+  /* Fine-tune Dwell's type presets where its settings only offer fixed steps */
+  --line-height--body-loose: 1.65; /* body copy */
+  --font-h1--letter-spacing: -0.01em;
+  --font-h1--line-height: 1.1;
+  --font-h2--line-height: 1.15;
+}
+
+/* Utilities */
+.ln-eyebrow {
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ln-muted);
+}
+
+.ln-link {
+  background: linear-gradient(var(--ln-brass), var(--ln-brass)) 0 100% / 0 1px no-repeat;
+  transition: background-size var(--ln-dur) var(--ln-ease);
+}
+
+.ln-link:hover {
+  background-size: 100% 1px;
+}
+
+.ln-fade {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .8s var(--ln-ease), transform .8s var(--ln-ease);
+}
+
+.ln-fade.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ln-fade {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Buttons: Jost 500 uppercase 13px, 0.14em tracking, 52px tall.
+   Radius and case come from theme settings; this sets what settings can't. */
+:is(.button, .button-secondary):not(.button-unstyled),
+button.shopify-payment-button__button--unbranded {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  min-height: 52px;
+  border-radius: var(--ln-radius);
+}
+
+/* Arabic: Noto Naskh Arabic for headings, IBM Plex Sans Arabic for body/labels.
+   Fonts are only requested on Arabic pages (see snippets/lumenook-head.liquid). */
+html[lang^='ar'] {
+  --font-heading--family: 'Noto Naskh Arabic', serif;
+  --font-subheading--family: 'Noto Naskh Arabic', serif;
+  --font-body--family: 'IBM Plex Sans Arabic', sans-serif;
+  --font-accent--family: 'IBM Plex Sans Arabic', sans-serif;
+
+  /* No tracking or uppercase in Arabic; roomier leading */
+  --letter-spacing--display-loose: 0;
+  --letter-spacing--heading-loose: 0;
+  --letter-spacing--body-loose: 0;
+  --font-h1--letter-spacing: 0;
+  --font-h1--case: none;
+  --font-h2--case: none;
+  --font-h3--case: none;
+  --font-h4--case: none;
+  --font-h5--case: none;
+  --font-h6--case: none;
+  --button-text-case-primary: none;
+  --button-text-case-secondary: none;
+  --line-height--body-loose: 1.8;
+}
+
+html[lang^='ar'] :is(.button, .button-secondary):not(.button-unstyled),
+html[lang^='ar'] button.shopify-payment-button__button--unbranded {
+  letter-spacing: 0;
+}
+
+[dir='rtl'] .ln-eyebrow {
+  letter-spacing: 0;
+  text-transform: none;
+}

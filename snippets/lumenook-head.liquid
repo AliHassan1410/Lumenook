@@ -1,0 +1,13 @@
+{% doc %}
+  Lumenook brand layer. Rendered once in layout/theme.liquid after Dwell's theme variables,
+  so tokens in lumenook.css can refine them. Arabic web fonts are requested only on Arabic pages.
+{% enddoc %}
+{%- if request.locale.iso_code == 'ar' -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500&family=Noto+Naskh+Arabic:wght@500;600&display=swap"
+  >
+{%- endif -%}
+{{ 'lumenook.css' | asset_url | stylesheet_tag }}
