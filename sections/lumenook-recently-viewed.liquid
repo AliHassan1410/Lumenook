@@ -8,7 +8,7 @@
     <ul class="ln-grid ln-grid--4" role="list" data-async-content>
       {%- for item in search.results limit: 4 -%}
         {%- if item.object_type == 'product' -%}
-          <li>{% render 'lumenook-product-card', product: item %}</li>
+          <li>{% render 'lumenook-product-card', product: item, section_id: section.id %}</li>
         {%- endif -%}
       {%- endfor -%}
     </ul>

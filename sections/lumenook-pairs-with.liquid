@@ -11,7 +11,7 @@
   <ln-async-section data-target="pairs">
     <ul class="ln-grid ln-grid--4" role="list" data-async-content>
       {%- for rec in recommendations.products limit: limit -%}
-        <li>{% render 'lumenook-product-card', product: rec %}</li>
+        <li>{% render 'lumenook-product-card', product: rec, section_id: section.id %}</li>
       {%- endfor -%}
     </ul>
   </ln-async-section>
@@ -23,7 +23,7 @@
         <ul class="ln-grid ln-grid--4" role="list">
           {%- for p in pairs limit: limit -%}
             {%- if p.available or section.settings.show_sold_out -%}
-              <li>{% render 'lumenook-product-card', product: p %}</li>
+              <li>{% render 'lumenook-product-card', product: p, section_id: section.id %}</li>
             {%- endif -%}
           {%- endfor -%}
         </ul>

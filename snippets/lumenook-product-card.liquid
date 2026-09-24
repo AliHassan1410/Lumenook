@@ -4,6 +4,7 @@
 
   @param {object} product - The product to render
   @param {string} [sizes] - Image sizes attribute
+  @param {string} [section_id] - Section ID, enables Dwell quick add on the card
 {% enddoc %}
 {%- liquid
   assign sizes = sizes | default: '(min-width: 990px) 25vw, 50vw'
@@ -46,4 +47,7 @@
       {%- endif -%}
     </p>
   </a>
+  {%- if section_id != blank and product.available and settings.quick_add -%}
+    <div class="ln-card__quick-add">{% render 'quick-add', product: product, section_id: section_id %}</div>
+  {%- endif -%}
 </article>
