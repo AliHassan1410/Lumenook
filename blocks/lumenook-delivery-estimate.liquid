@@ -1,0 +1,59 @@
+{% doc %}
+  Delivery estimate (brief Section 10B): countdown to the Asia/Dubai cut-off and an arrival date
+  for the chosen emirate. Settings live in Theme settings > Lumenook. Hidden when sold out;
+  the <ln-delivery-estimate> component in lumenook.js fills the text.
+{% enddoc %}
+{%- liquid
+  assign product = closest.product
+  assign fast = settings.ln_fast_emirates | default: 'Dubai, Sharjah, Ajman' | split: ','
+  assign others = settings.ln_other_emirates | default: 'Abu Dhabi, Al Ain, Ras Al Khaimah, Umm Al Quwain, Fujairah' | split: ','
+-%}
+{%- if product.available -%}
+  <ln-delivery-estimate class="ln-delivery" hidden {{ block.shopify_attributes }}>
+    {% render 'lumenook-icon', icon: 'truck' %}
+    <div class="ln-delivery__body">
+      <p class="ln-delivery__text" data-output aria-live="polite"></p>
+      <label class="ln-delivery__label">
+        <span class="visually-hidden">{{ 'lumenook.delivery.choose_emirate' | t }}</span>
+        <select class="ln-delivery__select">
+          {%- for e in fast -%}
+            {%- assign name = e | strip -%}
+            <option value="{{ name | handleize }}">{{ name }}</option>
+          {%- endfor -%}
+          {%- for e in others -%}
+            {%- assign name = e | strip -%}
+            <option value="{{ name | handleize }}">{{ name }}</option>
+          {%- endfor -%}
+        </select>
+      </label>
+    </div>
+    <script type="application/json">
+      {
+        "cutoffHour": {{ settings.ln_cutoff_hour | default: 14 }},
+        "otherDays": {{ settings.ln_other_days | default: 2 }},
+        "fastEmirates": [{% for e in fast %}{{ e | strip | handleize | json }}{% unless forloop.last %},{% endunless %}{% endfor %}],
+        "closedWeekdays": {{ settings.ln_closed_weekdays | json }},
+        "holidays": {{ settings.ln_holidays | json }},
+        "strings": {
+          "before": {{ 'lumenook.delivery.before_cutoff' | t | json }},
+          "after": {{ 'lumenook.delivery.after_cutoff' | t | json }},
+          "tomorrow": {{ 'lumenook.delivery.tomorrow' | t | json }}
+        }
+      }
+    </script>
+  </ln-delivery-estimate>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "LN delivery estimate",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Cut-off time, emirates, weekdays and holidays are set in Theme settings > Lumenook."
+    }
+  ],
+  "presets": [{ "name": "LN delivery estimate" }]
+}
+{% endschema %}

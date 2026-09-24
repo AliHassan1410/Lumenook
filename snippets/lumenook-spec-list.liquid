@@ -1,0 +1,45 @@
+{% doc %}
+  Two-column specification list from lumenook.* product metafields. Empty rows are skipped;
+  renders nothing at all when no spec is filled.
+
+  @param {object} product - The product whose metafields to read
+{% enddoc %}
+{%- liquid
+  assign m = product.metafields.lumenook
+  assign rows = 'material,dimensions,weight,light_source,color_temperature,power,control,warranty' | split: ','
+  assign has_rows = false
+  for key in rows
+    if m[key].value != blank
+      assign has_rows = true
+    endif
+  endfor
+  if m.dimmable != nil
+    assign has_rows = true
+  endif
+-%}
+{%- if has_rows -%}
+  <dl class="ln-spec">
+    {%- for key in rows -%}
+      {%- assign val = m[key].value -%}
+      {%- if val != blank -%}
+        <div class="ln-spec__row">
+          {%- assign label_key = 'lumenook.specs.' | append: key -%}
+          <dt>{{ label_key | t }}</dt>
+          <dd>{{ val }}</dd>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if m.dimmable != nil -%}
+      <div class="ln-spec__row">
+        <dt>{{ 'lumenook.specs.dimmable' | t }}</dt>
+        <dd>
+          {%- if m.dimmable.value == true -%}
+            {{- 'lumenook.general.yes' | t -}}
+          {%- else -%}
+            {{- 'lumenook.general.no' | t -}}
+          {%- endif -%}
+        </dd>
+      </div>
+    {%- endif -%}
+  </dl>
+{%- endif -%}

@@ -1,0 +1,49 @@
+{% doc %}
+  Compact Lumenook product card: 4:5 image (second image on hover), serif title,
+  subtitle metafield, price. Used by "Pairs well with" and "Recently viewed".
+
+  @param {object} product - The product to render
+  @param {string} [sizes] - Image sizes attribute
+{% enddoc %}
+{%- liquid
+  assign sizes = sizes | default: '(min-width: 990px) 25vw, 50vw'
+  assign subtitle = product.metafields.lumenook.subtitle.value
+  assign second_image = product.images[1]
+  assign price_min_money = product.price_min | money_without_trailing_zeros
+-%}
+<article class="ln-card">
+  <a class="ln-card__link" href="{{ product.url }}">
+    <div class="ln-card__media{% if second_image %} ln-card__media--hover{% endif %}">
+      {%- if product.featured_image -%}
+        {{
+          product.featured_image
+          | image_url: width: 900
+          | image_tag: widths: '300, 450, 600, 900', sizes: sizes, loading: 'lazy', class: 'ln-card__image', alt: product.featured_image.alt
+        }}
+        {%- if second_image -%}
+          {{
+            second_image
+            | image_url: width: 900
+            | image_tag: widths: '300, 450, 600, 900', sizes: sizes, loading: 'lazy', class: 'ln-card__image ln-card__image--second', alt: ''
+          }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'ln-card__image ln-card__placeholder' }}
+      {%- endif -%}
+      {%- unless product.available -%}
+        <span class="ln-badge">{{ 'lumenook.badges.sold_out' | t }}</span>
+      {%- endunless -%}
+    </div>
+    <h3 class="ln-card__title">{{ product.title }}</h3>
+    {%- if subtitle != blank -%}
+      <p class="ln-card__subtitle">{{ subtitle }}</p>
+    {%- endif -%}
+    <p class="ln-card__price">
+      {%- if product.price_varies -%}
+        {{ 'lumenook.product.from_price' | t: price: price_min_money }}
+      {%- else -%}
+        {{ product.price | money_without_trailing_zeros }}
+      {%- endif -%}
+    </p>
+  </a>
+</article>

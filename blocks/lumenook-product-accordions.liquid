@@ -1,0 +1,78 @@
+{% doc %}
+  Product information accordions (brief Section 10): Description, Specifications, What's in the box,
+  Care, Shipping & Returns. Rows with no content are skipped. First row open by default.
+{% enddoc %}
+{%- liquid
+  assign product = closest.product
+  assign m = product.metafields.lumenook
+  capture spec_list
+    render 'lumenook-spec-list', product: product
+  endcapture
+  assign first_open = true
+-%}
+<div class="ln-accordions" {{ block.shopify_attributes }}>
+  {%- if product.description != blank -%}
+    <details class="ln-accordion"{% if first_open %} open{% endif %}>
+      <summary class="ln-accordion__summary">{{ 'lumenook.product.description' | t }}</summary>
+      <div class="ln-accordion__body rte">{{ product.description }}</div>
+    </details>
+    {%- assign first_open = false -%}
+  {%- endif -%}
+
+  {%- if spec_list != blank -%}
+    <details class="ln-accordion"{% if first_open %} open{% endif %}>
+      <summary class="ln-accordion__summary">{{ 'lumenook.specs.heading' | t }}</summary>
+      <div class="ln-accordion__body">{{ spec_list }}</div>
+    </details>
+    {%- assign first_open = false -%}
+  {%- endif -%}
+
+  {%- if m.in_the_box.value != blank -%}
+    <details class="ln-accordion"{% if first_open %} open{% endif %}>
+      <summary class="ln-accordion__summary">{{ 'lumenook.product.in_the_box' | t }}</summary>
+      <div class="ln-accordion__body rte">{{ m.in_the_box | metafield_tag }}</div>
+    </details>
+    {%- assign first_open = false -%}
+  {%- endif -%}
+
+  {%- if m.care.value != blank -%}
+    <details class="ln-accordion"{% if first_open %} open{% endif %}>
+      <summary class="ln-accordion__summary">{{ 'lumenook.product.care' | t }}</summary>
+      <div class="ln-accordion__body rte">{{ m.care | metafield_tag }}</div>
+    </details>
+    {%- assign first_open = false -%}
+  {%- endif -%}
+
+  {%- if block.settings.shipping_text != blank -%}
+    <details class="ln-accordion"{% if first_open %} open{% endif %}>
+      <summary class="ln-accordion__summary">{{ 'lumenook.product.shipping_returns' | t }}</summary>
+      <div class="ln-accordion__body rte">
+        {{ block.settings.shipping_text }}
+        {%- if block.settings.shipping_page != blank -%}
+          <p><a class="ln-link" href="{{ block.settings.shipping_page.url }}">{{ 'lumenook.product.read_policy' | t }}</a></p>
+        {%- endif -%}
+      </div>
+    </details>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "LN product accordions",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "shipping_text",
+      "label": "Shipping & Returns text",
+      "default": "<p>Complimentary delivery across the UAE on orders over AED 300. Next working day to Dubai, Sharjah and Ajman; 1–3 working days to other emirates. Easy 14-day returns on unused items.</p>"
+    },
+    {
+      "type": "page",
+      "id": "shipping_page",
+      "label": "Shipping & Returns page"
+    }
+  ],
+  "presets": [{ "name": "LN product accordions" }]
+}
+{% endschema %}

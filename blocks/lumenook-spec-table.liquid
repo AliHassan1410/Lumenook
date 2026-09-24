@@ -1,0 +1,29 @@
+{% doc %}
+  Specification table from lumenook.* product metafields (brief Section 10A).
+  Renders nothing when the product has no specs filled in.
+{% enddoc %}
+{%- capture spec_list -%}{% render 'lumenook-spec-list', product: closest.product %}{%- endcapture -%}
+{%- if spec_list != blank -%}
+  <div class="ln-spec-table" {{ block.shopify_attributes }}>
+    {%- if block.settings.heading != blank -%}
+      <h2 class="ln-eyebrow ln-spec-table__heading">{{ block.settings.heading }}</h2>
+    {%- endif -%}
+    {{ spec_list }}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lumenook spec table",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Specifications"
+    }
+  ],
+  "presets": [{ "name": "Lumenook spec table" }]
+}
+{% endschema %}

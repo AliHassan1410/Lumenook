@@ -1,0 +1,42 @@
+{% comment %}
+  Recently viewed (brief Section 10): the last 4 products this shopper viewed, excluding the current one.
+  Reads the product IDs Dwell already stores in localStorage ('viewedProducts') and fetches them via search.
+{% endcomment %}
+{%- if search.performed -%}
+  {%- comment -%} Rendered via the Section Rendering API with ?q=id:… {%- endcomment -%}
+  <ln-async-section data-target="recent">
+    <ul class="ln-grid ln-grid--4" role="list" data-async-content>
+      {%- for item in search.results limit: 4 -%}
+        {%- if item.object_type == 'product' -%}
+          <li>{% render 'lumenook-product-card', product: item %}</li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </ln-async-section>
+{%- else -%}
+  <section class="ln-section ln-related" aria-labelledby="LnRecent-{{ section.id }}">
+    <div class="ln-container">
+      <ln-async-section
+        data-target="recent"
+        data-recently-viewed
+        data-current-id="{{ product.id }}"
+        data-search-url="{{ routes.search_url }}"
+        data-section-id="{{ section.id }}"
+        hidden
+      >
+        <h2 class="ln-section__heading" id="LnRecent-{{ section.id }}">{{ section.settings.heading }}</h2>
+        <div data-async-content></div>
+      </ln-async-section>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lumenook recently viewed",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Recently viewed" }
+  ],
+  "presets": [{ "name": "Lumenook recently viewed" }]
+}
+{% endschema %}

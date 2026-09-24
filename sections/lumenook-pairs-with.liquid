@@ -1,0 +1,55 @@
+{% comment %}
+  "Pairs well with" (brief Section 10): 2–4 products from lumenook.pairs_with. When none are set,
+  falls back to Shopify's complementary recommendations, fetched after load.
+{% endcomment %}
+{%- liquid
+  assign pairs = product.metafields.lumenook.pairs_with.value
+  assign limit = section.settings.limit
+-%}
+{%- if recommendations.performed? -%}
+  {%- comment -%} Rendered via the Section Rendering API for the fallback fetch. {%- endcomment -%}
+  <ln-async-section data-target="pairs">
+    <ul class="ln-grid ln-grid--4" role="list" data-async-content>
+      {%- for rec in recommendations.products limit: limit -%}
+        <li>{% render 'lumenook-product-card', product: rec %}</li>
+      {%- endfor -%}
+    </ul>
+  </ln-async-section>
+{%- else -%}
+  <section class="ln-section ln-related" aria-labelledby="LnPairs-{{ section.id }}">
+    <div class="ln-container">
+      {%- if pairs != blank and pairs.size > 0 -%}
+        <h2 class="ln-section__heading" id="LnPairs-{{ section.id }}">{{ section.settings.heading }}</h2>
+        <ul class="ln-grid ln-grid--4" role="list">
+          {%- for p in pairs limit: limit -%}
+            {%- if p.available or section.settings.show_sold_out -%}
+              <li>{% render 'lumenook-product-card', product: p %}</li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- else -%}
+        <ln-async-section
+          data-target="pairs"
+          data-url="{{ routes.product_recommendations_url }}?product_id={{ product.id }}&limit={{ limit }}&intent=complementary&section_id={{ section.id }}"
+          hidden
+        >
+          <h2 class="ln-section__heading" id="LnPairs-{{ section.id }}">{{ section.settings.heading }}</h2>
+          <div data-async-content></div>
+        </ln-async-section>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lumenook pairs well with",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Pairs well with" },
+    { "type": "range", "id": "limit", "label": "Products", "min": 2, "max": 4, "step": 1, "default": 4 },
+    { "type": "checkbox", "id": "show_sold_out", "label": "Show sold-out products", "default": false }
+  ],
+  "enabled_on": { "templates": ["product"] },
+  "presets": [{ "name": "Lumenook pairs well with" }]
+}
+{% endschema %}

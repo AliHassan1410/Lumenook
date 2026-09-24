@@ -1,0 +1,46 @@
+{% doc %}
+  Trust row: up to 4 items, each a thin line icon + short text (brief Section 10D).
+  Horizontal on desktop, 2x2 on mobile.
+{% enddoc %}
+<ul class="ln-trust" role="list" {{ block.shopify_attributes }}>
+  {%- for i in (1..4) -%}
+    {%- liquid
+      assign icon_key = 'icon_' | append: i
+      assign text_key = 'text_' | append: i
+      assign icon = block.settings[icon_key]
+      assign text = block.settings[text_key]
+    -%}
+    {%- if text != blank -%}
+      <li class="ln-trust__item">
+        {% render 'lumenook-icon', icon: icon %}
+        <span>{{ text }}</span>
+      </li>
+    {%- endif -%}
+  {%- endfor -%}
+</ul>
+
+{% schema %}
+{
+  "name": "Lumenook trust row",
+  "tag": null,
+  "settings": [
+    { "type": "select", "id": "icon_1", "label": "Icon 1", "default": "shield", "options": [
+      { "value": "shield", "label": "Shield" }, { "value": "truck", "label": "Truck" }, { "value": "cash", "label": "Cash" },
+      { "value": "lock", "label": "Lock" }, { "value": "return", "label": "Return" }, { "value": "gift", "label": "Gift" } ] },
+    { "type": "text", "id": "text_1", "label": "Text 1", "default": "2-year warranty" },
+    { "type": "select", "id": "icon_2", "label": "Icon 2", "default": "cash", "options": [
+      { "value": "shield", "label": "Shield" }, { "value": "truck", "label": "Truck" }, { "value": "cash", "label": "Cash" },
+      { "value": "lock", "label": "Lock" }, { "value": "return", "label": "Return" }, { "value": "gift", "label": "Gift" } ] },
+    { "type": "text", "id": "text_2", "label": "Text 2", "default": "Cash on delivery" },
+    { "type": "select", "id": "icon_3", "label": "Icon 3", "default": "lock", "options": [
+      { "value": "shield", "label": "Shield" }, { "value": "truck", "label": "Truck" }, { "value": "cash", "label": "Cash" },
+      { "value": "lock", "label": "Lock" }, { "value": "return", "label": "Return" }, { "value": "gift", "label": "Gift" } ] },
+    { "type": "text", "id": "text_3", "label": "Text 3", "default": "Secure checkout" },
+    { "type": "select", "id": "icon_4", "label": "Icon 4", "default": "return", "options": [
+      { "value": "shield", "label": "Shield" }, { "value": "truck", "label": "Truck" }, { "value": "cash", "label": "Cash" },
+      { "value": "lock", "label": "Lock" }, { "value": "return", "label": "Return" }, { "value": "gift", "label": "Gift" } ] },
+    { "type": "text", "id": "text_4", "label": "Text 4", "default": "14-day returns" }
+  ],
+  "presets": [{ "name": "Lumenook trust row" }]
+}
+{% endschema %}

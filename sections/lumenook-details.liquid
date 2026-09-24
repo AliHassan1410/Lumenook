@@ -1,0 +1,49 @@
+{% comment %}
+  "The Details" (brief Section 10E): alternating image + text rows from lumenook.features metaobjects.
+  Image side mirrors automatically in RTL. Renders nothing when the product has no features.
+{% endcomment %}
+{%- assign features = product.metafields.lumenook.features.value -%}
+{%- if features != blank and features.size > 0 -%}
+  <section class="ln-details ln-section" aria-labelledby="LnDetails-{{ section.id }}">
+    <div class="ln-container">
+      <h2 class="ln-section__heading" id="LnDetails-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {%- for feature in features limit: 6 -%}
+        <div class="ln-details__row{% cycle '', ' ln-details__row--reverse' %} ln-fade">
+          <div class="ln-details__media">
+            {%- if feature.image.value != blank -%}
+              {{
+                feature.image.value
+                | image_url: width: 1400
+                | image_tag: widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 50vw, 100vw', loading: 'lazy', alt: feature.image.value.alt
+              }}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'ln-details__placeholder' }}
+            {%- endif -%}
+          </div>
+          <div class="ln-details__text">
+            <h3 class="ln-details__title">{{ feature.title.value }}</h3>
+            {%- if feature.text.value != blank -%}
+              <div class="ln-details__body">{{ feature.text | metafield_tag }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lumenook details",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The details"
+    }
+  ],
+  "enabled_on": { "templates": ["product"] },
+  "presets": [{ "name": "Lumenook details" }]
+}
+{% endschema %}

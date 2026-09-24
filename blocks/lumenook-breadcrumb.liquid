@@ -1,0 +1,62 @@
+{% doc %}
+  Breadcrumb for the product page: Home / Department / Collection (brief Section 10), with
+  BreadcrumbList JSON-LD. Department comes from the dept-* tag; collection from the product type.
+{% enddoc %}
+{%- liquid
+  assign product = closest.product
+  assign dept = nil
+  if product.tags contains 'dept-lighting'
+    assign dept = collections['lighting']
+  elsif product.tags contains 'dept-desk'
+    assign dept = collections['desk-objects']
+  endif
+  assign leaf = nil
+  assign leaf_handles = 'table-lamps,floor-lamps,desk-lamps,ambient-lighting,smart-clocks,sound-display,charging,little-luxuries' | split: ','
+  for c in product.collections
+    if leaf_handles contains c.handle
+      assign leaf = c
+      break
+    endif
+  endfor
+-%}
+<nav class="ln-breadcrumb" aria-label="{{ 'lumenook.product.breadcrumb' | t }}" {{ block.shopify_attributes }}>
+  <ol role="list">
+    <li><a href="{{ routes.root_url }}">{{ 'lumenook.product.home' | t }}</a></li>
+    {%- if dept -%}
+      <li><a href="{{ dept.url }}">{{ dept.title }}</a></li>
+    {%- endif -%}
+    {%- if leaf and leaf.handle != dept.handle -%}
+      <li><a href="{{ leaf.url }}">{{ leaf.title }}</a></li>
+    {%- endif -%}
+    <li><span aria-current="page">{{ product.title }}</span></li>
+  </ol>
+</nav>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": {{ shop.name | strip | json }}, "item": {{ shop.url | append: routes.root_url | json }} }
+      {%- assign pos = 1 -%}
+      {%- if dept -%}
+        {%- assign pos = pos | plus: 1 -%}
+        ,{ "@type": "ListItem", "position": {{ pos }}, "name": {{ dept.title | json }}, "item": {{ shop.url | append: dept.url | json }} }
+      {%- endif -%}
+      {%- if leaf and leaf.handle != dept.handle -%}
+        {%- assign pos = pos | plus: 1 -%}
+        ,{ "@type": "ListItem", "position": {{ pos }}, "name": {{ leaf.title | json }}, "item": {{ shop.url | append: leaf.url | json }} }
+      {%- endif -%}
+      {%- assign pos = pos | plus: 1 -%}
+      ,{ "@type": "ListItem", "position": {{ pos }}, "name": {{ product.title | json }}, "item": {{ shop.url | append: product.url | json }} }
+    ]
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Lumenook breadcrumb",
+  "tag": null,
+  "settings": [],
+  "presets": [{ "name": "Lumenook breadcrumb" }]
+}
+{% endschema %}

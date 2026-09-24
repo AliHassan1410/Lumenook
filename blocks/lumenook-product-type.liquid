@@ -1,0 +1,16 @@
+{% doc %}
+  Product type eyebrow above the product title (brief Section 10).
+{% enddoc %}
+{%- assign product_type = closest.product.type -%}
+{%- if product_type != blank -%}
+  <p class="ln-eyebrow ln-product-type" {{ block.shopify_attributes }}>{{ product_type }}</p>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lumenook product type",
+  "tag": null,
+  "settings": [],
+  "presets": [{ "name": "Lumenook product type" }]
+}
+{% endschema %}

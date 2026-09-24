@@ -1,0 +1,53 @@
+{% doc %}
+  Lit / unlit toggle (brief Section 10C): crossfades lumenook.image_unlit and lumenook.image_lit.
+  Renders nothing unless both images are set. Default state is lit.
+{% enddoc %}
+{%- liquid
+  assign m = closest.product.metafields.lumenook
+  assign lit = m.image_lit.value
+  assign unlit = m.image_unlit.value
+  assign sizes = '(min-width: 990px) 60vw, 100vw'
+-%}
+{%- if lit != blank and unlit != blank -%}
+  <ln-lit-toggle class="ln-lit" data-lit {{ block.shopify_attributes }}>
+    <div class="ln-lit__media">
+      {{
+        unlit
+        | image_url: width: 2000
+        | image_tag: widths: '600, 900, 1200, 1600, 2000', sizes: sizes, loading: 'lazy', class: 'ln-lit__image ln-lit__image--unlit', alt: unlit.alt
+      }}
+      {{
+        lit
+        | image_url: width: 2000
+        | image_tag: widths: '600, 900, 1200, 1600, 2000', sizes: sizes, loading: 'lazy', class: 'ln-lit__image ln-lit__image--lit', alt: lit.alt
+      }}
+    </div>
+    <div class="ln-lit__controls">
+      {%- if block.settings.heading != blank -%}
+        <p class="ln-eyebrow">{{ block.settings.heading }}</p>
+      {%- endif -%}
+      <button type="button" class="ln-lit__button" aria-pressed="true">
+        <span class="ln-lit__state ln-lit__state--off">{{ 'lumenook.product.light_off' | t }}</span>
+        <span class="ln-lit__switch" aria-hidden="true"></span>
+        <span class="ln-lit__state ln-lit__state--on">{{ 'lumenook.product.light_on' | t }}</span>
+        <span class="visually-hidden">{{ 'lumenook.product.toggle_light' | t }}</span>
+      </button>
+    </div>
+  </ln-lit-toggle>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "LN lit / unlit toggle",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "See it glow"
+    }
+  ],
+  "presets": [{ "name": "LN lit / unlit toggle" }]
+}
+{% endschema %}
