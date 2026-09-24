@@ -10,6 +10,9 @@
   @param {number} [content_aspect_ratio] - Aspect ratio for content images.
   @param {number} [image_border_radius] - Border radius for content images.
   @param {object} [section] - The section object.
+  @param {object} [ln_card_collection] - Lumenook: collection for the image card (replaces featured collections).
+  @param {object} [ln_card_image] - Lumenook: card image (falls back to the collection image).
+  @param {string} [ln_card_caption] - Lumenook: card caption.
 
   @example
   {% render 'mega-menu-list', parent_link: link, id: 'MegaMenuList-1', grid_columns_count: 6, menu_content_type: 'featured_products' %}
@@ -305,6 +308,11 @@
       </ul>
     </span>
   {% when 'featured_collections' %}
+    {%- if ln_card_collection != blank -%}
+      <span class="mega-menu__content ln-mega-card-wrap" style="--menu-content-columns-desktop: {{ max_collection_columns }}; --menu-content-columns-tablet: {{ max_collection_columns_tablet }};">
+        {% render 'lumenook-mega-card', collection: ln_card_collection, image: ln_card_image, caption: ln_card_caption %}
+      </span>
+    {%- else -%}
     {% assign collection_handles = collection_handles | split: ',' | uniq %}
     {%- capture image_sizes -%}
       {%- render 'util-mega-menu-img-sizes-attr',
@@ -343,4 +351,5 @@
         {% endfor %}
       </ul>
     </span>
+    {%- endif -%}
 {% endcase %}

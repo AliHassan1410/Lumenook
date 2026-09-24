@@ -1,0 +1,26 @@
+{% doc %}
+  Mega menu image card (brief Section 11): 3:4 image with a serif caption, linking to a collection.
+
+  @param {object} collection - Collection to link to
+  @param {object} [image] - Card image; falls back to the collection image
+  @param {string} [caption] - Caption; falls back to the collection title
+{% enddoc %}
+{%- liquid
+  assign card_image = image | default: collection.featured_image
+  assign card_caption = caption | default: collection.title
+-%}
+<a class="ln-mega-card" href="{{ collection.url }}">
+  <span class="ln-mega-card__media">
+    {%- if card_image != blank -%}
+      {{
+        card_image
+        | image_url: width: 800
+        | image_tag: widths: '300, 450, 600, 800', sizes: '(min-width: 990px) 20vw, 40vw', loading: 'lazy', alt: '', class: 'ln-mega-card__image'
+      }}
+    {%- else -%}
+      {{ 'collection-1' | placeholder_svg_tag: 'ln-mega-card__image ln-mega-card__placeholder' }}
+    {%- endif -%}
+  </span>
+  <span class="ln-mega-card__caption">{{ card_caption }}</span>
+  <span class="ln-mega-card__cta ln-eyebrow">{{ 'lumenook.general.discover' | t }}</span>
+</a>
