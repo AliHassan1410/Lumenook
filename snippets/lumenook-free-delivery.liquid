@@ -1,0 +1,31 @@
+{% doc %}
+  Free-delivery progress bar for the cart drawer (brief Section 11).
+  Threshold comes from Theme settings > Lumenook (in store currency, default 300).
+  Rendered inside the cart drawer's re-rendered content, so it updates on every cart change.
+{% enddoc %}
+{%- liquid
+  assign threshold_setting = settings.ln_free_delivery_threshold | default: 300
+  assign threshold = threshold_setting | times: 100
+  assign total = cart.total_price
+  assign remaining = threshold | minus: total
+  assign remaining_money = remaining | money_without_trailing_zeros
+  if threshold > 0
+    assign percent = total | times: 100 | divided_by: threshold | at_most: 100
+  else
+    assign percent = 100
+  endif
+-%}
+{%- if threshold > 0 -%}
+  <div class="ln-free-delivery" role="status">
+    <p class="ln-free-delivery__text">
+      {%- if remaining > 0 -%}
+        {{ 'lumenook.cart.free_delivery_remaining' | t: amount: remaining_money }}
+      {%- else -%}
+        {{ 'lumenook.cart.free_delivery_unlocked' | t }}
+      {%- endif -%}
+    </p>
+    <div class="ln-free-delivery__track" aria-hidden="true">
+      <span class="ln-free-delivery__fill" style="inline-size: {{ percent }}%;"></span>
+    </div>
+  </div>
+{%- endif -%}

@@ -1,0 +1,42 @@
+{% doc %}
+  Cart drawer upsell: up to 2 available products from the upsell collection
+  (Theme settings > Lumenook, default Little Luxuries) that are not already in the cart.
+{% enddoc %}
+{%- liquid
+  assign upsell_collection = settings.ln_cart_upsell_collection
+  assign in_cart = cart.items | map: 'product_id'
+  assign shown = 0
+-%}
+{%- if upsell_collection != blank and upsell_collection.products_count > 0 -%}
+  {%- capture upsell_items -%}
+    {%- for product in upsell_collection.products limit: 12 -%}
+      {%- if shown >= 2 -%}{%- break -%}{%- endif -%}
+      {%- unless product.available -%}{%- continue -%}{%- endunless -%}
+      {%- if in_cart contains product.id -%}{%- continue -%}{%- endif -%}
+      {%- assign shown = shown | plus: 1 -%}
+      <li class="ln-upsell__item">
+        <a class="ln-upsell__link" href="{{ product.url }}">
+          {%- if product.featured_image -%}
+            {{
+              product.featured_image
+              | image_url: width: 160
+              | image_tag: widths: '80, 160', sizes: '80px', loading: 'lazy', class: 'ln-upsell__image', alt: product.featured_image.alt
+            }}
+          {%- else -%}
+            <span class="ln-upsell__image ln-upsell__image--placeholder" aria-hidden="true"></span>
+          {%- endif -%}
+          <span class="ln-upsell__text">
+            <span class="ln-upsell__title">{{ product.title }}</span>
+            <span class="ln-upsell__price">{{ product.price | money_without_trailing_zeros }}</span>
+          </span>
+        </a>
+      </li>
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- if shown > 0 -%}
+    <div class="ln-upsell">
+      <p class="ln-eyebrow ln-upsell__heading">{{ 'lumenook.cart.upsell_heading' | t }}</p>
+      <ul class="ln-upsell__list" role="list">{{ upsell_items }}</ul>
+    </div>
+  {%- endif -%}
+{%- endif -%}

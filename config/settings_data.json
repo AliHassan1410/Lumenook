@@ -25,7 +25,7 @@
     "type_size_h4": "18",
     "type_letter_spacing_h4": "heading-loose",
     "type_case_h4": "uppercase",
-    "type_size_h5": "16",
+    "type_size_h5": "20",
     "type_font_h6": "accent",
     "type_size_h6": "12",
     "type_line_height_h6": "display-normal",
@@ -91,7 +91,11 @@
     "type_font_button_secondary": "accent",
     "button_text_case_secondary": "uppercase",
     "popover_border_radius": 2,
-    "card_corner_radius": 2
+    "card_corner_radius": 2,
+    "show_cart_note": true,
+    "cart_note_open_by_default": false,
+    "ln_free_delivery_threshold": 300,
+    "ln_cart_upsell_collection": "little-luxuries"
   },
   "presets": {
     "Dwell": {
