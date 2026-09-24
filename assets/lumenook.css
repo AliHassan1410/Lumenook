@@ -553,15 +553,12 @@ html[lang^='ar'] {
 .ln-logo--footer { font-size: 20px; }
 
 /* =====================================================================
-   Header (Section 11): shrinks 88px -> 64px after 40px of scroll.
+   Header: slim 45px bar (owner request, replaces the brief 88 -> 64px shrink).
    ===================================================================== */
 @media (min-width: 990px) {
-  .header__columns {
-    min-block-size: 64px;
-    transition: min-block-size var(--ln-dur) var(--ln-ease);
-  }
+  .header .header__row { --header-padding: 0px; }
 
-  html.ln-scrolled .header__columns { min-block-size: 56px; }
+  .header__columns { min-block-size: 45px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -745,4 +742,21 @@ html[lang^='ar'] .ln-payments__cod { letter-spacing: 0; text-transform: none; }
     row-gap: 36px !important;
     column-gap: 16px !important;
   }
+}
+
+/* Homepage hero artwork carries its own headline and button: show it at its natural
+   proportions so nothing is cropped, and keep the H1 for SEO / screen readers only. */
+[id$='__hero'] .hero {
+  --hero-min-height: 0px !important;
+  aspect-ratio: 1580 / 656;
+  min-block-size: 0;
+}
+
+[id$='__hero'] .hero .text-block {
+  position: absolute !important;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
