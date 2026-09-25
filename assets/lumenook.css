@@ -1482,12 +1482,32 @@ product-custom-property-component[hidden] { display: none !important; }
   padding-inline: 10px;
 }
 
-.ln-card-buy .ln-card-buy__add { background: var(--ln-espresso); color: var(--ln-ivory); }
+/* Light, warm buttons on the ivory cards: sand "Add to cart", brass outline "Buy it now";
+   both warm to brass on hover. Espresso text on sand keeps strong contrast. */
+.ln-card-buy :is(.ln-card-buy__add, .ln-card-buy__full) {
+  background: var(--ln-sand) !important;
+  color: var(--ln-espresso) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  transition: background-color 200ms var(--ln-ease), color 200ms var(--ln-ease);
+}
+
+.ln-card-buy :is(.ln-card-buy__add, .ln-card-buy__full):not([disabled]):hover {
+  background: var(--ln-brass-dark) !important;
+  color: var(--ln-ivory) !important;
+}
 
 .ln-card-buy .shopify-payment-button__button--unbranded {
-  background: var(--ln-espresso) !important;
+  background: transparent !important;
+  color: var(--ln-espresso) !important;
+  box-shadow: inset 0 0 0 1px var(--ln-brass) !important;
+  transition: background-color 200ms var(--ln-ease), color 200ms var(--ln-ease);
+}
+
+.ln-card-buy .shopify-payment-button__button--unbranded:hover {
+  background: var(--ln-brass-dark) !important;
   color: var(--ln-ivory) !important;
-  box-shadow: none !important;
+  box-shadow: inset 0 0 0 1px var(--ln-brass-dark) !important;
 }
 
 .ln-card-buy button.shopify-payment-button__button--unbranded { display: flex !important; align-items: center; justify-content: center; gap: .5em; white-space: nowrap; }
