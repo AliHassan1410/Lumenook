@@ -445,7 +445,8 @@
       "light_on": "تشغيل",
       "toggle_light": "تشغيل المصباح أو إطفاؤه",
       "vat_included": "شامل ضريبة القيمة المضافة",
-      "instalments": "أو {{ count }} دفعات بدون فوائد بقيمة {{ amount }} مع {{ provider }}"
+      "instalments": "أو {{ count }} دفعات بدون فوائد بقيمة {{ amount }} مع {{ provider }}",
+      "in_detail": "عن قرب"
     },
     "whatsapp": {
       "label": "تحدث معنا عبر واتساب",

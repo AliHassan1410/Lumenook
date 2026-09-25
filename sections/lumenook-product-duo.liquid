@@ -1,40 +1,40 @@
 {% comment %}
-  Product image duo: two of the product's images side by side, edge to edge across the full
-  page width (like the homepage category banners). Uses images 2 and 3 when available,
-  otherwise 1 and 2. Renders nothing when the product has fewer than two images.
+  Product image row: up to three of the product's images in an even row inside the page width,
+  under a small eyebrow heading. Skips the first image (already the gallery hero) when the
+  product has four or more images. Renders nothing with fewer than two images.
 {% endcomment %}
 {%- liquid
   assign images = product.images
-  if images.size >= 3
-    assign first = images[1]
-    assign second = images[2]
-  elsif images.size == 2
-    assign first = images[0]
-    assign second = images[1]
+  assign offset = 0
+  if images.size >= 4
+    assign offset = 1
   endif
-  assign sizes = '(min-width: 750px) 50vw, 50vw'
+  assign count = images.size | minus: offset | at_most: 3
+  assign sizes = '(min-width: 750px) 30vw, 33vw'
 -%}
-{%- if first and second -%}
-  <section class="ln-duo" aria-label="{{ product.title | escape }}">
-    {%- for img in (1..2) -%}
-      {%- if forloop.index == 1 -%}{%- assign image = first -%}{%- else -%}{%- assign image = second -%}{%- endif -%}
-      {%- assign image_alt = image.alt | default: product.title -%}
-      <figure class="ln-duo__item">
-        {{
-          image
-          | image_url: width: 1800
-          | image_tag: widths: '400, 600, 900, 1200, 1500, 1800', sizes: sizes, loading: 'lazy', class: 'ln-duo__image', alt: image_alt
-        }}
-      </figure>
-    {%- endfor -%}
+{%- if count >= 2 -%}
+  <section class="ln-duo ln-duo--{{ count }}" aria-labelledby="LnDuo-{{ section.id }}">
+    <p class="ln-eyebrow ln-duo__heading" id="LnDuo-{{ section.id }}">{{ 'lumenook.product.in_detail' | t }}</p>
+    <div class="ln-duo__grid">
+      {%- for image in images offset: offset limit: count -%}
+        {%- assign image_alt = image.alt | default: product.title -%}
+        <figure class="ln-duo__item">
+          {{
+            image
+            | image_url: width: 1200
+            | image_tag: widths: '300, 450, 600, 900, 1200', sizes: sizes, loading: 'lazy', class: 'ln-duo__image', alt: image_alt
+          }}
+        </figure>
+      {%- endfor -%}
+    </div>
   </section>
 {%- endif -%}
 
 {% schema %}
 {
-  "name": "Lumenook image duo",
+  "name": "Lumenook image row",
   "settings": [],
   "enabled_on": { "templates": ["product"] },
-  "presets": [{ "name": "Lumenook image duo" }]
+  "presets": [{ "name": "Lumenook image row" }]
 }
 {% endschema %}

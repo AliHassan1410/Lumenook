@@ -1161,3 +1161,31 @@ product-custom-property-component[hidden] { display: none !important; }
     justify-content: center;
   }
 }
+
+/* Product image row: three even square images inside a calm, narrower page width */
+.ln-duo {
+  display: block;
+  inline-size: min(100% - 2 * var(--ln-gap), 1100px);
+  margin: clamp(40px, 5vw, 72px) auto 0;
+}
+
+.ln-duo__heading { margin: 0 0 18px; text-align: center; }
+
+.ln-duo__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.ln-duo--2 .ln-duo__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-inline-size: 740px;
+  margin-inline: auto;
+}
+
+.ln-duo .ln-duo__item { aspect-ratio: 1; border-radius: 4px; }
+
+@media (max-width: 749px) {
+  .ln-duo__grid { gap: 8px; }
+  .ln-duo__heading { margin-block-end: 12px; }
+}

@@ -436,7 +436,8 @@
       "light_on": "On",
       "toggle_light": "Switch the lamp on or off",
       "vat_included": "VAT included",
-      "instalments": "Or {{ count }} interest-free payments of {{ amount }} with {{ provider }}"
+      "instalments": "Or {{ count }} interest-free payments of {{ amount }} with {{ provider }}",
+      "in_detail": "In detail"
     },
     "whatsapp": {
       "label": "Chat with us on WhatsApp",
