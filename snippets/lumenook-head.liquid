@@ -89,7 +89,10 @@
   }
 </style>
 {%- if settings.favicon == blank -%}
-  <link rel="icon" type="image/svg+xml" href="{{ 'lumenook-favicon.svg' | asset_url }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ 'lumenook-favicon-32.png' | asset_url }}">
+  <link rel="icon" type="image/png" sizes="48x48" href="{{ 'lumenook-favicon-48.png' | asset_url }}">
+  <link rel="icon" type="image/png" sizes="192x192" href="{{ 'lumenook-favicon-192.png' | asset_url }}">
+  <link rel="apple-touch-icon" href="{{ 'lumenook-apple-touch-icon.png' | asset_url }}">
 {%- endif -%}
 {{ 'lumenook.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'lumenook.js' | asset_url }}" defer></script>
