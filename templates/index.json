@@ -382,11 +382,23 @@
                     "product_swatches_padding_right": 0
                   },
                   "blocks": {}
+                },
+                "ln_type": {
+                  "type": "lumenook-product-type",
+                  "settings": {},
+                  "blocks": {}
+                },
+                "ln_buy": {
+                  "type": "lumenook-card-buy",
+                  "settings": {},
+                  "blocks": {}
                 }
               },
               "block_order": [
+                "ln_type",
                 "product_title_LqTDzV",
                 "price_ECfK8q",
+                "ln_buy",
                 "swatches_EpqgCG"
               ]
             }
