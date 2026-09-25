@@ -1,0 +1,76 @@
+{% comment %}
+  Video feature (owner request): sits right below "In detail" (the image row). A vertical,
+  phone-format video plays in the centre with a short line of text on each side. Only appears on
+  products that have a video set in their "Feature video" metafield (lumenook.feature_video) —
+  renders nothing otherwise, so most product pages are unaffected.
+{% endcomment %}
+{%- liquid
+  assign video = product.metafields.lumenook.feature_video.value
+-%}
+{%- if video != blank -%}
+  <section class="ln-video-feature ln-section" aria-labelledby="LnVideoFeature-{{ section.id }}">
+    <div class="ln-container ln-video-feature__layout">
+      <div class="ln-video-feature__col ln-video-feature__col--left">
+        {%- if section.settings.left_heading != blank -%}
+          <h2 class="ln-video-feature__heading" id="LnVideoFeature-{{ section.id }}">{{ section.settings.left_heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.left_text != blank -%}
+          <p class="ln-video-feature__text">{{ section.settings.left_text }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="ln-video-feature__media">
+        <div class="ln-video-feature__frame">
+          {%- render 'video',
+            video: video,
+            video_autoplay: true,
+            video_loop: true,
+            disable_controls: true,
+            video_class: 'ln-video-feature__video'
+          -%}
+        </div>
+      </div>
+
+      <div class="ln-video-feature__col ln-video-feature__col--right">
+        {%- if section.settings.right_heading != blank -%}
+          <h3 class="ln-video-feature__heading">{{ section.settings.right_heading }}</h3>
+        {%- endif -%}
+        {%- if section.settings.right_text != blank -%}
+          <p class="ln-video-feature__text">{{ section.settings.right_text }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lumenook video feature",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows only on products with a video set in their \"Feature video\" metafield (Product → Metafields → Feature video)."
+    },
+    { "type": "header", "content": "Left text" },
+    { "type": "text", "id": "left_heading", "label": "Heading", "default": "Made to be seen" },
+    {
+      "type": "textarea",
+      "id": "left_text",
+      "label": "Text",
+      "default": "A closer look at how it sits in a room and holds the light, filmed the way you would show a friend."
+    },
+    { "type": "header", "content": "Right text" },
+    { "type": "text", "id": "right_heading", "label": "Heading", "default": "Worth a second look" },
+    {
+      "type": "textarea",
+      "id": "right_text",
+      "label": "Text",
+      "default": "Small details, real scale, true colour. What you see here is what arrives at your door."
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "presets": [{ "name": "Lumenook video feature" }]
+}
+{% endschema %}

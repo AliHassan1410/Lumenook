@@ -532,6 +532,10 @@
       "type": "lumenook-product-duo",
       "settings": {}
     },
+    "ln_video": {
+      "type": "lumenook-video-feature",
+      "settings": {}
+    },
     "ln_circle": {
       "type": "lumenook-circle-feature",
       "settings": {}
@@ -544,6 +548,7 @@
   "order": [
     "main",
     "ln_duo",
+    "ln_video",
     "ln_details",
     "ln_pairs",
     "product_recommendations_xmXAhw",
