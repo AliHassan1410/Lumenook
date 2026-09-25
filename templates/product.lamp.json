@@ -677,6 +677,10 @@
     "ln_duo": {
       "type": "lumenook-product-duo",
       "settings": {}
+    },
+    "ln_circle": {
+      "type": "lumenook-circle-feature",
+      "settings": {}
     }
   },
   "order": [
@@ -687,6 +691,7 @@
     "ln_details",
     "ln_pairs",
     "product_recommendations_xmXAhw",
+    "ln_circle",
     "ln_recent"
   ]
 }

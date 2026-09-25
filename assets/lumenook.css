@@ -1195,3 +1195,129 @@ product-custom-property-component[hidden] { display: none !important; }
   max-inline-size: 420px;
   margin-inline: auto;
 }
+
+/* =====================================================================
+   Circle feature: round image centred, three lines of copy on each side
+   ===================================================================== */
+.ln-circle { background: var(--ln-ivory); }
+.ln-circle__header { text-align: center; margin-block-end: clamp(28px, 4vw, 48px); }
+.ln-circle__header .ln-eyebrow { margin: 0 0 8px; }
+.ln-circle__heading { margin: 0; }
+
+.ln-circle__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+}
+
+.ln-circle__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(22px, 3vw, 36px);
+}
+
+.ln-circle__list--start { text-align: end; }
+.ln-circle__list--end { text-align: start; }
+
+.ln-circle__item {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding-block: 4px;
+  cursor: default;
+  outline-offset: 6px;
+  transition: transform 250ms var(--ln-ease);
+}
+
+.ln-circle__title {
+  font-family: var(--font-heading--family);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--ln-espresso);
+  transition: color 250ms var(--ln-ease);
+}
+
+.ln-circle__text {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ln-muted);
+  transition: color 250ms var(--ln-ease);
+}
+
+/* Small brass rule that grows toward the circle on hover */
+.ln-circle__item::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  block-size: 1px;
+  inline-size: 0;
+  background: var(--ln-brass);
+  transition: inline-size 250ms var(--ln-ease);
+}
+
+.ln-circle__list--start .ln-circle__item::after { inset-inline-end: -40px; }
+.ln-circle__list--end .ln-circle__item::after { inset-inline-start: -40px; }
+
+.ln-circle__item:is(:hover, :focus-visible) .ln-circle__title { color: var(--ln-brass-dark); }
+.ln-circle__item:is(:hover, :focus-visible) .ln-circle__text { color: var(--ln-espresso); }
+.ln-circle__item:is(:hover, :focus-visible)::after { inline-size: 28px; }
+.ln-circle__list--start .ln-circle__item:is(:hover, :focus-visible) { transform: translateX(6px); }
+.ln-circle__list--end .ln-circle__item:is(:hover, :focus-visible) { transform: translateX(-6px); }
+[dir='rtl'] .ln-circle__list--start .ln-circle__item:is(:hover, :focus-visible) { transform: translateX(-6px); }
+[dir='rtl'] .ln-circle__list--end .ln-circle__item:is(:hover, :focus-visible) { transform: translateX(6px); }
+
+/* Round frame with a thin brass ring */
+.ln-circle__media { display: grid; place-items: center; }
+
+.ln-circle__frame {
+  position: relative;
+  inline-size: clamp(240px, 26vw, 360px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 10px;
+  background: #FFFDF9;
+  box-shadow: 0 0 0 1px var(--ln-stone);
+}
+
+.ln-circle__frame::before {
+  content: '';
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  border: 1px solid var(--ln-brass);
+  opacity: .55;
+  pointer-events: none;
+}
+
+.ln-circle__image {
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--ln-sand);
+  transition: transform 400ms var(--ln-ease);
+}
+
+.ln-circle__frame { overflow: visible; }
+.ln-circle__frame > .ln-circle__image { display: block; }
+
+@media (hover: hover) {
+  .ln-circle__layout:hover .ln-circle__image { transform: scale(1.02); }
+}
+
+@media (max-width: 749px) {
+  .ln-circle__layout { grid-template-columns: 1fr; text-align: center; }
+  .ln-circle__media { order: -1; margin-block-end: 8px; }
+  .ln-circle__list--start, .ln-circle__list--end { text-align: center; }
+  .ln-circle__item::after { display: none; }
+  .ln-circle__list .ln-circle__item:is(:hover, :focus-visible) { transform: none; }
+  .ln-circle__frame { inline-size: min(70vw, 280px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ln-circle__item, .ln-circle__item::after, .ln-circle__image { transition: none; }
+}
