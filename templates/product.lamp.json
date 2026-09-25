@@ -26,7 +26,7 @@
             "thumbnail_position": "bottom",
             "thumbnail_width": 72,
             "thumbnail_radius": 2,
-            "aspect_ratio": "adapt",
+            "aspect_ratio": "1",
             "constrain_to_viewport": false,
             "media_fit": "cover",
             "media_radius": 4,

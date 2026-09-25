@@ -673,39 +673,6 @@ html[lang^='ar'] .ln-payments__cod { letter-spacing: 0; text-transform: none; }
 .ln-quote--night { background: var(--ln-scheme-3-bg); color: var(--ln-scheme-3-text); }
 
 /* =====================================================================
-   Product Page Media: compact, refined, boutique luxury sizing
-   ===================================================================== */
-@media screen and (min-width: 750px) {
-  .product-information__media {
-    max-width: 420px !important;
-    margin-inline: auto !important;
-  }
-
-  .product-information .media-gallery__grid {
-    max-width: 420px !important;
-    margin-inline: auto !important;
-  }
-
-  .product-information .product-media-container img {
-    max-height: 380px !important;
-    object-fit: contain !important;
-    background-color: var(--ln-sand, #f7f3ee);
-  }
-}
-
-@media screen and (max-width: 749px) {
-  .product-information__media {
-    max-width: 76vw !important;
-    margin-inline: auto !important;
-  }
-
-  .product-information .product-media-container img {
-    max-height: 44vh !important;
-    object-fit: contain !important;
-  }
-}
-
-/* =====================================================================
    Product grid: generous spacing between cards
    ===================================================================== */
 .product-list__grid,
@@ -1133,28 +1100,8 @@ product-custom-property-component[hidden] { display: none !important; }
 .product-information .product-media-container,
 .product-information .product-media { background: transparent; }
 
-/* Gallery (carousel): Dwell gives every slide one shared aspect ratio (from another image), so
-   a square image sits letterboxed in a wider box and thumbnails drift far down. Size each
-   slide from its own image ratio instead, fill the frame, and present it in a quiet mat. */
-.product-information slideshow-slide.product-media-container {
-  aspect-ratio: auto !important;
-  max-block-size: none;
-  block-size: auto;
-  align-self: start;
-}
-
-.product-information slideshow-slide.product-media-container .product-media {
-  aspect-ratio: var(--ratio, 1);
-  block-size: auto;
-  inline-size: 100%;
-}
-
-.product-information slideshow-slide.product-media-container .product-media img {
-  inline-size: 100%;
-  block-size: 100%;
-  object-fit: cover;
-}
-
+/* Gallery: every slide is the same square frame and the image fills it (cover), so there is
+   no letterboxing and the thumbnails sit right under the image. Framed in a quiet mat. */
 .product-information media-gallery slideshow-container {
   padding: 10px;
   background: #FFFDF9;
@@ -1162,10 +1109,31 @@ product-custom-property-component[hidden] { display: none !important; }
   border-radius: 4px;
 }
 
-.product-information media-gallery slideshow-slides { align-items: start; }
+.product-information .product-media-container img { object-fit: cover; }
 
 .product-information .slideshow-controls__thumbnails-container { margin-block-start: 12px; }
 
 @media (max-width: 749px) {
   .product-information media-gallery slideshow-container { padding: 6px; }
+}
+
+/* Buy it now: keep the arrow on the same line as the label */
+.product-information button.shopify-payment-button__button--unbranded {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: .6em;
+}
+
+.product-information button.shopify-payment-button__button--unbranded::after { margin-inline-start: 0; }
+
+/* Image duo: supplier photos often carry thin white margins; a slight zoom keeps them out of frame */
+.ln-duo__image { transform: scale(1.05); }
+
+@media (hover: hover) {
+  .ln-duo__item:hover .ln-duo__image { transform: scale(1.07); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ln-duo__image { transform: scale(1.05) !important; }
 }
