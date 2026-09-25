@@ -1132,3 +1132,40 @@ product-custom-property-component[hidden] { display: none !important; }
 /* Gallery: the image fills its frame at its own ratio, no sand margins around it */
 .product-information .product-media-container,
 .product-information .product-media { background: transparent; }
+
+/* Gallery (carousel): Dwell gives every slide one shared aspect ratio (from another image), so
+   a square image sits letterboxed in a wider box and thumbnails drift far down. Size each
+   slide from its own image ratio instead, fill the frame, and present it in a quiet mat. */
+.product-information slideshow-slide.product-media-container {
+  aspect-ratio: auto !important;
+  max-block-size: none;
+  block-size: auto;
+  align-self: start;
+}
+
+.product-information slideshow-slide.product-media-container .product-media {
+  aspect-ratio: var(--ratio, 1);
+  block-size: auto;
+  inline-size: 100%;
+}
+
+.product-information slideshow-slide.product-media-container .product-media img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.product-information media-gallery slideshow-container {
+  padding: 10px;
+  background: #FFFDF9;
+  border: 1px solid var(--ln-stone);
+  border-radius: 4px;
+}
+
+.product-information media-gallery slideshow-slides { align-items: start; }
+
+.product-information .slideshow-controls__thumbnails-container { margin-block-start: 12px; }
+
+@media (max-width: 749px) {
+  .product-information media-gallery slideshow-container { padding: 6px; }
+}
