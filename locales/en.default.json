@@ -377,7 +377,12 @@
       "tagline": "Light for your quiet corner"
     },
     "cta": {
-      "add_to_bag": "Add to bag"
+      "add_to_bag": "Add to bag",
+      "add_to_cart": "Add to cart",
+      "choose_options": "Choose options",
+      "decrease": "Decrease quantity",
+      "increase": "Increase quantity",
+      "quantity": "Quantity for {{ title }}"
     },
     "trust": {
       "warranty": "2-year warranty",

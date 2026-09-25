@@ -1,0 +1,64 @@
+{% doc %}
+  Purchase row for collection product cards: quantity (- 1 +), Add to cart and Buy it now,
+  matching the product page. Uses Dwell's product-form-component, so adding opens the cart
+  drawer as usual. Products with several variants get a "Choose options" link to the product
+  page instead, so the wrong variant is never added. Sold-out products show a disabled button.
+{% enddoc %}
+{%- liquid
+  assign product = closest.product
+  assign variant = product.selected_or_first_available_variant
+  assign form_id = 'LnCardBuy-' | append: section.id | append: '-' | append: product.id
+-%}
+<div class="ln-card-buy" {{ block.shopify_attributes }}>
+  {%- if product.available == false -%}
+    <button type="button" class="button ln-card-buy__full" disabled>{{ 'lumenook.badges.sold_out' | t }}</button>
+  {%- elsif product.has_only_default_variant == false -%}
+    <a class="button ln-card-buy__full" href="{{ product.url }}">{{ 'lumenook.cta.choose_options' | t }}</a>
+  {%- else -%}
+    <product-form-component
+      data-section-id="{{ section.id }}"
+      data-product-id="{{ product.id }}"
+      data-quantity-default="1"
+      on:submit="/handleSubmit"
+      class="ln-card-buy__form"
+    >
+      <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+      {%- form 'product', product, id: form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+        <input type="hidden" name="id" ref="variantId" value="{{ variant.id }}">
+        <div class="ln-card-buy__row">
+          <div class="ln-qty" data-ln-qty>
+            <button type="button" class="ln-qty__btn" data-step="-1" aria-label="{{ 'lumenook.cta.decrease' | t }}">&minus;</button>
+            <input
+              class="ln-qty__input"
+              type="number"
+              name="quantity"
+              value="1"
+              min="1"
+              inputmode="numeric"
+              aria-label="{{ 'lumenook.cta.quantity' | t: title: product.title | escape }}"
+            >
+            <button type="button" class="ln-qty__btn" data-step="1" aria-label="{{ 'lumenook.cta.increase' | t }}">+</button>
+          </div>
+          {%- assign add_text = 'lumenook.cta.add_to_cart' | t -%}
+          {% render 'add-to-cart-button',
+            add_to_cart_text: add_text,
+            class: 'ln-card-buy__add add-to-cart-button',
+            can_add_to_cart: variant.available,
+            show_icon: true,
+            product: product
+          %}
+        </div>
+        <div class="ln-card-buy__now">{{ form | payment_button }}</div>
+      {%- endform -%}
+    </product-form-component>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Lumenook card buy row",
+  "tag": null,
+  "settings": [],
+  "presets": [{ "name": "Lumenook card buy row" }]
+}
+{% endschema %}

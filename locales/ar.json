@@ -386,7 +386,12 @@
       "tagline": "ضوء لركنك الهادئ"
     },
     "cta": {
-      "add_to_bag": "أضف إلى الحقيبة"
+      "add_to_bag": "أضف إلى الحقيبة",
+      "add_to_cart": "أضف إلى السلة",
+      "choose_options": "اختر الخيارات",
+      "decrease": "تقليل الكمية",
+      "increase": "زيادة الكمية",
+      "quantity": "الكمية لـ {{ title }}"
     },
     "trust": {
       "warranty": "ضمان لمدة سنتين",

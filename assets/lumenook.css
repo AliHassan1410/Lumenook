@@ -1376,3 +1376,128 @@ product-custom-property-component[hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   .ln-duo .ln-duo__image { transform: none !important; }
 }
+
+/* Collection cards: category eyebrow on top, then title + price, then the purchase row */
+.product-grid-container .product-grid__item .group-block-content > .ln-product-type {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  margin: 0;
+  font-size: 11px;
+}
+
+.product-grid-container .product-grid__item .group-block-content > a.contents > .text-block,
+.product-grid-container .product-grid__item .group-block-content > product-price { grid-row: 2; }
+
+@media (max-width: 749px) {
+  .product-grid-container .product-grid__item .group-block-content > product-price { grid-row: 3; }
+}
+
+/* Stretch the text group to the card's height so every purchase row lines up at the bottom,
+   whether the title takes one line or two */
+.product-grid-container .product-grid__item .product-card__content > .group-block:has(.ln-card-buy) {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-grid-container .product-grid__item .group-block:has(.ln-card-buy) > .group-block-content { flex-grow: 1; grid-template-rows: auto auto 1fr; }
+.product-grid-container .product-grid__item .group-block-content > .ln-card-buy { align-self: end; }
+
+@media (max-width: 749px) {
+  .product-grid-container .product-grid__item .group-block:has(.ln-card-buy) > .group-block-content { grid-template-rows: auto auto auto 1fr; }
+}
+
+/* Hide Dwell's hover quick-add here: the full purchase row replaces it */
+.product-grid-container .product-grid__item .quick-add { display: none; }
+
+.ln-card-buy {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 8px;
+  margin-block-start: 10px;
+  cursor: default;
+}
+
+.ln-card-buy__form form { display: grid; gap: 8px; }
+
+.ln-card-buy__row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px;
+}
+
+.ln-qty {
+  display: grid;
+  grid-template-columns: 32px 34px 32px;
+  align-items: center;
+  block-size: 44px;
+  border: 1px solid var(--ln-stone);
+  border-radius: 2px;
+  background: #FFFDF9;
+}
+
+.ln-qty__btn {
+  block-size: 100%;
+  background: none;
+  border: 0;
+  color: var(--ln-espresso);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.ln-qty__btn:hover { color: var(--ln-brass-dark); }
+
+.ln-qty__input {
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0 !important;
+  background: transparent !important;
+  text-align: center;
+  font-size: 14px;
+  padding: 0 !important;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.ln-qty__input::-webkit-outer-spin-button,
+.ln-qty__input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.ln-card-buy :is(.ln-card-buy__add, .ln-card-buy__full),
+.ln-card-buy .shopify-payment-button__button--unbranded {
+  inline-size: 100%;
+  min-block-size: 44px !important;
+  border-radius: 2px;
+  font-size: 11px !important;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding-inline: 10px;
+}
+
+.ln-card-buy .ln-card-buy__add { background: var(--ln-espresso); color: var(--ln-ivory); }
+
+.ln-card-buy .shopify-payment-button__button--unbranded {
+  background: var(--ln-espresso) !important;
+  color: var(--ln-ivory) !important;
+  box-shadow: none !important;
+}
+
+.ln-card-buy button.shopify-payment-button__button--unbranded { display: flex !important; align-items: center; justify-content: center; gap: .5em; white-space: nowrap; }
+.ln-card-buy .shopify-payment-button__button--unbranded::after { content: '\2192'; }
+[dir='rtl'] .ln-card-buy .shopify-payment-button__button--unbranded::after { transform: scaleX(-1); }
+
+/* Load more sits in the collection wrapper grid: span the full row, below the products */
+.collection-wrapper > .ln-load-more { grid-column: 1 / -1; }
+.ln-card-buy .shopify-payment-button__more-options { display: none; }
+.ln-card-buy__full { display: grid; place-items: center; text-decoration: none; }
+.ln-card-buy__full[disabled] { opacity: .5; cursor: not-allowed; }
+
+html[lang^='ar'] .ln-card-buy :is(.ln-card-buy__add, .ln-card-buy__full, .shopify-payment-button__button--unbranded) {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+@media (max-width: 749px) {
+  .ln-card-buy__row { grid-template-columns: 1fr; }
+  .ln-qty { grid-template-columns: 1fr 1fr 1fr; }
+}

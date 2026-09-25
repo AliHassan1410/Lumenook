@@ -432,3 +432,24 @@ if (!customElements.get('ln-sticky-atc')) customElements.define('ln-sticky-atc',
     new MutationObserver(() => requestAnimationFrame(init)).observe(document.body, { childList: true, subtree: true });
   });
 })();
+
+/* Card quantity steppers (collection purchase row): keep Dwell's product form in sync so
+   Add to cart sends the chosen quantity. */
+document.addEventListener('click', (event) => {
+  const btn = event.target.closest('[data-ln-qty] [data-step]');
+  if (!btn) return;
+  event.preventDefault();
+  event.stopPropagation();
+  const input = btn.closest('[data-ln-qty]').querySelector('input');
+  input.value = Math.max(1, (parseInt(input.value, 10) || 1) + Number(btn.dataset.step));
+  input.dispatchEvent(new Event('change', { bubbles: true }));
+});
+
+document.addEventListener('change', (event) => {
+  const input = event.target.closest('[data-ln-qty] input');
+  if (!input) return;
+  const qty = Math.max(1, parseInt(input.value, 10) || 1);
+  input.value = qty;
+  const form = input.closest('product-form-component');
+  if (form) form.dataset.quantityDefault = String(qty);
+});

@@ -55,7 +55,7 @@
             "card-gallery": {
               "type": "_product-card-gallery",
               "settings": {
-                "image_ratio": "portrait",
+                "image_ratio": "square",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
@@ -172,12 +172,24 @@
                     "width": "100%"
                   },
                   "blocks": {}
+                },
+                "ln_type": {
+                  "type": "lumenook-product-type",
+                  "settings": {},
+                  "blocks": {}
+                },
+                "ln_buy": {
+                  "type": "lumenook-card-buy",
+                  "settings": {},
+                  "blocks": {}
                 }
               },
               "block_order": [
+                "ln_type",
                 "product_title_anJjPJ",
                 "ln_subtitle",
                 "price",
+                "ln_buy",
                 "swatches"
               ]
             }
