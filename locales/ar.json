@@ -399,7 +399,8 @@
       "choose_emirate": "التوصيل إلى",
       "before_cutoff": "اطلب خلال [hours] س و[minutes] د – يصل إلى [emirate] [date]",
       "after_cutoff": "اطلب الآن – يصل إلى [emirate] [date]",
-      "tomorrow": "غدًا"
+      "tomorrow": "غدًا",
+      "panel_heading": "توصيل مجاني للطلبات فوق {{ amount }}"
     },
     "specs": {
       "heading": "المواصفات",

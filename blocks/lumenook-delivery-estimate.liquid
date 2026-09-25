@@ -6,12 +6,17 @@
 {%- liquid
   assign product = closest.product
   assign fast = settings.ln_fast_emirates | default: 'Dubai, Sharjah, Ajman' | split: ','
+  assign ln_threshold = settings.ln_free_delivery_threshold | default: 0 | times: 100
+  assign ln_threshold_money = ln_threshold | money_without_trailing_zeros
   assign others = settings.ln_other_emirates | default: 'Abu Dhabi, Al Ain, Ras Al Khaimah, Umm Al Quwain, Fujairah' | split: ','
 -%}
 {%- if product.available -%}
   <ln-delivery-estimate class="ln-delivery" hidden {{ block.shopify_attributes }}>
     {% render 'lumenook-icon', icon: 'truck' %}
     <div class="ln-delivery__body">
+      {%- if ln_threshold > 0 -%}
+        <p class="ln-delivery__heading">{{ 'lumenook.delivery.panel_heading' | t: amount: ln_threshold_money }}</p>
+      {%- endif -%}
       <p class="ln-delivery__text" data-output aria-live="polite"></p>
       <label class="ln-delivery__label">
         <span class="visually-hidden">{{ 'lumenook.delivery.choose_emirate' | t }}</span>

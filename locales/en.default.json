@@ -390,7 +390,8 @@
       "choose_emirate": "Deliver to",
       "before_cutoff": "Order in the next [hours]h [minutes]m – arrives in [emirate] [date]",
       "after_cutoff": "Order now – arrives in [emirate] [date]",
-      "tomorrow": "tomorrow"
+      "tomorrow": "tomorrow",
+      "panel_heading": "Complimentary delivery over {{ amount }}"
     },
     "specs": {
       "heading": "Specifications",
