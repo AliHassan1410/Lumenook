@@ -366,3 +366,12 @@ if (!customElements.get('ln-sticky-atc')) customElements.define('ln-sticky-atc',
   videos.forEach((v) => io.observe(v));
 })();
 
+/* Auto-scrolling product carousels stay still for shoppers who prefer reduced motion. */
+if (reduceMotion() && window.customElements) {
+  customElements.whenDefined('slideshow-component').then(() => {
+    document.querySelectorAll('.resource-list__carousel[autoplay], .resource-list__carousel [autoplay]').forEach((el) => el.pause?.());
+    document.querySelectorAll('slideshow-component[autoplay]').forEach((el) => {
+      if (el.closest('.resource-list')) el.pause?.();
+    });
+  });
+}
