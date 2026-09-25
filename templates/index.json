@@ -823,20 +823,12 @@
             "icon": "return",
             "title": "Easy 14-day returns"
           }
-        },
-        "p4": {
-          "type": "item",
-          "settings": {
-            "icon": "gift",
-            "title": "Gift wrapping"
-          }
         }
       },
       "block_order": [
         "p1",
         "p2",
-        "p3",
-        "p4"
+        "p3"
       ]
     },
     "quote": {

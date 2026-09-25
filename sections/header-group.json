@@ -98,19 +98,11 @@
             "text": "Cash on delivery available"
           },
           "blocks": {}
-        },
-        "announcement_ln_gift": {
-          "type": "message",
-          "settings": {
-            "text": "Gift wrapping on request"
-          },
-          "blocks": {}
         }
       },
       "block_order": [
         "announcement_KMAGKG",
-        "announcement_ln_cod",
-        "announcement_ln_gift"
+        "announcement_ln_cod"
       ],
       "settings": {
         "speed": 8,
