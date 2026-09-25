@@ -1,31 +1,56 @@
 {% comment %}
-  Product image row: up to three of the product's images in an even row inside the page width,
-  under a small eyebrow heading. Skips the first image (already the gallery hero) when the
-  product has four or more images. Renders nothing with fewer than two images.
+  Product image row ("In detail"): up to three images in an even row inside the page width.
+  Uses the images chosen in the product's "In detail images" field (lumenook.detail_images).
+  When that field is empty it picks automatically: the product's images, skipping the first
+  (already the gallery hero) when there are four or more. Renders nothing with fewer than two.
 {% endcomment %}
 {%- liquid
-  assign images = product.images
-  assign offset = 0
-  if images.size >= 4
-    assign offset = 1
+  assign chosen = product.metafields.lumenook.detail_images.value
+  assign use_chosen = false
+  if chosen != blank and chosen.size > 0
+    assign use_chosen = true
+    assign count = chosen.size | at_most: 3
+  else
+    assign images = product.images
+    assign offset = 0
+    if images.size >= 4
+      assign offset = 1
+    endif
+    assign count = images.size | minus: offset | at_most: 3
   endif
-  assign count = images.size | minus: offset | at_most: 3
   assign sizes = '(min-width: 750px) 30vw, 33vw'
+  assign min_count = 2
+  if use_chosen
+    assign min_count = 1
+  endif
 -%}
-{%- if count >= 2 -%}
+{%- if count >= min_count -%}
   <section class="ln-duo ln-duo--{{ count }}" aria-labelledby="LnDuo-{{ section.id }}">
     <p class="ln-eyebrow ln-duo__heading" id="LnDuo-{{ section.id }}">{{ 'lumenook.product.in_detail' | t }}</p>
     <div class="ln-duo__grid">
-      {%- for image in images offset: offset limit: count -%}
-        {%- assign image_alt = image.alt | default: product.title -%}
-        <figure class="ln-duo__item">
-          {{
-            image
-            | image_url: width: 1200
-            | image_tag: widths: '300, 450, 600, 900, 1200', sizes: sizes, loading: 'lazy', class: 'ln-duo__image', alt: image_alt
-          }}
-        </figure>
-      {%- endfor -%}
+      {%- if use_chosen -%}
+        {%- for image in chosen limit: count -%}
+          {%- assign image_alt = image.alt | default: product.title -%}
+          <figure class="ln-duo__item">
+            {{
+              image
+              | image_url: width: 1200
+              | image_tag: widths: '300, 450, 600, 900, 1200', sizes: sizes, loading: 'lazy', class: 'ln-duo__image', alt: image_alt
+            }}
+          </figure>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for image in images offset: offset limit: count -%}
+          {%- assign image_alt = image.alt | default: product.title -%}
+          <figure class="ln-duo__item">
+            {{
+              image
+              | image_url: width: 1200
+              | image_tag: widths: '300, 450, 600, 900, 1200', sizes: sizes, loading: 'lazy', class: 'ln-duo__image', alt: image_alt
+            }}
+          </figure>
+        {%- endfor -%}
+      {%- endif -%}
     </div>
   </section>
 {%- endif -%}

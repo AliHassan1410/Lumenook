@@ -1189,3 +1189,9 @@ product-custom-property-component[hidden] { display: none !important; }
   .ln-duo__grid { gap: 8px; }
   .ln-duo__heading { margin-block-end: 12px; }
 }
+
+.ln-duo--1 .ln-duo__grid {
+  grid-template-columns: minmax(0, 1fr);
+  max-inline-size: 420px;
+  margin-inline: auto;
+}
