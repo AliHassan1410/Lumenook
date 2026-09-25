@@ -507,7 +507,7 @@
         "layout_type": "carousel",
         "carousel_on_mobile": false,
         "max_products": 5,
-        "columns": 6,
+        "columns": 5,
         "mobile_columns": "2",
         "columns_gap": 12,
         "rows_gap": 36,
