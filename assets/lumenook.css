@@ -133,6 +133,9 @@ html[lang^='ar'] button.shopify-payment-button__button--unbranded {
   padding-block: var(--ln-section-y);
 }
 
+/* Directly under a plain banner (no hero image): the banner already carries the top gap */
+.ln-section--top-tight { padding-block-start: clamp(8px, 1.5vw, 24px); }
+
 .ln-section__heading {
   font-family: var(--font-heading--family);
   font-weight: 500;

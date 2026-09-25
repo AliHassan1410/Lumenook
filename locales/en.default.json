@@ -416,7 +416,8 @@
       "read_more": "Read more",
       "read_less": "Read less",
       "discover": "Discover",
-      "announcements": "Announcements"
+      "announcements": "Announcements",
+      "all_collections": "All collections"
     },
     "cart": {
       "free_delivery_remaining": "You're {{ amount }} away from complimentary delivery",

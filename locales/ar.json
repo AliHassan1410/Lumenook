@@ -425,7 +425,8 @@
       "read_more": "اقرأ المزيد",
       "read_less": "عرض أقل",
       "discover": "اكتشف",
-      "announcements": "الإعلانات"
+      "announcements": "الإعلانات",
+      "all_collections": "كل المجموعات"
     },
     "cart": {
       "free_delivery_remaining": "تبقّى {{ amount }} للحصول على توصيل مجاني",
