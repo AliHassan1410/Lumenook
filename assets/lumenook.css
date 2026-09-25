@@ -821,3 +821,125 @@ html[lang^='ar'] .ln-marquee { letter-spacing: 0; text-transform: none; }
   .ln-marquee__track { animation: none; inline-size: auto; justify-content: center; }
   .ln-marquee__list[aria-hidden='true'] { display: none; }
 }
+
+/* =====================================================================
+   Collection / search product cards: premium framed cards, 3 per row (owner request)
+   ===================================================================== */
+@media (min-width: 990px) {
+  .product-grid-container .product-grid--grid:not([product-grid-view='zoom-out']) {
+    --product-grid-columns-desktop: repeat(3, minmax(0, 1fr)) !important;
+    --product-grid-gap-desktop: 32px;
+  }
+}
+
+@media (min-width: 750px) and (max-width: 989px) {
+  .product-grid-container .product-grid--grid:not([product-grid-view='zoom-out']) {
+    --product-grid-columns-desktop: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+.product-grid-container .product-grid:not([product-grid-view='zoom-out']) .product-grid__item {
+  background: #FFFDF9;
+  border: 1px solid var(--ln-stone);
+  border-radius: 16px;
+  padding: 12px 12px 18px;
+  transition: transform var(--ln-dur) var(--ln-ease), box-shadow var(--ln-dur) var(--ln-ease), border-color var(--ln-dur);
+}
+
+@media (hover: hover) {
+  .product-grid-container .product-grid:not([product-grid-view='zoom-out']) .product-grid__item:hover {
+    transform: translateY(-4px);
+    border-color: var(--ln-brass);
+    box-shadow: 0 18px 40px rgb(28 25 23 / .08);
+  }
+
+  .product-grid-container .product-grid__item:hover .product-media__image { transform: scale(1.04); }
+}
+
+.product-grid-container .product-grid__item .card-gallery {
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--ln-sand);
+}
+
+.product-grid-container .product-grid__item .product-media__image {
+  transition: transform .8s var(--ln-ease);
+}
+
+/* Title left, price right on one line; subtitle and swatches below */
+.product-grid-container .product-grid__item .group-block-content {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 12px;
+  row-gap: 4px;
+  padding-block-start: 6px;
+}
+
+.product-grid-container .product-grid__item .group-block-content > * { grid-column: 1 / -1; }
+
+.product-grid-container .product-grid__item .group-block-content > a.contents > .text-block {
+  grid-column: 1;
+  grid-row: 1;
+  font-family: var(--font-accent--family);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.product-grid-container .product-grid__item .group-block-content > product-price {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  text-align: end;
+  font-size: 14px;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+/* Badges: small rounded labels to match the cards */
+.product-grid-container .product-badges__badge { border-radius: 999px; padding-inline: 10px; }
+
+/* Quick add ("Shop now") in espresso */
+.product-grid-container .quick-add__button {
+  background: var(--ln-espresso);
+  color: var(--ln-ivory);
+  border-radius: 999px;
+}
+
+@media (max-width: 749px) {
+  .product-grid-container .product-grid:not([product-grid-view='zoom-out']) .product-grid__item {
+    padding: 8px 8px 12px;
+    border-radius: 12px;
+  }
+
+  .product-grid-container .product-grid__item .card-gallery { border-radius: 8px; }
+
+  .product-grid-container .product-grid__item .group-block-content {
+    grid-template-columns: 1fr;
+  }
+
+  .product-grid-container .product-grid__item .group-block-content > product-price {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+    text-align: start;
+  }
+
+  .product-grid-container .product-grid__item .group-block-content > a.contents > .text-block {
+    font-size: 12px;
+    letter-spacing: .1em;
+  }
+}
+
+html[lang^='ar'] .product-grid-container .product-grid__item .group-block-content > a.contents > .text-block {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-grid-container .product-grid__item,
+  .product-grid-container .product-grid__item .product-media__image { transition: none; transform: none !important; }
+}
