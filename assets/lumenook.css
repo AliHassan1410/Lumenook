@@ -1121,3 +1121,14 @@ footer input[type='email']:focus-visible { border-block-end-color: var(--ln-bras
 @media (prefers-reduced-motion: reduce) {
   .ln-duo__image, .ln-card__image { transition: none; transform: none !important; }
 }
+
+/* Gift message: hidden until "This is a gift" is ticked (CSS-only, works without JS) */
+product-custom-property-component[hidden] { display: none !important; }
+
+.product-information:has(input[name='properties[Gift]']:not(:checked)) product-custom-property-component:has([name='properties[Gift message]']) {
+  display: none;
+}
+
+/* Gallery: the image fills its frame at its own ratio, no sand margins around it */
+.product-information .product-media-container,
+.product-information .product-media { background: transparent; }
