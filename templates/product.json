@@ -535,6 +535,10 @@
     "ln_circle": {
       "type": "lumenook-circle-feature",
       "settings": {}
+    },
+    "ln_mood": {
+      "type": "lumenook-mood",
+      "settings": {}
     }
   },
   "order": [
@@ -544,6 +548,7 @@
     "ln_pairs",
     "product_recommendations_xmXAhw",
     "ln_circle",
+    "ln_mood",
     "ln_recent"
   ]
 }

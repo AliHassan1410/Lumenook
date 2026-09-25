@@ -544,138 +544,6 @@
       ],
       "settings": {}
     },
-    "ln_after_dark": {
-      "type": "media-with-content",
-      "blocks": {
-        "media": {
-          "type": "_media-without-appearance",
-          "static": true,
-          "settings": {
-            "media_type": "image",
-            "video_loop": true,
-            "video_autoplay": false,
-            "image_position": "cover",
-            "video_position": "cover"
-          },
-          "blocks": {}
-        },
-        "content": {
-          "type": "_content-without-appearance",
-          "static": true,
-          "settings": {
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "space-between",
-            "gap": 24
-          },
-          "blocks": {
-            "ln_e": {
-              "type": "text",
-              "settings": {
-                "text": "<p>AFTER DARK</p>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h6",
-                "font": "var(--font-body--family)",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "{{ settings.color_palette.color1 }}",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "ln_h": {
-              "type": "text",
-              "settings": {
-                "text": "<h2>Glow, not glare</h2>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h2",
-                "font": "var(--font-body--family)",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "{{ settings.color_palette.background }}",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "ln_p": {
-              "type": "text",
-              "settings": {
-                "text": "<p>Touch lamps, candle warmers and ambient pieces for slow evenings. Warm, low light that makes a room feel calm long after sunset.</p>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "{{ settings.color_palette.background }}",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "ln_b": {
-              "type": "button",
-              "settings": {
-                "label": "Shop Mood & Ambient",
-                "link": "shopify://collections/ambient-lighting",
-                "open_in_new_tab": false,
-                "style_class": "button-unstyled",
-                "link_text_color": "{{ settings.color_palette.background }}",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "ln_e",
-            "ln_h",
-            "ln_p",
-            "ln_b"
-          ]
-        }
-      },
-      "name": "t:names.media_with_text",
-      "settings": {
-        "media_position": "left",
-        "media_width": "medium",
-        "media_height": "80svh",
-        "section_width": "page-width",
-        "extend_media": true,
-        "background_color": "{{ settings.color_palette.color2 }}",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "ln_duo": {
       "type": "lumenook-product-duo",
       "settings": {}
@@ -683,17 +551,21 @@
     "ln_circle": {
       "type": "lumenook-circle-feature",
       "settings": {}
+    },
+    "ln_mood": {
+      "type": "lumenook-mood",
+      "settings": {}
     }
   },
   "order": [
     "main",
     "ln_duo",
     "ln_lit",
-    "ln_after_dark",
     "ln_details",
     "ln_pairs",
     "product_recommendations_xmXAhw",
     "ln_circle",
+    "ln_mood",
     "ln_recent"
   ]
 }

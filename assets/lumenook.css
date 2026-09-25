@@ -706,6 +706,78 @@ html[lang^='ar'] .ln-payments__cod { letter-spacing: 0; text-transform: none; }
 .ln-quote--sand { background: var(--ln-scheme-2-bg); color: var(--ln-scheme-2-text); }
 .ln-quote--night { background: var(--ln-scheme-3-bg); color: var(--ln-scheme-3-text); }
 
+/* Mood feature: full-bleed split, product image one side, dark panel the other */
+.ln-mood {
+  inline-size: 100dvw;
+  position: relative;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  background: var(--ln-night);
+}
+
+[dir='rtl'] .ln-mood { transform: translateX(50%); }
+
+@media (min-width: 750px) {
+  .ln-mood { grid-template-columns: 1fr 1fr; min-block-size: clamp(440px, 58vh, 600px); }
+  .ln-mood--media-right .ln-mood__media { order: 2; }
+  .ln-mood--media-right .ln-mood__panel { order: 1; }
+}
+
+.ln-mood__media { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--ln-sand); }
+
+@media (min-width: 750px) {
+  .ln-mood__media { aspect-ratio: auto; }
+}
+
+.ln-mood__image { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; }
+
+.ln-mood__panel {
+  display: flex;
+  align-items: center;
+  padding: clamp(32px, 5vw, 64px);
+  color: var(--ln-ivory-on-dark);
+}
+
+.ln-mood__inner { max-inline-size: 460px; display: grid; gap: 16px; }
+
+.ln-mood__eyebrow { margin: 0; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--ln-brass); }
+
+.ln-mood__heading {
+  margin: 0;
+  font-family: var(--font-heading--family);
+  font-weight: 500;
+  font-size: clamp(30px, 3.4vw, 42px);
+  line-height: 1.15;
+}
+
+.ln-mood__text { margin: 0; font-size: 15px; line-height: 1.65; color: var(--ln-ivory-on-dark); opacity: .85; }
+
+.ln-mood__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-block-start: 8px;
+  inline-size: fit-content;
+  color: var(--ln-ivory-on-dark);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border-block-end: 1px solid rgb(239 230 218 / .4);
+  padding-block-end: 4px;
+  transition: border-color 200ms var(--ln-ease), color 200ms var(--ln-ease);
+}
+
+.ln-mood__cta:hover { border-color: var(--ln-brass); color: var(--ln-brass); }
+.ln-mood__cta-arrow { transition: transform 200ms var(--ln-ease); }
+.ln-mood__cta:hover .ln-mood__cta-arrow { transform: translateX(4px); }
+[dir='rtl'] .ln-mood__cta-arrow { display: inline-block; transform: scaleX(-1); }
+[dir='rtl'] .ln-mood__cta:hover .ln-mood__cta-arrow { transform: scaleX(-1) translateX(4px); }
+
+html[lang^='ar'] .ln-mood__eyebrow,
+html[lang^='ar'] .ln-mood__cta { letter-spacing: 0; text-transform: none; }
+
 /* =====================================================================
    Product grid: generous spacing between cards
    ===================================================================== */

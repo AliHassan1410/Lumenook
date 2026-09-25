@@ -1,0 +1,137 @@
+{% comment %}
+  Mood feature (owner request): full-bleed split under "The Lumenook way" — a product image on one
+  side, a dark panel on the other with an eyebrow, heading, two generic lines and a "Explore" link.
+  Copy follows the product's department tag (dept-lighting, dept-desk) so every category gets text
+  that fits it, falling back to a generic set for anything else (gifts, little luxuries, etc.).
+{% endcomment %}
+{%- liquid
+  assign s = section.settings
+  assign image = s.image
+  if image == blank and product != blank
+    assign image = product.featured_image
+  endif
+  assign image_alt = image.alt | default: product.title
+
+  assign set = ''
+  if product.tags contains 'dept-lighting'
+    assign set = 'lighting_'
+  elsif product.tags contains 'dept-desk'
+    assign set = 'desk_'
+  endif
+
+  assign eyebrow_key = set | append: 'eyebrow'
+  assign heading_key = set | append: 'heading'
+  assign text_key = set | append: 'text'
+  assign cta_text_key = set | append: 'cta_text'
+  assign cta_link_key = set | append: 'cta_link'
+
+  assign eyebrow = s[eyebrow_key] | default: s.eyebrow
+  assign heading = s[heading_key] | default: s.heading
+  assign text = s[text_key] | default: s.text
+  assign cta_text = s[cta_text_key] | default: s.cta_text
+  assign cta_link = s[cta_link_key] | default: s.cta_link
+  if cta_link == blank
+    if set == 'lighting_'
+      assign cta_link = collections['lighting'].url | default: '/collections/lighting'
+    elsif set == 'desk_'
+      assign cta_link = collections['desk-objects'].url | default: '/collections/desk-objects'
+    else
+      assign cta_link = '/collections'
+    endif
+  endif
+-%}
+<section class="ln-mood{% if s.media_position == 'right' %} ln-mood--media-right{% endif %}" aria-labelledby="LnMood-{{ section.id }}">
+  <div class="ln-mood__media">
+    {%- if image != blank -%}
+      {{
+        image
+        | image_url: width: 1600
+        | image_tag: widths: '600, 900, 1200, 1600', sizes: '(min-width: 750px) 50vw, 100vw', loading: 'lazy', class: 'ln-mood__image', alt: image_alt
+      }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'ln-mood__image' }}
+    {%- endif -%}
+  </div>
+  <div class="ln-mood__panel">
+    <div class="ln-mood__inner">
+      {%- if eyebrow != blank -%}<p class="ln-mood__eyebrow">{{ eyebrow }}</p>{%- endif -%}
+      {%- if heading != blank -%}<h2 class="ln-mood__heading" id="LnMood-{{ section.id }}">{{ heading }}</h2>{%- endif -%}
+      {%- if text != blank -%}<p class="ln-mood__text">{{ text }}</p>{%- endif -%}
+      {%- if cta_text != blank -%}
+        <a class="ln-mood__cta" href="{{ cta_link }}">
+          {{ cta_text }}<span class="ln-mood__cta-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lumenook mood feature",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Leave empty to use the product's main image."
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Image position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "All other products"
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "LUMENOOK" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Made to be lived with" },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Chosen for how it feels every day, not just how it photographs. A piece that earns its place and stays there."
+    },
+    { "type": "text", "id": "cta_text", "label": "Link text", "default": "Explore the edit" },
+    { "type": "url", "id": "cta_link", "label": "Link", "info": "Leave empty to link to all collections." },
+    {
+      "type": "header",
+      "content": "Lighting products (tag dept-lighting)"
+    },
+    { "type": "text", "id": "lighting_eyebrow", "label": "Eyebrow", "default": "AFTER DARK" },
+    { "type": "text", "id": "lighting_heading", "label": "Heading", "default": "Glow, not glare" },
+    {
+      "type": "textarea",
+      "id": "lighting_text",
+      "label": "Text",
+      "default": "Warm, low light for slow evenings. The kind of glow that makes a room feel calmer the moment it's switched on."
+    },
+    { "type": "text", "id": "lighting_cta_text", "label": "Link text", "default": "Explore lighting" },
+    { "type": "url", "id": "lighting_cta_link", "label": "Link", "info": "Leave empty to link to the Lighting collection." },
+    {
+      "type": "header",
+      "content": "Desk objects (tag dept-desk)"
+    },
+    { "type": "text", "id": "desk_eyebrow", "label": "Eyebrow", "default": "AT YOUR DESK" },
+    { "type": "text", "id": "desk_heading", "label": "Heading", "default": "Useful, not cluttered" },
+    {
+      "type": "textarea",
+      "id": "desk_text",
+      "label": "Text",
+      "default": "Objects that earn their place on a desk: considered, tactile, and built for the hours you actually spend there."
+    },
+    { "type": "text", "id": "desk_cta_text", "label": "Link text", "default": "Explore desk objects" },
+    { "type": "url", "id": "desk_cta_link", "label": "Link", "info": "Leave empty to link to the Desk Objects collection." }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "presets": [{ "name": "Lumenook mood feature" }]
+}
+{% endschema %}
