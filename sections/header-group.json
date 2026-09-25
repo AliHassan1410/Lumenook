@@ -43,10 +43,8 @@
             "drawer_dividers": false,
             "ln_card_1_parent": "Lighting",
             "ln_card_1_collection": "ambient-lighting",
-            "ln_card_1_caption": "After Dark",
             "ln_card_2_parent": "Desk Objects",
-            "ln_card_2_collection": "home-office-edit",
-            "ln_card_2_caption": "The Home Office Edit"
+            "ln_card_2_collection": "home-office-edit"
           },
           "blocks": {}
         }

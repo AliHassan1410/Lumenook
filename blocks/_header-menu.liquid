@@ -147,10 +147,8 @@
               >
                 {% assign list_id = 'MegaMenuList-' | append: forloop.index %}
                 {%- liquid
-                  # Lumenook: optional image card per top-level item (brief Section 11)
+                  # Lumenook: optional product strip per top-level item (brief Section 11)
                   assign ln_card_collection = blank
-                  assign ln_card_image = blank
-                  assign ln_card_caption = blank
                   assign ln_title = link.title | strip | downcase
                   for n in (1..2)
                     assign ln_parent_key = 'ln_card_' | append: n | append: '_parent'
@@ -158,10 +156,6 @@
                     if ln_parent != blank and ln_parent == ln_title
                       assign ln_key = 'ln_card_' | append: n | append: '_collection'
                       assign ln_card_collection = block_settings[ln_key]
-                      assign ln_key = 'ln_card_' | append: n | append: '_image'
-                      assign ln_card_image = block_settings[ln_key]
-                      assign ln_key = 'ln_card_' | append: n | append: '_caption'
-                      assign ln_card_caption = block_settings[ln_key]
                     endif
                   endfor
                 -%}
@@ -180,9 +174,7 @@
                       menu_content_type: menu_content_type,
                       content_aspect_ratio: ratio,
                       image_border_radius: image_border_radius,
-                      ln_card_collection: ln_card_collection,
-                      ln_card_image: ln_card_image,
-                      ln_card_caption: ln_card_caption
+                      ln_card_collection: ln_card_collection
                     %}
                   </div>
                 </div>
@@ -1086,7 +1078,7 @@
     },
     {
       "type": "header",
-      "content": "Lumenook image card 1"
+      "content": "Lumenook menu products 1"
     },
     {
       "type": "text",
@@ -1097,23 +1089,11 @@
     {
       "type": "collection",
       "id": "ln_card_1_collection",
-      "label": "Link to collection"
-    },
-    {
-      "type": "image_picker",
-      "id": "ln_card_1_image",
-      "label": "Image (3:4)",
-      "info": "Falls back to the collection image."
-    },
-    {
-      "type": "text",
-      "id": "ln_card_1_caption",
-      "label": "Caption",
-      "default": "After Dark"
+      "label": "Products from collection"
     },
     {
       "type": "header",
-      "content": "Lumenook image card 2"
+      "content": "Lumenook menu products 2"
     },
     {
       "type": "text",
@@ -1124,19 +1104,7 @@
     {
       "type": "collection",
       "id": "ln_card_2_collection",
-      "label": "Link to collection"
-    },
-    {
-      "type": "image_picker",
-      "id": "ln_card_2_image",
-      "label": "Image (3:4)",
-      "info": "Falls back to the collection image."
-    },
-    {
-      "type": "text",
-      "id": "ln_card_2_caption",
-      "label": "Caption",
-      "default": "The Home Office Edit"
+      "label": "Products from collection"
     }
   ]
 }

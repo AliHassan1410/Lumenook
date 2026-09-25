@@ -1,0 +1,26 @@
+{% doc %}
+  Mega menu product images: three products from the collection as framed square images
+  (the same ivory frame as the product page "In detail" row), images only. Each links to its
+  product; the product name is the link's accessible name.
+
+  @param {object} collection - Collection the products come from
+  @param {number} [limit] - Number of products, default 3
+{% enddoc %}
+{%- assign max = limit | default: 3 -%}
+<ul class="ln-mega-products" role="list">
+  {%- for product in collection.products limit: max -%}
+    <li>
+      <a class="ln-mega-products__item" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+        {%- if product.featured_image != blank -%}
+          {{
+            product.featured_image
+            | image_url: width: 400
+            | image_tag: widths: '200, 300, 400', sizes: '200px', loading: 'lazy', alt: '', class: 'ln-mega-products__image'
+          }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'ln-mega-products__image' }}
+        {%- endif -%}
+      </a>
+    </li>
+  {%- endfor -%}
+</ul>
