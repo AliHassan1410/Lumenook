@@ -1,6 +1,7 @@
 {% comment %}
   Circle feature: a product image in a round frame at the centre, three short lines of
   generic brand copy on each side. Lines respond gently on hover/focus.
+  Copy set follows the product's department tag: dept-lighting, dept-desk, or the generic lines.
   Image: the section's image setting, otherwise the product's featured image.
 {% endcomment %}
 {%- liquid
@@ -10,6 +11,12 @@
     assign image = product.featured_image
   endif
   assign image_alt = image.alt | default: product.title
+  assign set = ''
+  if product.tags contains 'dept-lighting'
+    assign set = 'lighting_'
+  elsif product.tags contains 'dept-desk'
+    assign set = 'desk_'
+  endif
 -%}
 <section class="ln-circle ln-section" aria-labelledby="LnCircle-{{ section.id }}">
   <div class="ln-container">
@@ -23,12 +30,22 @@
     <div class="ln-circle__layout">
       <ul class="ln-circle__list ln-circle__list--start" role="list">
         {%- for i in (1..3) -%}
-          {%- assign t_key = 'left_title_' | append: i -%}
-          {%- assign d_key = 'left_text_' | append: i -%}
-          {%- if s[t_key] != blank -%}
+          {%- liquid
+            assign t_key = set | append: 'left_title_' | append: i
+            assign d_key = set | append: 'left_text_' | append: i
+            assign title = s[t_key]
+            assign text = s[d_key]
+            if title == blank
+              assign t_key = 'left_title_' | append: i
+              assign d_key = 'left_text_' | append: i
+              assign title = s[t_key]
+              assign text = s[d_key]
+            endif
+          -%}
+          {%- if title != blank -%}
             <li class="ln-circle__item" tabindex="0">
-              <span class="ln-circle__title">{{ s[t_key] }}</span>
-              {%- if s[d_key] != blank -%}<span class="ln-circle__text">{{ s[d_key] }}</span>{%- endif -%}
+              <span class="ln-circle__title">{{ title }}</span>
+              {%- if text != blank -%}<span class="ln-circle__text">{{ text }}</span>{%- endif -%}
             </li>
           {%- endif -%}
         {%- endfor -%}
@@ -50,12 +67,22 @@
 
       <ul class="ln-circle__list ln-circle__list--end" role="list">
         {%- for i in (1..3) -%}
-          {%- assign t_key = 'right_title_' | append: i -%}
-          {%- assign d_key = 'right_text_' | append: i -%}
-          {%- if s[t_key] != blank -%}
+          {%- liquid
+            assign t_key = set | append: 'right_title_' | append: i
+            assign d_key = set | append: 'right_text_' | append: i
+            assign title = s[t_key]
+            assign text = s[d_key]
+            if title == blank
+              assign t_key = 'right_title_' | append: i
+              assign d_key = 'right_text_' | append: i
+              assign title = s[t_key]
+              assign text = s[d_key]
+            endif
+          -%}
+          {%- if title != blank -%}
             <li class="ln-circle__item" tabindex="0">
-              <span class="ln-circle__title">{{ s[t_key] }}</span>
-              {%- if s[d_key] != blank -%}<span class="ln-circle__text">{{ s[d_key] }}</span>{%- endif -%}
+              <span class="ln-circle__title">{{ title }}</span>
+              {%- if text != blank -%}<span class="ln-circle__text">{{ text }}</span>{%- endif -%}
             </li>
           {%- endif -%}
         {%- endfor -%}
@@ -68,25 +95,266 @@
 {
   "name": "Lumenook circle feature",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Lumenook way" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Chosen with care" },
-    { "type": "image_picker", "id": "image", "label": "Image", "info": "Leave empty to use the product's main image." },
-    { "type": "header", "content": "Left side" },
-    { "type": "text", "id": "left_title_1", "label": "Line 1 title", "default": "Considered design" },
-    { "type": "text", "id": "left_text_1", "label": "Line 1 text", "default": "Chosen for its form as much as its function." },
-    { "type": "text", "id": "left_title_2", "label": "Line 2 title", "default": "Warm, calm light" },
-    { "type": "text", "id": "left_text_2", "label": "Line 2 text", "default": "Made for slow evenings and quiet corners." },
-    { "type": "text", "id": "left_title_3", "label": "Line 3 title", "default": "Made to live with" },
-    { "type": "text", "id": "left_text_3", "label": "Line 3 text", "default": "Pieces that sit comfortably in any room." },
-    { "type": "header", "content": "Right side" },
-    { "type": "text", "id": "right_title_1", "label": "Line 1 title", "default": "Delivered with care" },
-    { "type": "text", "id": "right_text_1", "label": "Line 1 text", "default": "Packed carefully and sent across the UAE." },
-    { "type": "text", "id": "right_title_2", "label": "Line 2 title", "default": "Ready to gift" },
-    { "type": "text", "id": "right_text_2", "label": "Line 2 text", "default": "Add a gift note and we will include it." },
-    { "type": "text", "id": "right_title_3", "label": "Line 3 title", "default": "Here to help" },
-    { "type": "text", "id": "right_text_3", "label": "Line 3 text", "default": "Questions before or after you buy? Just ask." }
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Lumenook way"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Chosen with care"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Leave empty to use the product's main image."
+    },
+    {
+      "type": "header",
+      "content": "All other products: left side"
+    },
+    {
+      "type": "text",
+      "id": "left_title_1",
+      "label": "Line 1 title",
+      "default": "Considered design"
+    },
+    {
+      "type": "text",
+      "id": "left_text_1",
+      "label": "Line 1 text",
+      "default": "Chosen for its form as much as its function."
+    },
+    {
+      "type": "text",
+      "id": "left_title_2",
+      "label": "Line 2 title",
+      "default": "Warm, calm light"
+    },
+    {
+      "type": "text",
+      "id": "left_text_2",
+      "label": "Line 2 text",
+      "default": "Made for slow evenings and quiet corners."
+    },
+    {
+      "type": "text",
+      "id": "left_title_3",
+      "label": "Line 3 title",
+      "default": "Made to live with"
+    },
+    {
+      "type": "text",
+      "id": "left_text_3",
+      "label": "Line 3 text",
+      "default": "Pieces that sit comfortably in any room."
+    },
+    {
+      "type": "header",
+      "content": "All other products: right side"
+    },
+    {
+      "type": "text",
+      "id": "right_title_1",
+      "label": "Line 1 title",
+      "default": "Delivered with care"
+    },
+    {
+      "type": "text",
+      "id": "right_text_1",
+      "label": "Line 1 text",
+      "default": "Packed carefully and sent across the UAE."
+    },
+    {
+      "type": "text",
+      "id": "right_title_2",
+      "label": "Line 2 title",
+      "default": "Ready to gift"
+    },
+    {
+      "type": "text",
+      "id": "right_text_2",
+      "label": "Line 2 text",
+      "default": "Add a gift note and we will include it."
+    },
+    {
+      "type": "text",
+      "id": "right_title_3",
+      "label": "Line 3 title",
+      "default": "Here to help"
+    },
+    {
+      "type": "text",
+      "id": "right_text_3",
+      "label": "Line 3 text",
+      "default": "Questions before or after you buy? Just ask."
+    },
+    {
+      "type": "header",
+      "content": "Lighting products (tag dept-lighting)"
+    },
+    {
+      "type": "text",
+      "id": "lighting_left_title_1",
+      "label": "Left 1 title",
+      "default": "Warm, calm light"
+    },
+    {
+      "type": "text",
+      "id": "lighting_left_text_1",
+      "label": "Left 1 text",
+      "default": "A soft glow made for slow evenings."
+    },
+    {
+      "type": "text",
+      "id": "lighting_left_title_2",
+      "label": "Left 2 title",
+      "default": "Light in layers"
+    },
+    {
+      "type": "text",
+      "id": "lighting_left_text_2",
+      "label": "Left 2 text",
+      "default": "Pair it with other lamps for a gentler room."
+    },
+    {
+      "type": "text",
+      "id": "lighting_left_title_3",
+      "label": "Left 3 title",
+      "default": "Beautiful switched off"
+    },
+    {
+      "type": "text",
+      "id": "lighting_left_text_3",
+      "label": "Left 3 text",
+      "default": "A shape that works as décor by day."
+    },
+    {
+      "type": "text",
+      "id": "lighting_right_title_1",
+      "label": "Right 1 title",
+      "default": "Easy to place"
+    },
+    {
+      "type": "text",
+      "id": "lighting_right_text_1",
+      "label": "Right 1 text",
+      "default": "Suits bedsides, consoles and reading corners."
+    },
+    {
+      "type": "text",
+      "id": "lighting_right_title_2",
+      "label": "Right 2 title",
+      "default": "A glowing gift"
+    },
+    {
+      "type": "text",
+      "id": "lighting_right_text_2",
+      "label": "Right 2 text",
+      "default": "Add a gift note and we will include it."
+    },
+    {
+      "type": "text",
+      "id": "lighting_right_title_3",
+      "label": "Right 3 title",
+      "default": "Delivered with care"
+    },
+    {
+      "type": "text",
+      "id": "lighting_right_text_3",
+      "label": "Right 3 text",
+      "default": "Packed carefully and sent across the UAE."
+    },
+    {
+      "type": "header",
+      "content": "Desk objects (tag dept-desk)"
+    },
+    {
+      "type": "text",
+      "id": "desk_left_title_1",
+      "label": "Left 1 title",
+      "default": "Made for your desk"
+    },
+    {
+      "type": "text",
+      "id": "desk_left_text_1",
+      "label": "Left 1 text",
+      "default": "Useful objects that earn their place."
+    },
+    {
+      "type": "text",
+      "id": "desk_left_title_2",
+      "label": "Left 2 title",
+      "default": "A calmer workspace"
+    },
+    {
+      "type": "text",
+      "id": "desk_left_text_2",
+      "label": "Left 2 text",
+      "default": "Less clutter, more focus through the day."
+    },
+    {
+      "type": "text",
+      "id": "desk_left_title_3",
+      "label": "Left 3 title",
+      "default": "Considered design"
+    },
+    {
+      "type": "text",
+      "id": "desk_left_text_3",
+      "label": "Left 3 text",
+      "default": "Chosen for form as much as function."
+    },
+    {
+      "type": "text",
+      "id": "desk_right_title_1",
+      "label": "Right 1 title",
+      "default": "Easy to live with"
+    },
+    {
+      "type": "text",
+      "id": "desk_right_text_1",
+      "label": "Right 1 text",
+      "default": "At home beside a laptop, lamp or books."
+    },
+    {
+      "type": "text",
+      "id": "desk_right_title_2",
+      "label": "Right 2 title",
+      "default": "A thoughtful gift"
+    },
+    {
+      "type": "text",
+      "id": "desk_right_text_2",
+      "label": "Right 2 text",
+      "default": "Ideal for colleagues; add a gift note."
+    },
+    {
+      "type": "text",
+      "id": "desk_right_title_3",
+      "label": "Right 3 title",
+      "default": "Delivered with care"
+    },
+    {
+      "type": "text",
+      "id": "desk_right_text_3",
+      "label": "Right 3 text",
+      "default": "Packed carefully and sent across the UAE."
+    }
   ],
-  "enabled_on": { "templates": ["product"] },
-  "presets": [{ "name": "Lumenook circle feature" }]
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Lumenook circle feature"
+    }
+  ]
 }
 {% endschema %}
