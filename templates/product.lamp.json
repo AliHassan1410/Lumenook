@@ -16,20 +16,20 @@
           "type": "_product-media-gallery",
           "static": true,
           "settings": {
-            "media_presentation": "grid",
+            "media_presentation": "carousel",
             "media_columns": "two",
             "image_gap": 8,
             "large_first_image": false,
             "icons_style": "arrow",
             "slideshow_controls_style": "thumbnails",
-            "slideshow_mobile_controls_style": "counter",
-            "thumbnail_position": "right",
-            "thumbnail_width": 44,
-            "thumbnail_radius": 0,
-            "aspect_ratio": "1/1",
+            "slideshow_mobile_controls_style": "thumbnails",
+            "thumbnail_position": "bottom",
+            "thumbnail_width": 72,
+            "thumbnail_radius": 8,
+            "aspect_ratio": "1",
             "constrain_to_viewport": true,
             "media_fit": "cover",
-            "media_radius": 0,
+            "media_radius": 12,
             "extend_media": false,
             "zoom": true,
             "video_loop": false,
@@ -313,13 +313,13 @@
       "settings": {
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",
-        "equal_columns": true,
+        "equal_columns": false,
         "limit_details_width": true,
         "gap": 48,
         "enable_sticky_add_to_cart": false,
         "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 16,
-        "padding-block-end": 0
+        "padding-block-start": 24,
+        "padding-block-end": 48
       }
     },
     "ln_details": {
@@ -673,10 +673,15 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "ln_duo": {
+      "type": "lumenook-product-duo",
+      "settings": {}
     }
   },
   "order": [
     "main",
+    "ln_duo",
     "ln_lit",
     "ln_after_dark",
     "ln_details",

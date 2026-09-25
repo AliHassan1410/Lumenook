@@ -327,26 +327,21 @@ class LnStickyAtc extends HTMLElement {
 }
 if (!customElements.get('ln-sticky-atc')) customElements.define('ln-sticky-atc', LnStickyAtc);
 
-/* Product gallery on mobile: thin progress bar instead of dots (brief Section 10). */
+/* Gift message: only shown once "This is a gift" is ticked (the message field is cleared when unticked). */
 (() => {
-  const scroller = document.querySelector('.product-information slideshow-slides');
-  if (!scroller) return;
-  const bar = document.createElement('div');
-  bar.className = 'ln-gallery-progress';
-  bar.setAttribute('aria-hidden', 'true');
-  bar.innerHTML = '<span></span>';
-  scroller.closest('slideshow-component')?.after(bar);
-  const fill = bar.firstElementChild;
-  const update = () => {
-    const max = scroller.scrollWidth - scroller.clientWidth;
-    const ratio = max > 0 ? Math.abs(scroller.scrollLeft) / max : 0;
-    const slides = Math.max(1, Math.round(scroller.scrollWidth / Math.max(1, scroller.clientWidth)));
-    fill.style.inlineSize = `${100 / slides}%`;
-    fill.style.transform = `translateX(${ratio * (slides - 1) * 100 * (document.dir === 'rtl' ? -1 : 1)}%)`;
+  const gift = document.querySelector('.product-information input[type="checkbox"][name="properties[Gift]"]');
+  const message = document.querySelector('.product-information [name="properties[Gift message]"]');
+  if (!gift || !message) return;
+  const wrapper = message.closest('product-custom-property-component') || message.parentElement;
+  const sync = () => {
+    wrapper.hidden = !gift.checked;
+    message.disabled = !gift.checked;
   };
-  scroller.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
-  window.addEventListener('resize', update);
-  update();
+  gift.addEventListener('change', () => {
+    sync();
+    if (gift.checked) message.focus();
+  });
+  sync();
 })();
 
 /* Product gallery videos: autoplay muted while in view, unless the shopper saves data or prefers reduced motion. */

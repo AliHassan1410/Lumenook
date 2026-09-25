@@ -1,0 +1,40 @@
+{% comment %}
+  Product image duo: two of the product's images side by side, edge to edge across the full
+  page width (like the homepage category banners). Uses images 2 and 3 when available,
+  otherwise 1 and 2. Renders nothing when the product has fewer than two images.
+{% endcomment %}
+{%- liquid
+  assign images = product.images
+  if images.size >= 3
+    assign first = images[1]
+    assign second = images[2]
+  elsif images.size == 2
+    assign first = images[0]
+    assign second = images[1]
+  endif
+  assign sizes = '(min-width: 750px) 50vw, 50vw'
+-%}
+{%- if first and second -%}
+  <section class="ln-duo" aria-label="{{ product.title | escape }}">
+    {%- for img in (1..2) -%}
+      {%- if forloop.index == 1 -%}{%- assign image = first -%}{%- else -%}{%- assign image = second -%}{%- endif -%}
+      {%- assign image_alt = image.alt | default: product.title -%}
+      <figure class="ln-duo__item">
+        {{
+          image
+          | image_url: width: 1800
+          | image_tag: widths: '400, 600, 900, 1200, 1500, 1800', sizes: sizes, loading: 'lazy', class: 'ln-duo__image', alt: image_alt
+        }}
+      </figure>
+    {%- endfor -%}
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lumenook image duo",
+  "settings": [],
+  "enabled_on": { "templates": ["product"] },
+  "presets": [{ "name": "Lumenook image duo" }]
+}
+{% endschema %}
