@@ -44,7 +44,10 @@
   {% endfor %}
 {% endcapture %}
 
-<div style="{{ gutter_style }} --slide-width-max: {{ slide_width_max | default: '300px' }};">
+<div
+  style="{{ gutter_style }} --slide-width-max: {{ slide_width_max | default: '300px' }};"
+  {% if ln_autoplay %}data-ln-marquee="{{ settings.ln_autoplay_speed | default: 3 }}"{% endif %}
+>
   {% render 'slideshow',
     ref: slideshow_ref,
     class: 'resource-list__carousel',
@@ -53,9 +56,7 @@
     icon_style: settings.icons_style,
     icon_shape: settings.icons_shape,
     auto_hide_controls: false,
-    infinite: ln_autoplay,
-    autoplay: ln_autoplay,
-    autoplay_speed: settings.ln_autoplay_speed,
+    infinite: false,
     initial_slide: 0,
     slide_count: slide_count,
     slideshow_gutters: slideshow_gutters

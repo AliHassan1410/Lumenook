@@ -366,12 +366,70 @@ if (!customElements.get('ln-sticky-atc')) customElements.define('ln-sticky-atc',
   videos.forEach((v) => io.observe(v));
 })();
 
-/* Auto-scrolling product carousels stay still for shoppers who prefer reduced motion. */
-if (reduceMotion() && window.customElements) {
-  customElements.whenDefined('slideshow-component').then(() => {
-    document.querySelectorAll('.resource-list__carousel[autoplay], .resource-list__carousel [autoplay]').forEach((el) => el.pause?.());
-    document.querySelectorAll('slideshow-component[autoplay]').forEach((el) => {
-      if (el.closest('.resource-list')) el.pause?.();
+/* Continuous product marquee (owner request): carousels flagged with [data-ln-marquee] drift
+   right to left like the announcement ticker. Slides are cloned once so the loop is seamless.
+   Pauses on hover, keyboard focus and touch; stays still for reduced-motion shoppers. */
+(() => {
+  if (reduceMotion()) return;
+  const start = (wrapper) => {
+    const scroller = wrapper.querySelector('slideshow-slides');
+    if (!scroller || scroller.dataset.lnMarquee) return;
+    const originals = [...scroller.children].filter((el) => el.matches('slideshow-slide'));
+    if (originals.length < 2) return;
+    scroller.dataset.lnMarquee = 'on';
+
+    originals.forEach((slide) => {
+      const clone = slide.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.setAttribute('inert', '');
+      clone.removeAttribute('ref');
+      clone.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
+      clone.querySelectorAll('[ref]').forEach((el) => el.removeAttribute('ref'));
+      scroller.append(clone);
     });
-  });
-}
+
+    scroller.style.scrollSnapType = 'none';
+    scroller.style.scrollBehavior = 'auto';
+
+    const rtl = getComputedStyle(scroller).direction === 'rtl';
+    const secondsPerSlide = Math.max(1, Number(wrapper.dataset.lnMarquee) || 3);
+    let loopWidth = 0;
+    let speed = 0;
+    const measure = () => {
+      const first = originals[0].getBoundingClientRect();
+      const firstClone = scroller.children[originals.length]?.getBoundingClientRect();
+      loopWidth = firstClone ? Math.abs(firstClone.left - first.left) : scroller.scrollWidth / 2;
+      speed = (loopWidth / originals.length) / secondsPerSlide;
+    };
+    measure();
+    window.addEventListener('resize', measure);
+
+    let pos = Math.abs(scroller.scrollLeft);
+    let paused = false;
+    let last = performance.now();
+    const pause = () => { paused = true; };
+    const resume = () => { paused = false; pos = Math.abs(scroller.scrollLeft); last = performance.now(); };
+    wrapper.addEventListener('mouseenter', pause);
+    wrapper.addEventListener('mouseleave', resume);
+    wrapper.addEventListener('focusin', pause);
+    wrapper.addEventListener('focusout', resume);
+    wrapper.addEventListener('touchstart', pause, { passive: true });
+    wrapper.addEventListener('touchend', () => setTimeout(resume, 2500), { passive: true });
+
+    const tick = (now) => {
+      const dt = Math.min(64, now - last) / 1000;
+      last = now;
+      if (!paused && !document.hidden && loopWidth > 0) {
+        pos += speed * dt;
+        if (pos >= loopWidth) pos -= loopWidth;
+        scroller.scrollLeft = rtl ? -pos : pos;
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const init = () => document.querySelectorAll('[data-ln-marquee]').forEach(start);
+  if (window.customElements) customElements.whenDefined('slideshow-component').then(() => requestAnimationFrame(init));
+  else init();
+})();
