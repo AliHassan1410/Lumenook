@@ -417,7 +417,7 @@
         "padding-block-start": 24,
         "padding-block-end": 48,
         "ln_autoplay": true,
-        "ln_autoplay_speed": 3
+        "ln_autoplay_speed": 5
       }
     },
     "after_dark": {

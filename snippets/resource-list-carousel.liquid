@@ -44,6 +44,24 @@
   {% endfor %}
 {% endcapture %}
 
+{%- if ln_autoplay -%}
+  {%- comment -%} Lumenook: continuous right-to-left marquee (left to right in RTL), like the announcement bar {%- endcomment -%}
+  {%- capture ln_marquee_items -%}
+    {%- for item in slides -%}
+      <li class="ln-card-marquee__item">{{ item }}</li>
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- assign ln_marquee_seconds = settings.ln_autoplay_speed | default: 5 | times: slide_count -%}
+  <div
+    class="ln-card-marquee"
+    style="--slide-width-max: {{ slide_width_max | default: '300px' }}; --ln-card-marquee-duration: {{ ln_marquee_seconds }}s;"
+  >
+    <div class="ln-card-marquee__track">
+      <ul class="ln-card-marquee__list" role="list">{{ ln_marquee_items }}</ul>
+      <ul class="ln-card-marquee__list" role="list" aria-hidden="true" inert>{{ ln_marquee_items }}</ul>
+    </div>
+  </div>
+{%- else -%}
 <div style="{{ gutter_style }} --slide-width-max: {{ slide_width_max | default: '300px' }};">
   {% render 'slideshow',
     ref: slideshow_ref,
@@ -53,14 +71,13 @@
     icon_style: settings.icons_style,
     icon_shape: settings.icons_shape,
     auto_hide_controls: false,
-    infinite: ln_autoplay,
-    autoplay: ln_autoplay,
-    autoplay_speed: settings.ln_autoplay_speed,
+    infinite: false,
     initial_slide: 0,
     slide_count: slide_count,
     slideshow_gutters: slideshow_gutters
   %}
 </div>
+{%- endif -%}
 
 {% stylesheet %}
   .resource-list__carousel {
