@@ -768,12 +768,20 @@ html[lang^='ar'] .ln-marquee { letter-spacing: 0; text-transform: none; }
 }
 
 /* =====================================================================
-   Collection / search product cards: premium framed cards, 3 per row (owner request)
+   Collection / search product cards: premium framed cards, 4 per row (owner request),
+   3 on small laptops so the purchase row keeps room
    ===================================================================== */
 @media (min-width: 990px) {
   .product-grid-container .product-grid--grid:not([product-grid-view='zoom-out']) {
     --product-grid-columns-desktop: repeat(3, minmax(0, 1fr)) !important;
     --product-grid-gap-desktop: 32px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .product-grid-container .product-grid--grid:not([product-grid-view='zoom-out']) {
+    --product-grid-columns-desktop: repeat(4, minmax(0, 1fr)) !important;
+    --product-grid-gap-desktop: 24px;
   }
 }
 
