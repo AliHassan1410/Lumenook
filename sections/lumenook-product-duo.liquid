@@ -18,15 +18,31 @@
     endif
     assign count = images.size | minus: offset | at_most: 3
   endif
-  assign sizes = '(min-width: 750px) 30vw, 33vw'
+  assign sizes = '(min-width: 990px) 220px, 33vw'
   assign min_count = 2
   if use_chosen
     assign min_count = 1
   endif
+
+  # Copy follows the product department: dept-lighting, dept-desk, or the generic set
+  assign set = ''
+  if product.tags contains 'dept-lighting'
+    assign set = 'lighting_'
+  elsif product.tags contains 'dept-desk'
+    assign set = 'desk_'
+  endif
+  assign heading_key = set | append: 'heading'
+  assign text_key = set | append: 'text'
+  assign heading = section.settings[heading_key] | default: section.settings.heading
+  assign text = section.settings[text_key] | default: section.settings.text
 -%}
 {%- if count >= min_count -%}
   <section class="ln-duo ln-duo--{{ count }}" aria-labelledby="LnDuo-{{ section.id }}">
-    <p class="ln-eyebrow ln-duo__heading" id="LnDuo-{{ section.id }}">{{ 'lumenook.product.in_detail' | t }}</p>
+    <div class="ln-duo__copy">
+      <p class="ln-eyebrow ln-duo__heading">{{ 'lumenook.product.in_detail' | t }}</p>
+      {%- if heading != blank -%}<h2 class="ln-duo__title" id="LnDuo-{{ section.id }}">{{ heading }}</h2>{%- endif -%}
+      {%- if text != blank -%}<p class="ln-duo__text">{{ text }}</p>{%- endif -%}
+    </div>
     <div class="ln-duo__grid">
       {%- if use_chosen -%}
         {%- for image in chosen limit: count -%}
@@ -58,8 +74,65 @@
 {% schema %}
 {
   "name": "Lumenook image row",
-  "settings": [],
-  "enabled_on": { "templates": ["product"] },
-  "presets": [{ "name": "Lumenook image row" }]
+  "settings": [
+    {
+      "type": "header",
+      "content": "All other products"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A closer look"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "The shape, the finish, the small details that make a piece worth keeping. Take a closer look before it finds its place in your home."
+    },
+    {
+      "type": "header",
+      "content": "Lighting products (tag dept-lighting)"
+    },
+    {
+      "type": "text",
+      "id": "lighting_heading",
+      "label": "Heading",
+      "default": "Made to glow"
+    },
+    {
+      "type": "textarea",
+      "id": "lighting_text",
+      "label": "Text",
+      "default": "A closer look at the form, the finish and the way it holds the light. Every lamp we choose should look as good lit in the evening as it does unlit by day."
+    },
+    {
+      "type": "header",
+      "content": "Desk objects (tag dept-desk)"
+    },
+    {
+      "type": "text",
+      "id": "desk_heading",
+      "label": "Heading",
+      "default": "Made for the desk"
+    },
+    {
+      "type": "textarea",
+      "id": "desk_text",
+      "label": "Text",
+      "default": "A closer look at the form and the finish. Every desk object we choose should be useful every day and look considered among the things you keep close."
+    }
+  ],
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Lumenook image row"
+    }
+  ]
 }
 {% endschema %}

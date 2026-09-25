@@ -504,9 +504,9 @@
       "settings": {
         "product": "{{ closest.product }}",
         "recommendation_type": "related",
-        "layout_type": "grid",
+        "layout_type": "carousel",
         "carousel_on_mobile": false,
-        "max_products": 4,
+        "max_products": 5,
         "columns": 4,
         "mobile_columns": "2",
         "columns_gap": 12,
@@ -517,7 +517,9 @@
         "gap": 28,
         "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-end": 48,
+        "ln_autoplay": true,
+        "ln_autoplay_speed": 4
       }
     },
     "ln_recent": {

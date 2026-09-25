@@ -425,6 +425,10 @@ if (!customElements.get('ln-sticky-atc')) customElements.define('ln-sticky-atc',
   };
 
   const init = () => document.querySelectorAll('[data-ln-marquee]').forEach(start);
-  if (window.customElements) customElements.whenDefined('slideshow-component').then(() => requestAnimationFrame(init));
-  else init();
+  const ready = window.customElements ? customElements.whenDefined('slideshow-component') : Promise.resolve();
+  ready.then(() => {
+    requestAnimationFrame(init);
+    // Carousels loaded later (e.g. product recommendations) start as soon as they appear.
+    new MutationObserver(() => requestAnimationFrame(init)).observe(document.body, { childList: true, subtree: true });
+  });
 })();
