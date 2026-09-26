@@ -1,44 +1,47 @@
 {% comment %}
   Video feature (owner request): sits right below "In detail" (the image row). A vertical,
-  phone-format video plays in the centre with a short line of text on each side. Only appears on
+  framed phone-format video plays in the centre with three short points on each side. Only appears on
   products that have a video set in their "Feature video" metafield (lumenook.feature_video) —
   renders nothing otherwise, so most product pages are unaffected.
 {% endcomment %}
 {%- liquid
   assign video = product.metafields.lumenook.feature_video.value
+  assign sides = 'left,right' | split: ','
 -%}
 {%- if video != blank -%}
-  <section class="ln-video-feature ln-section" aria-labelledby="LnVideoFeature-{{ section.id }}">
+  <section class="ln-video-feature ln-section" aria-label="{{ product.title | escape }}">
     <div class="ln-container ln-video-feature__layout">
-      <div class="ln-video-feature__col ln-video-feature__col--left">
-        {%- if section.settings.left_heading != blank -%}
-          <h2 class="ln-video-feature__heading" id="LnVideoFeature-{{ section.id }}">{{ section.settings.left_heading }}</h2>
+      {%- for side in sides -%}
+        <ul class="ln-video-feature__col ln-video-feature__col--{{ side }}" role="list">
+          {%- for i in (1..3) -%}
+            {%- assign title_key = side | append: '_title_' | append: i -%}
+            {%- assign text_key = side | append: '_text_' | append: i -%}
+            {%- assign point_title = section.settings[title_key] -%}
+            {%- assign point_text = section.settings[text_key] -%}
+            {%- if point_title != blank -%}
+              <li class="ln-video-feature__point">
+                <span class="ln-video-feature__title">{{ point_title }}</span>
+                {%- if point_text != blank -%}<span class="ln-video-feature__text">{{ point_text }}</span>{%- endif -%}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        {%- if side == 'left' -%}
+          <div class="ln-video-feature__media">
+            <div class="ln-video-feature__frame">
+              <div class="ln-video-feature__screen">
+                {%- render 'video',
+                  video: video,
+                  video_autoplay: true,
+                  video_loop: true,
+                  disable_controls: true,
+                  video_class: 'ln-video-feature__video'
+                -%}
+              </div>
+            </div>
+          </div>
         {%- endif -%}
-        {%- if section.settings.left_text != blank -%}
-          <p class="ln-video-feature__text">{{ section.settings.left_text }}</p>
-        {%- endif -%}
-      </div>
-
-      <div class="ln-video-feature__media">
-        <div class="ln-video-feature__frame">
-          {%- render 'video',
-            video: video,
-            video_autoplay: true,
-            video_loop: true,
-            disable_controls: true,
-            video_class: 'ln-video-feature__video'
-          -%}
-        </div>
-      </div>
-
-      <div class="ln-video-feature__col ln-video-feature__col--right">
-        {%- if section.settings.right_heading != blank -%}
-          <h3 class="ln-video-feature__heading">{{ section.settings.right_heading }}</h3>
-        {%- endif -%}
-        {%- if section.settings.right_text != blank -%}
-          <p class="ln-video-feature__text">{{ section.settings.right_text }}</p>
-        {%- endif -%}
-      </div>
+      {%- endfor -%}
     </div>
   </section>
 {%- endif -%}
@@ -51,22 +54,20 @@
       "type": "paragraph",
       "content": "Shows only on products with a video set in their \"Feature video\" metafield (Product → Metafields → Feature video)."
     },
-    { "type": "header", "content": "Left text" },
-    { "type": "text", "id": "left_heading", "label": "Heading", "default": "Made to be seen" },
-    {
-      "type": "textarea",
-      "id": "left_text",
-      "label": "Text",
-      "default": "A closer look at how it sits in a room and holds the light, filmed the way you would show a friend."
-    },
-    { "type": "header", "content": "Right text" },
-    { "type": "text", "id": "right_heading", "label": "Heading", "default": "Worth a second look" },
-    {
-      "type": "textarea",
-      "id": "right_text",
-      "label": "Text",
-      "default": "Small details, real scale, true colour. What you see here is what arrives at your door."
-    }
+    { "type": "header", "content": "Left points" },
+    { "type": "text", "id": "left_title_1", "label": "Point 1 title", "default": "Real scale" },
+    { "type": "text", "id": "left_text_1", "label": "Point 1 text", "default": "Filmed in a real room, so you can judge the size." },
+    { "type": "text", "id": "left_title_2", "label": "Point 2 title", "default": "True colour" },
+    { "type": "text", "id": "left_text_2", "label": "Point 2 text", "default": "See the finish and the glow as it really looks." },
+    { "type": "text", "id": "left_title_3", "label": "Point 3 title", "default": "Shown in use" },
+    { "type": "text", "id": "left_text_3", "label": "Point 3 text", "default": "Filmed the way you would show it to a friend." },
+    { "type": "header", "content": "Right points" },
+    { "type": "text", "id": "right_title_1", "label": "Point 1 title", "default": "Easy to place" },
+    { "type": "text", "id": "right_text_1", "label": "Point 1 text", "default": "Sits comfortably on a bedside, desk or shelf." },
+    { "type": "text", "id": "right_title_2", "label": "Point 2 title", "default": "What you see arrives" },
+    { "type": "text", "id": "right_text_2", "label": "Point 2 text", "default": "The piece in the video is the piece at your door." },
+    { "type": "text", "id": "right_title_3", "label": "Point 3 title", "default": "Delivered with care" },
+    { "type": "text", "id": "right_text_3", "label": "Point 3 text", "default": "Packed carefully and sent across the UAE." }
   ],
   "enabled_on": {
     "templates": ["product"]
