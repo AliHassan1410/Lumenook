@@ -328,14 +328,6 @@
         "heading": "The details"
       }
     },
-    "ln_pairs": {
-      "type": "lumenook-pairs-with",
-      "settings": {
-        "heading": "Pairs well with",
-        "limit": 4,
-        "show_sold_out": false
-      }
-    },
     "product_recommendations_xmXAhw": {
       "type": "product-recommendations",
       "blocks": {
@@ -567,7 +559,6 @@
     "ln_video",
     "ln_lit",
     "ln_details",
-    "ln_pairs",
     "product_recommendations_xmXAhw",
     "ln_circle",
     "ln_mood",
