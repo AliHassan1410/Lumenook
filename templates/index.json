@@ -135,7 +135,9 @@
         "reflection_opacity": 75,
         "padding-block-start": 0,
         "padding-block-end": 0,
-        "image_1": "shopify://shop_images/lumenook-hero-desk.jpg",
+        "image_1": "shopify://shop_images/lumenook-hero-desk-essentials.jpg",
+        "custom_mobile_media": true,
+        "image_1_mobile": "shopify://shop_images/lumenook-hero-desk-essentials-mobile.jpg",
         "link": "/collections"
       }
     },
