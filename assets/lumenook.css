@@ -795,12 +795,14 @@ html[lang^='ar'] .ln-mood__cta { letter-spacing: 0; text-transform: none; }
   justify-items: center;
 }
 
-.ln-video-feature__col { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; max-inline-size: 320px; text-align: center; }
-.ln-video-feature__point { display: grid; gap: 4px; }
+.ln-video-feature__copy { inline-size: 100%; max-inline-size: 520px; }
+.ln-video-feature__copy .ln-eyebrow { margin: 0 0 8px; }
+.ln-video-feature__heading { margin: 0 0 24px; font-family: var(--font-heading--family); font-weight: 500; font-size: clamp(28px, 3vw, 38px); line-height: 1.15; }
+.ln-video-feature__points { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.ln-video-feature__point { display: grid; gap: 4px; padding-block: 16px; border-block-start: 1px solid var(--ln-stone); }
+.ln-video-feature__point:last-child { border-block-end: 1px solid var(--ln-stone); }
 .ln-video-feature__title { font-family: var(--font-heading--family); font-weight: 500; font-size: clamp(19px, 2vw, 23px); line-height: 1.2; }
 .ln-video-feature__text { font-size: 14px; line-height: 1.6; color: var(--ln-muted); }
-
-.ln-video-feature__media { order: -1; }
 
 /* Ivory mat, hairline border, soft corners: the same frame as the "In detail" images */
 .ln-video-feature__frame {
@@ -824,12 +826,9 @@ html[lang^='ar'] .ln-mood__cta { letter-spacing: 0; text-transform: none; }
 .ln-video-feature__video { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
 
 @media (min-width: 990px) {
-  .ln-video-feature__layout { grid-template-columns: 1fr auto 1fr; gap: 56px; }
-  .ln-video-feature__col { gap: 34px; }
-  .ln-video-feature__col--left { justify-self: end; text-align: end; }
-  .ln-video-feature__col--right { justify-self: start; text-align: start; }
-  .ln-video-feature__media { order: 0; }
+  .ln-video-feature__layout { grid-template-columns: auto minmax(0, 520px); justify-content: center; gap: 88px; }
   .ln-video-feature__frame { inline-size: 316px; }
+  .ln-video-feature--media-right .ln-video-feature__media { order: 2; }
 }
 
 /* =====================================================================
