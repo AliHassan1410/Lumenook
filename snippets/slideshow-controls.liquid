@@ -105,10 +105,11 @@
           ref="thumbnailsContainer"
           class="slideshow-controls__thumbnails-container"
         >
-          <div class="slideshow-controls__thumbnails">
+          <div class="slideshow-controls__thumbnails" role="tablist">
             {% for media in thumbnails %}
               <button
                 class="slideshow-control button button-unstyled slideshow-controls__thumbnail"
+                role="tab"
                 aria-label="{{ 'accessibility.slide_status' | t: index: forloop.index, length: forloop.length }}"
                 on:click="/select/{{ forloop.index0 }}"
                 style="--aspect-ratio: {% if aspect_ratio == 'adapt' %}{{ media.preview_image.aspect_ratio | default: 1.0 }}{% else %}{{ aspect_ratio }}{% endif %};"

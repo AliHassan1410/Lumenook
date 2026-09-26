@@ -361,11 +361,67 @@ if (!customElements.get('ln-sticky-atc')) customElements.define('ln-sticky-atc',
   videos.forEach((v) => io.observe(v));
 })();
 
+/* Carousel slides that the slideshow marks aria-hidden must not stay focusable: mark them inert too
+   (keyboard users otherwise tab into buttons and links they cannot see). Marquee carousels expose
+   their slides instead (see below), which clears aria-hidden and therefore inert. */
+(() => {
+  const sync = (el) => {
+    if (el instanceof Element && el.matches('slideshow-slide')) el.inert = el.getAttribute('aria-hidden') === 'true';
+  };
+  const scan = () => document.querySelectorAll('slideshow-slide[aria-hidden="true"]').forEach(sync);
+  let queued = false;
+  const queueScan = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => {
+      queued = false;
+      scan();
+    });
+  };
+  new MutationObserver((mutations) => {
+    let added = false;
+    mutations.forEach((m) => {
+      if (m.type === 'attributes') sync(m.target);
+      else added = true;
+    });
+    if (added) queueScan();
+  }).observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['aria-hidden'] });
+  queueScan();
+})();
+
+/* Card "Buy it now": a plain button (not Shopify's dynamic checkout button, which loads ~370 KB of
+   wallet/checkout scripts on every page with cards). Adds one unit and goes straight to checkout. */
+document.addEventListener('click', async (event) => {
+  const button = event.target.closest('[data-ln-buy-now]');
+  if (!button || button.disabled) return;
+  event.preventDefault();
+  event.stopPropagation();
+  const root = window.Shopify?.routes?.root || '/';
+  button.disabled = true;
+  button.setAttribute('aria-busy', 'true');
+  try {
+    const response = await fetch(`${root}cart/add.js`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ items: [{ id: Number(button.dataset.variantId), quantity: 1 }] }),
+    });
+    if (!response.ok) throw new Error(String(response.status));
+    window.location.href = `${root}checkout`;
+  } catch (error) {
+    button.disabled = false;
+    button.removeAttribute('aria-busy');
+  }
+});
+
 /* Continuous product marquee (owner request): carousels flagged with [data-ln-marquee] drift
    right to left like the announcement ticker. Slides are cloned once so the loop is seamless.
-   Pauses on hover, keyboard focus and touch; stays still for reduced-motion shoppers. */
+   Pauses on hover, keyboard focus and touch; stays still for reduced-motion shoppers.
+   Performance: starts after the page has loaded, only animates while the carousel is on screen,
+   and measures inside a ResizeObserver callback so it never forces a synchronous layout. */
 (() => {
   if (reduceMotion()) return;
+  const rtl = document.documentElement.dir === 'rtl';
+
   const start = (wrapper) => {
     const scroller = wrapper.querySelector('slideshow-slides');
     if (!scroller || scroller.dataset.lnMarquee) return;
@@ -373,62 +429,107 @@ if (!customElements.get('ln-sticky-atc')) customElements.define('ln-sticky-atc',
     if (originals.length < 2) return;
     scroller.dataset.lnMarquee = 'on';
 
+    // Clones are visual only: inert (not focusable, not announced). Their inner refs are kept so the
+    // cards' components (add to cart etc.) initialise normally; only the slide's own ref and ids go.
     originals.forEach((slide) => {
       const clone = slide.cloneNode(true);
       clone.setAttribute('aria-hidden', 'true');
       clone.setAttribute('inert', '');
       clone.removeAttribute('ref');
       clone.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
-      clone.querySelectorAll('[ref]').forEach((el) => el.removeAttribute('ref'));
       scroller.append(clone);
+    });
+
+    // Every original slide stays reachable while the carousel drifts, so none may be aria-hidden
+    // (hidden slides would still hold focusable buttons and links).
+    const expose = (slide) => {
+      if (slide.matches('slideshow-slide:not([inert])') && slide.getAttribute('aria-hidden') === 'true') {
+        slide.removeAttribute('aria-hidden');
+      }
+    };
+    originals.forEach(expose);
+    new MutationObserver((mutations) => mutations.forEach((m) => expose(m.target))).observe(scroller, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['aria-hidden'],
     });
 
     scroller.style.scrollSnapType = 'none';
     scroller.style.scrollBehavior = 'auto';
 
-    const rtl = getComputedStyle(scroller).direction === 'rtl';
     const secondsPerSlide = Math.max(1, Number(wrapper.dataset.lnMarquee) || 3);
     let loopWidth = 0;
     let speed = 0;
+    // Runs after layout (ResizeObserver), so these reads are free.
     const measure = () => {
-      const first = originals[0].getBoundingClientRect();
-      const firstClone = scroller.children[originals.length]?.getBoundingClientRect();
-      loopWidth = firstClone ? Math.abs(firstClone.left - first.left) : scroller.scrollWidth / 2;
-      speed = (loopWidth / originals.length) / secondsPerSlide;
+      const firstClone = scroller.children[originals.length];
+      loopWidth = firstClone ? Math.abs(firstClone.offsetLeft - originals[0].offsetLeft) : scroller.scrollWidth / 2;
+      speed = loopWidth / originals.length / secondsPerSlide;
     };
-    measure();
-    window.addEventListener('resize', measure);
+    new ResizeObserver(measure).observe(scroller);
 
-    let pos = Math.abs(scroller.scrollLeft);
+    let pos = 0;
     let paused = false;
-    let last = performance.now();
-    const pause = () => { paused = true; };
-    const resume = () => { paused = false; pos = Math.abs(scroller.scrollLeft); last = performance.now(); };
-    wrapper.addEventListener('mouseenter', pause);
-    wrapper.addEventListener('mouseleave', resume);
-    wrapper.addEventListener('focusin', pause);
-    wrapper.addEventListener('focusout', resume);
-    wrapper.addEventListener('touchstart', pause, { passive: true });
-    wrapper.addEventListener('touchend', () => setTimeout(resume, 2500), { passive: true });
+    let visible = false;
+    let running = false;
+    let last = 0;
 
     const tick = (now) => {
+      if (!visible || paused || document.hidden) {
+        running = false;
+        return;
+      }
       const dt = Math.min(64, now - last) / 1000;
       last = now;
-      if (!paused && !document.hidden && loopWidth > 0) {
+      if (loopWidth > 0) {
         pos += speed * dt;
         if (pos >= loopWidth) pos -= loopWidth;
         scroller.scrollLeft = rtl ? -pos : pos;
       }
       requestAnimationFrame(tick);
     };
-    requestAnimationFrame(tick);
+    const run = () => {
+      if (running || !visible || paused || document.hidden) return;
+      running = true;
+      last = performance.now();
+      requestAnimationFrame(tick);
+    };
+
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible) run();
+    }).observe(wrapper);
+
+    const pause = () => { paused = true; };
+    const resume = () => {
+      paused = false;
+      pos = Math.abs(scroller.scrollLeft); // pick up wherever a touch/drag left the carousel
+      run();
+    };
+    wrapper.addEventListener('mouseenter', pause);
+    wrapper.addEventListener('mouseleave', resume);
+    wrapper.addEventListener('focusin', pause);
+    wrapper.addEventListener('focusout', resume);
+    wrapper.addEventListener('touchstart', pause, { passive: true });
+    wrapper.addEventListener('touchend', () => setTimeout(resume, 2500), { passive: true });
+    document.addEventListener('visibilitychange', run);
   };
 
   const init = () => document.querySelectorAll('[data-ln-marquee]').forEach(start);
+  const whenIdle = (callback) => ('requestIdleCallback' in window ? requestIdleCallback(callback, { timeout: 2000 }) : setTimeout(callback, 200));
   const ready = window.customElements ? customElements.whenDefined('slideshow-component') : Promise.resolve();
-  ready.then(() => {
-    requestAnimationFrame(init);
+  const loaded = document.readyState === 'complete' ? Promise.resolve() : new Promise((resolve) => window.addEventListener('load', resolve, { once: true }));
+  Promise.all([ready, loaded]).then(() => {
+    whenIdle(init);
     // Carousels loaded later (e.g. product recommendations) start as soon as they appear.
-    new MutationObserver(() => requestAnimationFrame(init)).observe(document.body, { childList: true, subtree: true });
+    let scheduled = false;
+    new MutationObserver(() => {
+      if (scheduled) return;
+      scheduled = true;
+      whenIdle(() => {
+        scheduled = false;
+        init();
+      });
+    }).observe(document.body, { childList: true, subtree: true });
   });
 })();

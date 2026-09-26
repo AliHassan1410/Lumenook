@@ -98,7 +98,7 @@
     {% endif %}
 
     <div class="featured-blog-posts-card__content layout-panel-flex--column">
-      <h4>{{ title }}</h4>
+      <h3>{{ title }}</h3>
       {{ details }}
       {{ description }}
     </div>
@@ -183,8 +183,19 @@
     gap: var(--gap);
   }
 
-  .featured-blog-posts-card__content h4 {
+  .featured-blog-posts-card__content :is(h3, h4) {
     margin: 0;
+  }
+
+  /* Lumenook: card titles are h3 (h2 section title > h3) but keep the h4 look */
+  .featured-blog-posts-card__content h3 {
+    font-family: var(--font-h4--family);
+    font-style: var(--font-h4--style);
+    font-weight: var(--font-h4--weight);
+    font-size: var(--font-h4--size);
+    line-height: var(--font-h4--line-height);
+    letter-spacing: var(--font-h4--letter-spacing);
+    text-transform: var(--font-h4--case);
   }
 {% endstylesheet %}
 

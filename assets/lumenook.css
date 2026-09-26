@@ -7,7 +7,7 @@
   --ln-sand: #E6DCCF;
   --ln-stone: #D9CFC2;
   --ln-brass: #B08D57;
-  --ln-brass-dark: #8A6A3B;
+  --ln-brass-dark: #775A2C; /* darkened from #8A6A3B so brass text passes WCAG AA (4.5:1) on ivory and sand */
   --ln-espresso: #2B2320;
   --ln-night: #1C1917;
   --ln-muted: #6B5F58;
@@ -1608,7 +1608,7 @@ product-custom-property-component[hidden] { display: none !important; }
 .ln-card-buy__now { min-inline-size: 0; }
 
 .ln-card-buy :is(.ln-card-buy__add, .ln-card-buy__full),
-.ln-card-buy .shopify-payment-button__button--unbranded {
+.ln-card-buy .ln-card-buy__now-btn {
   inline-size: 100%;
   min-block-size: 40px !important;
   block-size: 40px;
@@ -1636,30 +1636,29 @@ product-custom-property-component[hidden] { display: none !important; }
   color: var(--ln-ivory) !important;
 }
 
-.ln-card-buy .shopify-payment-button__button--unbranded {
+.ln-card-buy .ln-card-buy__now-btn {
   background: transparent !important;
   color: var(--ln-espresso) !important;
   box-shadow: inset 0 0 0 1px var(--ln-brass) !important;
   transition: background-color 200ms var(--ln-ease), color 200ms var(--ln-ease);
 }
 
-.ln-card-buy .shopify-payment-button__button--unbranded:hover {
+.ln-card-buy .ln-card-buy__now-btn:hover {
   background: var(--ln-brass-dark) !important;
   color: var(--ln-ivory) !important;
   box-shadow: inset 0 0 0 1px var(--ln-brass-dark) !important;
 }
 
-.ln-card-buy button.shopify-payment-button__button--unbranded { display: flex !important; align-items: center; justify-content: center; gap: .5em; white-space: nowrap; }
-.ln-card-buy .shopify-payment-button__button--unbranded::after { content: '\2192'; }
-[dir='rtl'] .ln-card-buy .shopify-payment-button__button--unbranded::after { transform: scaleX(-1); }
+.ln-card-buy button.ln-card-buy__now-btn { display: flex !important; align-items: center; justify-content: center; gap: .5em; white-space: nowrap; }
+.ln-card-buy .ln-card-buy__now-btn::after { content: '\2192'; }
+[dir='rtl'] .ln-card-buy .ln-card-buy__now-btn::after { transform: scaleX(-1); }
 
 /* Load more sits in the collection wrapper grid: span the full row, below the products */
 .collection-wrapper > .ln-load-more { grid-column: 1 / -1; }
-.ln-card-buy .shopify-payment-button__more-options { display: none; }
 .ln-card-buy__full { display: grid; place-items: center; text-decoration: none; }
 .ln-card-buy__full[disabled] { opacity: .5; cursor: not-allowed; }
 
-html[lang^='ar'] .ln-card-buy :is(.ln-card-buy__add, .ln-card-buy__full, .shopify-payment-button__button--unbranded) {
+html[lang^='ar'] .ln-card-buy :is(.ln-card-buy__add, .ln-card-buy__full, .ln-card-buy__now-btn) {
   letter-spacing: 0;
   text-transform: none;
 }

@@ -135,9 +135,9 @@
         "reflection_opacity": 75,
         "padding-block-start": 0,
         "padding-block-end": 0,
-        "image_1": "shopify://shop_images/lumenook-hero-desk-essentials.jpg",
+        "image_1": "shopify://shop_images/lumenook-hero-desk-wide.jpg",
         "custom_mobile_media": true,
-        "image_1_mobile": "shopify://shop_images/lumenook-hero-desk-essentials-mobile.jpg",
+        "image_1_mobile": "shopify://shop_images/lumenook-hero-desk-wide-mobile.jpg",
         "link": "/collections"
       }
     },
@@ -147,7 +147,7 @@
         "cat_lighting": {
           "type": "category",
           "settings": {
-            "asset_image": "category-lighting-wide.jpg",
+            "image": "shopify://shop_images/lumenook-category-lighting.jpg",
             "tag": "COLLECTION 01",
             "title": "Sculptural Lighting",
             "subtitle": "Warm touch lamps, floor silhouettes & ambient evening glow",
@@ -158,7 +158,7 @@
         "cat_desk": {
           "type": "category",
           "settings": {
-            "asset_image": "category-desk-wide.jpg",
+            "image": "shopify://shop_images/lumenook-category-desk.jpg",
             "tag": "COLLECTION 02",
             "title": "Considered Desk Objects",
             "subtitle": "Smart clocks, wireless charging docks & tactile desk pieces",
@@ -242,7 +242,7 @@
                 "link": "shopify://collections/lighting",
                 "open_in_new_tab": false,
                 "style_class": "button-unstyled",
-                "link_text_color": "{{ settings.color_palette.background }}",
+                "link_text_color": "#2B2320",
                 "width": "fit-content",
                 "custom_width": 100,
                 "width_mobile": "fit-content",
@@ -442,8 +442,7 @@
           "static": true,
           "settings": {
             "media_type": "image",
-            "asset_url": "after-dark.jpg",
-            "asset_alt": "Warm ambient lighting scene with a touch lamp and candle warmer on a bedside table",
+            "image": "shopify://shop_images/lumenook-after-dark.jpg",
             "video_loop": true,
             "video_autoplay": false,
             "image_position": "cover",
@@ -633,7 +632,7 @@
                 "link": "shopify://collections/desk-objects",
                 "open_in_new_tab": false,
                 "style_class": "button-unstyled",
-                "link_text_color": "{{ settings.color_palette.background }}",
+                "link_text_color": "#2B2320",
                 "width": "fit-content",
                 "custom_width": 100,
                 "width_mobile": "fit-content",
@@ -870,7 +869,7 @@
             "title": {
               "type": "_heading",
               "settings": {
-                "text": "<h4>{{ closest.article.title }}</h4>",
+                "text": "<h3>{{ closest.article.title }}</h3>",
                 "show_alignment": false
               },
               "blocks": {},

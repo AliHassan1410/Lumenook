@@ -19,10 +19,25 @@
 >
 
 {%- liquid
-  assign og_title = page_title | default: shop.name
+  # Lumenook: never ship a page without a title/description. The homepage falls back to a proper
+  # SEO title while the store title in Preferences is still the plain shop name; every page falls
+  # back to a short brand description when Shopify has none to generate.
+  assign ln_title = page_title
+  assign ln_description = page_description
+  if request.page_type == 'index'
+    if ln_title == blank or ln_title == shop.name
+      assign ln_title = 'lumenook.seo.home_title' | t
+    endif
+    if ln_description == blank
+      assign ln_description = 'lumenook.seo.home_description' | t
+    endif
+  endif
+  assign ln_description = ln_description | default: shop.description | default: 'lumenook.seo.fallback_description' | t
+
+  assign og_title = ln_title | default: shop.name
   assign og_url = canonical_url | default: request.origin
   assign og_type = 'website'
-  assign og_description = page_description | default: shop.description | default: shop.name
+  assign og_description = ln_description
 
   if request.page_type == 'product'
     assign og_type = 'product'
@@ -104,10 +119,10 @@
 >
 
 <title>
-  {{ page_title }}
+  {{ ln_title }}
   {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
   {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-  {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  {%- unless ln_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
 </title>
 
 <link
@@ -115,9 +130,7 @@
   href="{{ canonical_url }}"
 >
 
-{% if page_description %}
-  <meta
-    name="description"
-    content="{{ page_description | escape }}"
-  >
-{% endif %}
+<meta
+  name="description"
+  content="{{ ln_description | escape }}"
+>

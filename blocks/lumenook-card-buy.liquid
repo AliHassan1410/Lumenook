@@ -1,7 +1,9 @@
 {% doc %}
   Purchase row for collection product cards: Add to cart and Buy it now side by side
   (quantity 1). Uses Dwell's product-form-component, so adding opens the cart
-  drawer as usual. Products with several variants get a "Choose options" link to the product
+  drawer as usual. "Buy it now" is a plain button (lumenook.js adds the item and goes to checkout)
+  rather than Shopify's dynamic checkout button, which would load ~370 KB of wallet/checkout
+  scripts on every page that shows cards. Products with several variants get a "Choose options" link to the product
   page instead, so the wrong variant is never added. Sold-out products show a disabled button.
 {% enddoc %}
 {%- liquid
@@ -34,7 +36,11 @@
             show_icon: false,
             product: product
           %}
-          <div class="ln-card-buy__now">{{ form | payment_button }}</div>
+          <div class="ln-card-buy__now">
+            <button type="button" class="button ln-card-buy__now-btn" data-ln-buy-now data-variant-id="{{ variant.id }}">
+              {{- 'lumenook.cta.buy_now' | t -}}
+            </button>
+          </div>
         </div>
       {%- endform -%}
     </product-form-component>

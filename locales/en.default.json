@@ -376,10 +376,17 @@
     "brand": {
       "tagline": "Light for your quiet corner"
     },
+    "seo": {
+      "home_title": "Lumenook | Luxury Lamps & Desk Accessories in the UAE",
+      "home_description": "Lumenook: sculptural lamps and considered desk objects, delivered across the UAE. Warm, premium lighting for every room, with cash on delivery and complimentary delivery over AED 300.",
+      "fallback_description": "Lumenook: sculptural lamps and considered desk objects, delivered across the UAE."
+    },
     "cta": {
       "add_to_bag": "Add to bag",
       "add_to_cart": "Add to cart",
       "choose_options": "Choose options",
+      "buy_now": "Buy it now",
+      "explore_collection": "Explore the collection",
       "decrease": "Decrease quantity",
       "increase": "Increase quantity",
       "quantity": "Quantity for {{ title }}"

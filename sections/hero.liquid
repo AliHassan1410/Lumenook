@@ -120,6 +120,32 @@
   endif
 %}
 
+{%- comment -%}
+  Lumenook: preload the hero image (LCP) for the layout that will render, with the same srcset/sizes as
+  the <img> so the browser reuses the download. Only on the first section of the page.
+{%- endcomment -%}
+{%- if section.index == 1 and media_1 == 'image' and section.settings.image_1 != blank -%}
+  {%- # theme-check-disable AssetPreload -%}
+  {%- assign ln_widths_array = widths | split: ', ' -%}
+  {%- capture ln_desktop_srcset -%}
+    {%- for w in ln_widths_array -%}
+      {{ section.settings.image_1 | image_url: width: w }} {{ w }}w{% unless forloop.last %}, {% endunless %}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- if media_1_mobile == 'image' and section.settings.image_1_mobile != blank -%}
+    {%- capture ln_mobile_srcset -%}
+      {%- for w in mobile_widths_array -%}
+        {{ section.settings.image_1_mobile | image_url: width: w }} {{ w }}w{% unless forloop.last %}, {% endunless %}
+      {%- endfor -%}
+    {%- endcapture -%}
+    <link rel="preload" as="image" media="(min-width: 750px)" imagesrcset="{{ ln_desktop_srcset | strip }}" imagesizes="{{ sizes }}" fetchpriority="high">
+    <link rel="preload" as="image" media="(max-width: 749px)" imagesrcset="{{ ln_mobile_srcset | strip }}" imagesizes="{{ sizes_mobile }}" fetchpriority="high">
+  {%- else -%}
+    <link rel="preload" as="image" imagesrcset="{{ ln_desktop_srcset | strip }}" imagesizes="{{ sizes }}" fetchpriority="high">
+  {%- endif -%}
+  {%- # theme-check-enable AssetPreload -%}
+{%- endif -%}
+
 {% capture media_slot_1 %}
   {%- if media_1 == 'image' and media_1_mobile == 'image' -%}
     {%- comment -%} Both desktop and mobile are images. Assume similar images, and this is art direction: use picture element. {%- endcomment -%}
@@ -568,6 +594,7 @@
       <a
         href="{{ section.settings.link }}"
         class="hero__link"
+        aria-label="{{ 'lumenook.cta.explore_collection' | t }}"
         {% if section.settings.open_in_new_tab %}
           target="_blank" rel="noopener"
         {% endif %}
