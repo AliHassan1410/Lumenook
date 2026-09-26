@@ -779,6 +779,15 @@ html[lang^='ar'] .ln-mood__eyebrow,
 html[lang^='ar'] .ln-mood__cta { letter-spacing: 0; text-transform: none; }
 
 /* Video feature: a framed phone-format (9:16) video in the centre, three points on each side */
+/* The whole section sits on a sand band with hairline borders top and bottom */
+.ln-video-feature {
+  background: var(--ln-sand);
+  border-block: 1px solid var(--ln-stone);
+  padding-block: clamp(40px, 6vw, 80px);
+}
+
+.ln-video-feature__text { color: var(--ln-muted); }
+
 .ln-video-feature__layout {
   display: grid;
   gap: 32px;
